@@ -1,59 +1,115 @@
-# ExprtreeVisualizer
+ExprTree Visualizer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Visualización interactiva de árboles de expresión mediante Parser Recursivo
 
-## Development server
+Descripción del Proyecto
 
-To start a local development server, run:
+ExprTree Visualizer es una aplicación web desarrollada en Angular Standalone diseñada para:
 
-```bash
+Recibir expresiones matemáticas ingresadas por el usuario.
+
+Tokenizar la expresión y construir su árbol de expresión usando un Parser Recursivo.
+
+Mostrar la expresión equivalente en notación postfix.
+
+Visualizar el árbol generado mediante D3.js de forma interactiva.
+
+Explicar paso a paso el proceso del parser y la construcción del árbol.
+
+El proyecto está pensado como herramienta educativa y demostrativa para el estudio de árboles, gramáticas, parsing recursivo y estructuras de datos, inspirado en la teoría presentada en Grimaldi – Matemáticas Discretas.
+
+Además, incluye una sección visual estilo slide presentation, donde se muestra la portada, el equipo, el docente y las tecnologías utilizadas.
+
+Tecnologías Utilizadas
+
+Angular 17+ Standalone
+
+TypeScript
+
+SCSS (SASS)
+
+D3.js (para visualización de árboles)
+
+HTML5 / CSS3
+
+Node.js (entorno de ejecución)
+
+Git / GitHub (control de versiones)
+
+Estructura Principal del Proyecto
+src/
+│
+├── app/
+│   ├── core/
+│   │   └── slide.service.ts
+│   │
+│   ├── components/
+│   │   ├── presentation-slider/
+│   │   ├── workspace/
+│   │   ├── expression-input/
+│   │   ├── parser-view/
+│   │   └── tree-visualizer/
+│   │
+│   └── app.component.ts
+│
+└── styles.scss
+
+🛠️ Requisitos Previos
+
+Antes de clonar y ejecutar el proyecto, asegúrate de tener instalado:
+
+Node.js 18+
+https://nodejs.org/
+
+Angular CLI
+
+npm install -g @angular/cli
+
+
+Git
+https://git-scm.com/
+
+Cómo Clonar el Proyecto
+
+Ejecuta lo siguiente en tu terminal:
+
+git clone https://github.com/reneeduardo24/exprtree-visualizer.git
+cd exprtree-visualizer
+
+Instalar Dependencias
+npm install
+
+Correr el Proyecto en Modo Desarrollo
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+Luego abre en tu navegador:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+http://localhost:4200
 
-```bash
-ng generate component component-name
-```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+La aplicación recargará automáticamente cada vez que realices cambios.
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+Compilar para Producción
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+Los archivos finales quedarán en:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+/dist/exprtree-visualizer/
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
+Listos para deploy.
 
-For end-to-end (e2e) testing, run:
+Equipo de Desarrollo
 
-```bash
-ng e2e
-```
+Eduardo Chavez
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Jesus Enrique Felix
 
-## Additional Resources
+Raul Ortega
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Rene Hernandez
+
+Docente:
+Dr. Gilberto Borrego Soto
