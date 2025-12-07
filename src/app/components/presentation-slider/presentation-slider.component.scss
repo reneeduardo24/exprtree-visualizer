@@ -1,0 +1,383 @@
+/* ================= SLIDER ROOT ================= */
+
+.slider-root {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* BACKGROUND GRID */
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image: linear-gradient(
+      to right,
+      rgb(99, 102, 241) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgb(99, 102, 241) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* SLIDE CONTAINER */
+
+.slide-container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  max-width: 96rem; // ancho máximo tipo desktop-xl
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 2rem;
+}
+
+.slide-content {
+  width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* ================= UTILITY CLASSES ================= */
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.space-y {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= TITLES ================= */
+
+.title-main {
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.title-section {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+/* SUBTITLES */
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #9ca3af;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+/* DIVIDER */
+
+.divider {
+  height: 0.25rem;
+  width: 8rem;
+  border-radius: 9999px;
+  background: rgb(129, 140, 248);
+}
+
+/* ================= BUTTON: SCROLL DOWN ================= */
+
+.scroll-down-btn {
+  margin-top: 1rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid #1f2937;
+  background: rgba(17, 24, 39, 0.9);
+  color: #e5e7eb;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.4rem;
+  align-items: center;
+  justify-content: center;
+  animation: bounce 1.5s infinite;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.95);
+    border-color: rgba(129, 140, 248, 0.6);
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* ================= TEAM GRID ================= */
+
+.grid-members {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  max-width: 40rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #1f2937;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba(129, 140, 248, 0.6);
+    background: rgba(15, 23, 42, 0.9);
+    transform: translateY(-2px);
+  }
+}
+
+.avatar {
+  display: flex;
+  height: 5rem;
+  width: 5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(129, 140, 248, 0.2);
+  color: rgb(129, 140, 248);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.member-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ================= SUPERVISOR CARD ================= */
+
+.card-supervisor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem;
+  border-radius: 1.25rem;
+  border: 1px solid #1f2937;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.supervisor-avatar {
+  height: 6rem;
+  width: 6rem;
+  font-size: 2.5rem;
+}
+
+.supervisor-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.supervisor-position {
+  font-size: 1.1rem;
+  color: #9ca3af;
+}
+
+/* ================= TECHNOLOGIES GRID ================= */
+
+.grid-technologies {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 48rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card-tech {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+  border-radius: 0.9rem;
+  border: 1px solid #1f2937;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom right,
+      rgba(129, 140, 248, 0.2),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover {
+    border-color: rgba(129, 140, 248, 0.6);
+    background: rgba(15, 23, 42, 0.9);
+    transform: translateY(-2px);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.tech-name {
+  position: relative;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ================= NAV BUTTONS ================= */
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 9999px;
+  border: 1px solid #1f2937;
+  background: rgba(17, 24, 39, 0.85);
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.1s ease;
+
+  &:hover {
+    border-color: rgba(129, 140, 248, 0.6);
+    background: rgba(15, 23, 42, 0.95);
+    transform: translateY(-50%) scale(1.03);
+  }
+}
+
+.nav-button-left {
+  left: 2rem;
+}
+
+.nav-button-right {
+  right: 2rem;
+}
+
+/* ================= DOT NAVIGATION ================= */
+
+.dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  gap: 0.75rem;
+  transform: translateX(-50%);
+}
+
+.dot {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+  background: #4b5563;
+  cursor: pointer;
+  transition:
+    width 0.2s ease,
+    background-color 0.2s ease;
+
+  &.dot-active {
+    width: 2rem;
+    background: rgb(129, 140, 248);
+  }
+
+  &:hover {
+    background: #6b7280;
+  }
+}
+
+/* ================= SLIDE COUNTER ================= */
+
+.counter {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Animación suave al cambiar de slide */
+.slide-content.slide-animate {
+  animation: fadeSlide 600ms ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

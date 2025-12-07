@@ -1,0 +1,87 @@
+.workspace-root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  /* bg-gradient-to-b from-black via-gray-950 to-black */
+  background: linear-gradient(
+    to bottom,
+    #000000 0%,
+    #020617 50%,
+    #000000 100%
+  );
+}
+
+/* Fondo de grid muy tenue */
+.workspace-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+}
+
+.workspace-grid-inner {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(99, 102, 241) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(99, 102, 241) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Orbes de luz (indigo + purple) */
+.workspace-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px); /* similar a blur-3xl */
+}
+
+.workspace-orb-1 {
+  left: 25%;
+  top: 25%;
+  width: 24rem;  /* h-96 w-96 */
+  height: 24rem;
+  background-color: rgba(129, 140, 248, 0.25); /* indigo-500/10 aprox */
+}
+
+.workspace-orb-2 {
+  right: 25%;
+  bottom: 25%;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(168, 85, 247, 0.25); /* purple-500/10 aprox */
+}
+
+.workspace-inner {
+  position: relative;
+  z-index: 10;
+  max-width: 80rem; /* max-w-7xl */
+  margin: 0 auto;
+  padding: 4rem 2rem 4rem;
+}
+
+.workspace-header {
+  text-align: center;
+  margin-bottom: 4rem; /* mb-16 */
+}
+
+.workspace-title {
+  margin-bottom: 1rem; /* mb-4 */
+  font-size: clamp(2.5rem, 4vw, 3.5rem); /* ~text-5xl */
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+.workspace-title-underline {
+  height: 0.25rem;      /* h-1 */
+  width: 6rem;          /* w-24 */
+  margin: 0 auto;
+  border-radius: 9999px;
+  background-color: rgb(99, 102, 241); /* indigo-500 */
+}
+
+.workspace-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* space-y-8 */
+}

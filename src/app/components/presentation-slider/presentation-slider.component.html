@@ -1,0 +1,145 @@
+<section class="slider-root">
+  <!-- background grid -->
+  <div class="bg-grid"></div>
+
+  <div class="slide-container">
+    <div class="slide-content" [class.slide-animate]="animationActive">
+      <!-- Slide: title -->
+      <ng-container *ngIf="currentSlide.type === 'title'">
+        <div class="center-column text-center space-y">
+          <div class="space-y">
+            <h1 class="title-main">
+              {{ currentSlide.title }}
+            </h1>
+            <p class="subtitle">
+              {{ currentSlide.subtitle }}
+            </p>
+          </div>
+          <div class="divider"></div>
+          <button
+            type="button"
+            class="scroll-down-btn"
+            (click)="triggerScrollToWorkspace()"
+          >
+            ↓
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Slide: team -->
+      <ng-container *ngIf="currentSlide.type === 'team'">
+        <div class="center-column space-y">
+          <h2 class="title-section">
+            {{ currentSlide.title }}
+          </h2>
+          <div class="grid-members">
+            <div
+              class="card-member"
+              *ngFor="let member of currentSlide.members"
+            >
+              <div class="avatar">
+                {{ member.name.charAt(0) }}
+              </div>
+              <h3 class="member-name">{{ member.name }}</h3>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Slide: supervisor -->
+      <ng-container *ngIf="currentSlide.type === 'supervisor'">
+        <div class="center-column space-y">
+          <h2 class="title-section">
+            {{ currentSlide.title }}
+          </h2>
+          <div class="card-supervisor">
+            <div class="avatar supervisor-avatar">
+              {{ currentSlide.supervisor?.name?.charAt(0) }}
+            </div>
+            <h3 class="supervisor-name">
+              {{ currentSlide.supervisor?.name }}
+            </h3>
+            <p class="supervisor-position">
+              {{ currentSlide.supervisor?.position }}
+            </p>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Slide: technologies -->
+      <ng-container *ngIf="currentSlide.type === 'technologies'">
+        <div class="center-column space-y">
+          <h2 class="title-section">
+            {{ currentSlide.title }}
+          </h2>
+          <div class="grid-technologies">
+            <div
+              class="card-tech"
+              *ngFor="let tech of currentSlide.technologies"
+            >
+              <p class="tech-name">{{ tech }}</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Slide: thankyou -->
+      <ng-container *ngIf="currentSlide.type === 'thankyou'">
+        <div class="center-column text-center space-y">
+          <div class="space-y">
+            <h1 class="title-main">
+              {{ currentSlide.title }}
+            </h1>
+            <p class="subtitle">
+              {{ currentSlide.subtitle }}
+            </p>
+          </div>
+          <div class="divider"></div>
+          <button
+            type="button"
+            class="scroll-down-btn"
+            (click)="triggerScrollToWorkspace()"
+          >
+            ↓
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- navegación -->
+  <button
+    class="nav-button nav-button-left"
+    type="button"
+    (click)="prevSlide()"
+    aria-label="Slide anterior"
+  >
+    ‹
+  </button>
+
+  <button
+    class="nav-button nav-button-right"
+    type="button"
+    (click)="nextSlide()"
+    aria-label="Slide siguiente"
+  >
+    ›
+  </button>
+
+  <!-- dots -->
+  <div class="dots">
+    <button
+      *ngFor="let slide of slides; let i = index"
+      type="button"
+      (click)="goToSlide(i)"
+      [class.dot-active]="i === currentSlideIndex"
+      class="dot"
+      [attr.aria-label]="'Ir al slide ' + (i + 1)"
+    ></button>
+  </div>
+
+  <!-- contador -->
+  <div class="counter">
+    {{ currentSlideIndex + 1 }} / {{ slides.length }}
+  </div>
+</section>
