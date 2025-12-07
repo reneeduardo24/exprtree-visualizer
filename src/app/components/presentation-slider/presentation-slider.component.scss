@@ -383,58 +383,7 @@
 }
 
 /* ================= RESPONSIVE (MÓVIL) ================= */
-@media (max-width: 640px) {
-  .slider-root {
-    height: auto;
-    min-height: 100vh;
-    align-items: flex-start;
-    padding-top: 3.5rem;
-    padding-bottom: 3rem;
-  }
 
-  .slide-container {
-    align-items: flex-start;
-    padding-inline: 1.25rem;
-  }
-
-  .slide-content {
-    max-width: 28rem;
-    margin-inline: auto;
-  }
-
-  .title-main {
-    font-size: 2.1rem;
-  }
-
-  .title-section {
-    font-size: 1.6rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-  }
-
-  .grid-members {
-    gap: 1.25rem;
-    max-width: 100%;
-  }
-
-  .card-member {
-    padding: 1.25rem 1.5rem;
-    border-radius: 1rem;
-  }
-
-  .avatar {
-    height: 3.5rem;
-    width: 3.5rem;
-    font-size: 1.4rem;
-  }
-
-  .member-name {
-    font-size: 1rem;
-  }
-
-  /* ================= MOBILE FIX (evita que la última tarjeta se recorte) ================= */
 @media (max-width: 640px) {
   .slider-root {
     height: auto;
@@ -492,4 +441,26 @@
   }
 }
 
+.slider-swiper {
+  width: 100%;
+  height: 100vh;
+}
+
+/* paginación */
+.slider-swiper .swiper-pagination-bullet {
+  background: #4b5563;
+  opacity: 1;
+  width: 8px;
+  height: 8px;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.slider-swiper .swiper-pagination-bullet-active {
+  background: rgb(129, 140, 248);
+  width: 24px;
+  border-radius: 9999px;
+}
+
+.slider-swiper .swiper-pagination {
+  bottom: 1.5rem;
 }
