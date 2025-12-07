@@ -2,7 +2,9 @@
   <!-- background grid -->
   <div class="bg-grid"></div>
 
-  <div class="slide-container">
+  <div class="slide-container"
+   (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)">
     <div class="slide-content" [class.slide-animate]="animationActive">
       <!-- Slide: title -->
       <ng-container *ngIf="currentSlide.type === 'title'">

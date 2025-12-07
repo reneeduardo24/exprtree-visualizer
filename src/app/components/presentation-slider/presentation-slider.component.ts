@@ -21,12 +21,16 @@ export class PresentationSliderComponent implements OnInit, OnDestroy {
 
   @Output() requestScrollToWorkspace = new EventEmitter<void>();
 
-  /** tiempo entre slides automáticos (ms) */
+  /** auto slide */
   private readonly autoSlideIntervalMs = 7000;
   private autoSlideId: ReturnType<typeof setInterval> | null = null;
 
-  /** controla la clase de animación */
+  /** animación */
   animationActive = false;
+
+  /** swipe */
+  private touchStartX: number | null = null;
+  private readonly swipeThreshold = 50; // px
 
   constructor(private slideService: SlideService) {
     this.slides = this.slideService.getSlides();
@@ -70,7 +74,7 @@ export class PresentationSliderComponent implements OnInit, OnDestroy {
     this.requestScrollToWorkspace.emit();
   }
 
-  // --------- manejo del auto–slide ---------
+  // --------- auto slide ---------
 
   private startAutoSlide(): void {
     this.clearAutoSlide();
@@ -90,17 +94,43 @@ export class PresentationSliderComponent implements OnInit, OnDestroy {
     this.startAutoSlide();
   }
 
-  // --------- animación suave en cada cambio ---------
+  // --------- animación suave ---------
 
   private triggerAnimation(): void {
-  // Removemos clase
-  this.animationActive = false;
-
-  // Dos frames para asegurar reinicio incluso si Angular no detecta cambios
-  requestAnimationFrame(() => {
+    this.animationActive = false;
     requestAnimationFrame(() => {
-      this.animationActive = true;
+      requestAnimationFrame(() => {
+        this.animationActive = true;
+      });
     });
-  });
-}
+  }
+
+  // --------- swipe en móvil ---------
+
+  onTouchStart(event: TouchEvent): void {
+    if (event.changedTouches.length > 0) {
+      this.touchStartX = event.changedTouches[0].clientX;
+    }
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    if (this.touchStartX === null || event.changedTouches.length === 0) {
+      return;
+    }
+
+    const endX = event.changedTouches[0].clientX;
+    const diffX = endX - this.touchStartX;
+
+    if (Math.abs(diffX) > this.swipeThreshold) {
+      if (diffX < 0) {
+        // swipe hacia la izquierda -> siguiente slide
+        this.nextSlide();
+      } else {
+        // swipe hacia la derecha -> slide anterior
+        this.prevSlide();
+      }
+    }
+
+    this.touchStartX = null;
+  }
 }
