@@ -2,12 +2,19 @@
   <div class="bg-grid"></div>
 
   <swiper-container
+    #swiperEl
     class="slider-swiper"
-    loop="true"
+    [attr.loop]="slides.length > 2 ? 'true' : null"
     speed="600"
     autoplay-delay="7000"
     autoplay-disable-on-interaction="false"
     pagination="true"
+    slides-per-view="1"
+    grab-cursor="true"
+    allow-touch-move="true"
+    simulate-touch="true"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
   >
     <swiper-slide *ngFor="let slide of slides">
       <div class="slide-container">

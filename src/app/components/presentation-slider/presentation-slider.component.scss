@@ -29,7 +29,27 @@
   background-size: 40px 40px;
 }
 
-/* SLIDE CONTAINER */
+/* SWIPER CONTAINER */
+
+.slider-swiper,
+swiper-container.slider-swiper {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  touch-action: pan-y;
+}
+
+/* Cada slide ocupa todo el área del swiper */
+
+swiper-slide {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* SLIDE CONTAINER (contenido interno) */
 
 .slide-container {
   position: relative;
@@ -45,7 +65,6 @@
 
 .slide-content {
   width: 100%;
-  transition: opacity 0.5s ease-in-out;
 }
 
 /* ================= UTILITY CLASSES ================= */
@@ -283,103 +302,24 @@
   font-weight: 600;
 }
 
-/* ================= NAV BUTTONS ================= */
+/* ================= SWIPER PAGINATION ================= */
 
-.nav-button {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 9999px;
-  border: 1px solid #1f2937;
-  background: rgba(17, 24, 39, 0.85);
-  color: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-50%);
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    transform 0.1s ease;
-
-  &:hover {
-    border-color: rgba(129, 140, 248, 0.6);
-    background: rgba(15, 23, 42, 0.95);
-    transform: translateY(-50%) scale(1.03);
-  }
-}
-
-.nav-button-left {
-  left: 2rem;
-}
-
-.nav-button-right {
-  right: 2rem;
-}
-
-/* ================= DOT NAVIGATION ================= */
-
-.dots {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  z-index: 2;
-  display: flex;
-  gap: 0.75rem;
-  transform: translateX(-50%);
-}
-
-.dot {
-  height: 0.5rem;
-  width: 0.5rem;
-  border-radius: 9999px;
+.slider-swiper .swiper-pagination-bullet {
   background: #4b5563;
-  cursor: pointer;
-  transition:
-    width 0.2s ease,
-    background-color 0.2s ease;
-
-  &.dot-active {
-    width: 2rem;
-    background: rgb(129, 140, 248);
-  }
-
-  &:hover {
-    background: #6b7280;
-  }
+  opacity: 1;
+  width: 8px;
+  height: 8px;
+  transition: width 0.2s ease, background-color 0.2s ease;
 }
 
-/* ================= SLIDE COUNTER ================= */
-
-.counter {
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 2;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 0.8rem;
-  color: #6b7280;
+.slider-swiper .swiper-pagination-bullet-active {
+  background: rgb(129, 140, 248);
+  width: 24px;
+  border-radius: 9999px;
 }
 
-/* Animación suave al cambiar de slide */
-.slide-content.slide-animate {
-  animation: fadeSlide 600ms ease;
-}
-
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.slider-swiper .swiper-pagination {
+  bottom: 1.5rem;
 }
 
 /* ================= RESPONSIVE (MÓVIL) ================= */
@@ -435,32 +375,10 @@
     font-size: 1rem;
   }
 
-  /* OCULTAR FLECHAS EN MÓVIL */
-  .nav-button {
-    display: none;
+  /* En móvil dejamos que el swiper ajuste altura dinámicamente */
+  .slider-swiper,
+  swiper-container.slider-swiper {
+    height: auto;
+    min-height: 100vh;
   }
-}
-
-.slider-swiper {
-  width: 100%;
-  height: 100vh;
-}
-
-/* paginación */
-.slider-swiper .swiper-pagination-bullet {
-  background: #4b5563;
-  opacity: 1;
-  width: 8px;
-  height: 8px;
-  transition: width 0.2s ease, background-color 0.2s ease;
-}
-
-.slider-swiper .swiper-pagination-bullet-active {
-  background: rgb(129, 140, 248);
-  width: 24px;
-  border-radius: 9999px;
-}
-
-.slider-swiper .swiper-pagination {
-  bottom: 1.5rem;
 }
