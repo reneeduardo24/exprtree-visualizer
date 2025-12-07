@@ -2,35 +2,28 @@
   <div class="bg-grid"></div>
 
   <swiper-container
-    #swiperEl
     class="slider-swiper"
-    [attr.loop]="slides.length > 2 ? 'true' : null"
+    slides-per-view="1"
+    loop="true"
     speed="600"
     autoplay-delay="7000"
     autoplay-disable-on-interaction="false"
     pagination="true"
-    slides-per-view="1"
     grab-cursor="true"
     allow-touch-move="true"
     simulate-touch="true"
-    (touchstart)="onTouchStart($event)"
-    (touchend)="onTouchEnd($event)"
   >
     <swiper-slide *ngFor="let slide of slides">
       <div class="slide-container">
         <div class="slide-content">
           <ng-container [ngSwitch]="slide.type">
 
-            <!-- Slide: título principal -->
+            <!-- TITLE -->
             <ng-container *ngSwitchCase="'title'">
               <div class="center-column text-center space-y">
                 <div class="space-y">
-                  <h1 class="title-main">
-                    {{ slide.title }}
-                  </h1>
-                  <p class="subtitle">
-                    {{ slide.subtitle }}
-                  </p>
+                  <h1 class="title-main">{{ slide.title }}</h1>
+                  <p class="subtitle">{{ slide.subtitle }}</p>
                 </div>
                 <div class="divider"></div>
                 <button
@@ -43,12 +36,10 @@
               </div>
             </ng-container>
 
-            <!-- Slide: equipo -->
+            <!-- TEAM -->
             <ng-container *ngSwitchCase="'team'">
               <div class="center-column space-y">
-                <h2 class="title-section">
-                  {{ slide.title }}
-                </h2>
+                <h2 class="title-section">{{ slide.title }}</h2>
                 <div class="divider"></div>
 
                 <div class="grid-members">
@@ -59,20 +50,16 @@
                     <div class="avatar">
                       {{ member.name.charAt(0) }}
                     </div>
-                    <h3 class="member-name">
-                      {{ member.name }}
-                    </h3>
+                    <h3 class="member-name">{{ member.name }}</h3>
                   </div>
                 </div>
               </div>
             </ng-container>
 
-            <!-- Slide: docente -->
+            <!-- SUPERVISOR -->
             <ng-container *ngSwitchCase="'supervisor'">
               <div class="center-column space-y">
-                <h2 class="title-section">
-                  {{ slide.title }}
-                </h2>
+                <h2 class="title-section">{{ slide.title }}</h2>
                 <div class="divider"></div>
 
                 <div class="card-supervisor">
@@ -89,12 +76,10 @@
               </div>
             </ng-container>
 
-            <!-- Slide: tecnologías -->
+            <!-- TECHNOLOGIES -->
             <ng-container *ngSwitchCase="'technologies'">
               <div class="center-column space-y">
-                <h2 class="title-section">
-                  {{ slide.title }}
-                </h2>
+                <h2 class="title-section">{{ slide.title }}</h2>
                 <div class="divider"></div>
 
                 <div class="grid-technologies">
@@ -102,24 +87,18 @@
                     class="card-tech"
                     *ngFor="let tech of slide.technologies"
                   >
-                    <p class="tech-name">
-                      {{ tech }}
-                    </p>
+                    <p class="tech-name">{{ tech }}</p>
                   </div>
                 </div>
               </div>
             </ng-container>
 
-            <!-- Slide: cierre / resumen -->
+            <!-- THANK YOU / resumen -->
             <ng-container *ngSwitchCase="'thankyou'">
               <div class="center-column text-center space-y">
                 <div class="space-y">
-                  <h1 class="title-main">
-                    {{ slide.title }}
-                  </h1>
-                  <p class="subtitle">
-                    {{ slide.subtitle }}
-                  </p>
+                  <h1 class="title-main">{{ slide.title }}</h1>
+                  <p class="subtitle">{{ slide.subtitle }}</p>
                 </div>
                 <div class="divider"></div>
                 <button
