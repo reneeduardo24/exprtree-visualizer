@@ -1,87 +1,83 @@
+/* ================= WORKSPACE ROOT ================= */
+
 .workspace-root {
   position: relative;
   min-height: 100vh;
   width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5rem 1.5rem 4rem;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   overflow: hidden;
-  /* bg-gradient-to-b from-black via-gray-950 to-black */
-  background: linear-gradient(
-    to bottom,
-    #000000 0%,
-    #020617 50%,
-    #000000 100%
-  );
 }
 
-/* Fondo de grid muy tenue */
-.workspace-grid {
-  position: absolute;
-  inset: 0;
-  opacity: 0.05;
-}
+/* GRID DE FONDO (mismo estilo que el slider) */
 
-.workspace-grid-inner {
+.workspace-bg {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(to right, rgb(99, 102, 241) 1px, transparent 1px),
+  opacity: 0.1;
+  background-image: linear-gradient(
+      to right,
+      rgb(99, 102, 241) 1px,
+      transparent 1px
+    ),
     linear-gradient(to bottom, rgb(99, 102, 241) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Orbes de luz (indigo + purple) */
-.workspace-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(64px); /* similar a blur-3xl */
-}
+/* CONTENEDOR CENTRAL */
 
-.workspace-orb-1 {
-  left: 25%;
-  top: 25%;
-  width: 24rem;  /* h-96 w-96 */
-  height: 24rem;
-  background-color: rgba(129, 140, 248, 0.25); /* indigo-500/10 aprox */
-}
-
-.workspace-orb-2 {
-  right: 25%;
-  bottom: 25%;
-  width: 24rem;
-  height: 24rem;
-  background-color: rgba(168, 85, 247, 0.25); /* purple-500/10 aprox */
-}
-
-.workspace-inner {
+.workspace-container {
   position: relative;
-  z-index: 10;
-  max-width: 80rem; /* max-w-7xl */
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem 4rem;
 }
+
+/* CABECERA DEL WORKSPACE */
 
 .workspace-header {
   text-align: center;
-  margin-bottom: 4rem; /* mb-16 */
+  margin-bottom: 3rem;
 }
 
 .workspace-title {
-  margin-bottom: 1rem; /* mb-4 */
-  font-size: clamp(2.5rem, 4vw, 3.5rem); /* ~text-5xl */
-  font-weight: 700;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 800;
   letter-spacing: -0.04em;
-  color: #ffffff;
 }
 
-.workspace-title-underline {
-  height: 0.25rem;      /* h-1 */
-  width: 6rem;          /* w-24 */
-  margin: 0 auto;
-  border-radius: 9999px;
-  background-color: rgb(99, 102, 241); /* indigo-500 */
+.workspace-subtitle {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  color: #9ca3af;
+  max-width: 40rem;
+  margin-inline: auto;
 }
 
-.workspace-cards {
+/* LISTA DE PASOS */
+
+.workspace-steps {
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* space-y-8 */
+  gap: 2.75rem;
+}
+
+/* ================= RESPONSIVE (MÓVIL) ================= */
+
+@media (max-width: 640px) {
+  .workspace-root {
+    padding-top: 4rem;
+    padding-inline: 1.25rem;
+  }
+
+  .workspace-subtitle {
+    font-size: 0.95rem;
+  }
 }

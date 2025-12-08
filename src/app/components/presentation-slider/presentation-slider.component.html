@@ -17,7 +17,6 @@
       <div class="slide-container">
         <div class="slide-content">
           <ng-container [ngSwitch]="slide.type">
-
             <!-- TITLE -->
             <ng-container *ngSwitchCase="'title'">
               <div class="center-column text-center space-y">
@@ -43,10 +42,7 @@
                 <div class="divider"></div>
 
                 <div class="grid-members">
-                  <div
-                    class="card-member"
-                    *ngFor="let member of slide.members"
-                  >
+                  <div class="card-member" *ngFor="let member of slide.members">
                     <div class="avatar">
                       {{ member.name.charAt(0) }}
                     </div>
@@ -58,7 +54,7 @@
 
             <!-- SUPERVISOR -->
             <ng-container *ngSwitchCase="'supervisor'">
-              <div class="center-column space-y">
+              <div class="center-column space-y supervisor-section">
                 <h2 class="title-section">{{ slide.title }}</h2>
                 <div class="divider"></div>
 
@@ -110,7 +106,6 @@
                 </button>
               </div>
             </ng-container>
-
           </ng-container>
         </div>
       </div>

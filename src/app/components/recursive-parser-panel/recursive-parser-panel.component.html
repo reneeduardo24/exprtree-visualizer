@@ -1,0 +1,158 @@
+<div class="parser-root">
+  <div class="parser-bg-grid"></div>
+
+  <div class="parser-container">
+    <!-- Encabezado -->
+    <header class="parser-header">
+      <div class="parser-step-badge">2</div>
+      <div>
+        <h2 class="parser-title">Parser Recursivo</h2>
+        <p class="parser-subtitle">
+          Simulación de la construcción del árbol de expresión a partir de la notación postfix.
+        </p>
+      </div>
+    </header>
+
+    <!-- Resumen de expresión -->
+    <section class="parser-summary-card">
+      <div class="summary-row">
+        <span class="summary-label">Expresión original</span>
+        <span class="summary-value mono">{{ expression }}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Expresión normalizada</span>
+        <span class="summary-value mono">{{ normalizedExpression }}</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Postfix</span>
+        <span class="summary-value mono postfix-value">{{ postfix }}</span>
+      </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <ng-container *ngIf="parseResult.isValid; else errorState">
+      <div class="parser-layout">
+        <!-- Panel de pasos -->
+        <section class="panel steps-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Pasos de construcción</h3>
+            <p class="panel-subtitle">
+              Navega entre los pasos para ver cómo evoluciona la pila y el árbol.
+            </p>
+          </div>
+
+          <!-- Controles de navegación -->
+          <div class="step-controls" *ngIf="totalSteps > 0">
+            <div class="step-buttons">
+              <button class="btn-nav" type="button" (click)="goFirst()" [disabled]="currentStepIndex === 0">
+                «
+              </button>
+              <button class="btn-nav" type="button" (click)="goPrev()" [disabled]="currentStepIndex === 0">
+                ‹
+              </button>
+              <span class="step-indicator">
+                Paso {{ currentStep?.step }} de {{ totalSteps }}
+              </span>
+              <button
+                class="btn-nav"
+                type="button"
+                (click)="goNext()"
+                [disabled]="currentStepIndex === totalSteps - 1"
+              >
+                ›
+              </button>
+              <button
+                class="btn-nav"
+                type="button"
+                (click)="goLast()"
+                [disabled]="currentStepIndex === totalSteps - 1"
+              >
+                »
+              </button>
+            </div>
+
+            <div class="step-meta" *ngIf="currentStep">
+              <p class="step-token">
+                Token actual:
+                <span class="mono highlight-token">"{{ currentStep.token }}"</span>
+              </p>
+              <p class="step-action">
+                {{ currentStep.action }}
+              </p>
+              <p class="step-stack">
+                Tamaño de la pila:
+                <span class="mono">{{ currentStep.stackSize }}</span>
+              </p>
+            </div>
+          </div>
+
+          <div *ngIf="!totalSteps" class="empty-message">
+            No hay pasos generados. Verifica que la notación postfix no esté vacía.
+          </div>
+
+          <!-- Tabla de pasos -->
+          <div class="steps-table-wrapper" *ngIf="totalSteps > 0">
+            <table class="steps-table">
+              <thead>
+                <tr>
+                  <th>Paso</th>
+                  <th>Token</th>
+                  <th>Acción</th>
+                  <th>Pila</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let step of parseResult.steps"
+                  [class.step-active]="step.step === currentStep?.step"
+                >
+                  <td class="mono">{{ step.step }}</td>
+                  <td class="mono">{{ step.token }}</td>
+                  <td>{{ step.action }}</td>
+                  <td class="mono">{{ step.stackSize }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Panel de árbol ASCII -->
+        <section class="panel tree-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Árbol parcial</h3>
+            <p class="panel-subtitle">
+              Vista en texto del árbol resultante según el paso seleccionado.
+            </p>
+          </div>
+
+          <pre class="ascii-tree">
+{{ renderAsciiTree(currentStep?.currentRoot || parseResult.tree) }}
+          </pre>
+
+          <div
+            class="final-message"
+            *ngIf="parseResult.tree && currentStepIndex === totalSteps - 1"
+          >
+            <p class="final-title">Árbol completo construido exitosamente.</p>
+            <p class="final-text">
+              Puedes regresar a pasos anteriores para revisar cómo fue evolucionando la pila y el árbol.
+            </p>
+          </div>
+        </section>
+      </div>
+    </ng-container>
+
+    <!-- Estado de error -->
+    <ng-template #errorState>
+      <section class="panel error-panel">
+        <h3 class="panel-title">Error al construir el árbol</h3>
+        <p class="panel-subtitle">
+          Ocurrió un problema al procesar la notación postfix.
+        </p>
+        <p class="error-message">
+          {{ parseResult.errorMessage || 'Error desconocido.' }}
+        </p>
+      </section>
+    </ng-template>
+  </div>
+</div>

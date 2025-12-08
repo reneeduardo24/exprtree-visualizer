@@ -1,14 +1,186 @@
-<div class="workspace-card">
-  <div class="workspace-card-overlay"></div>
-  <div class="workspace-card-inner">
-    <div class="workspace-card-header">
-      <div class="workspace-card-badge">
-        <span>1</span>
-      </div>
-      <h3 class="workspace-card-title">Mathematical Expression Input</h3>
+<div class="expression-root">
+  <div class="expression-bg-grid"></div>
+
+  <div class="expression-container">
+    <!-- Encabezado -->
+    <header class="expression-header">
+      <h2 class="expression-title">Analizador de Expresiones Matemáticas</h2>
+      <p class="expression-subtitle">
+        Convierte notación infija a postfija y genera árboles de expresión.
+      </p>
+    </header>
+
+    <div class="expression-layout">
+      <!-- Columna izquierda: formulario -->
+      <section class="expression-form-card">
+        <div class="card-header">
+          <div class="card-badge">
+            <span>1</span>
+          </div>
+          <div>
+            <h3 class="card-title">Entrada de expresión</h3>
+            <p class="card-description">
+              Ingresa una expresión en notación infija usando operandos de una sola
+              letra o dígito y operadores permitidos.
+            </p>
+          </div>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="form-body">
+          <!-- Campo de expresión -->
+          <div class="form-group">
+            <label for="expression" class="label">
+              Expresión matemática
+            </label>
+            <textarea
+              id="expression"
+              rows="3"
+              class="input expression-input"
+              formControlName="expression"
+              placeholder="Ejemplo: (a+b)*c^2"
+            ></textarea>
+            <div class="hint">
+              Usa letras a–z, A–Z, dígitos 0–9, operadores
+              <span class="mono">+, -, *, /, \, ^</span> y paréntesis.
+            </div>
+          </div>
+
+          <!-- Botones rápidos de operadores -->
+          <div class="form-group">
+            <span class="label label-inline">Operadores rápidos</span>
+            <div class="operator-grid">
+              <button
+                type="button"
+                class="chip"
+                *ngFor="let op of allowedOperators"
+                (click)="addOperator(op)"
+              >
+                {{ op }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Notación de salida -->
+          <div class="form-group">
+            <span class="label label-inline">Notación de salida</span>
+            <div class="radio-group">
+              <label class="radio">
+                <input
+                  type="radio"
+                  value="postfix"
+                  formControlName="outputNotation"
+                  checked
+                />
+                <span>Postfija (Requerido)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="actions">
+            <div class="actions-left">
+              <button
+                type="button"
+                class="btn-secondary"
+                (click)="useRandomExample()"
+              >
+                Usar ejemplo aleatorio
+              </button>
+              <button
+                type="button"
+                class="btn-ghost"
+                (click)="clearExpression()"
+              >
+                Limpiar
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              class="btn-primary"
+              [class.btn-primary-disabled]="!isValid"
+            >
+              Enviar al parser
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Columna derecha: validación -->
+      <aside class="validation-column">
+        <!-- Estado de validación -->
+        <div class="panel">
+          <h3 class="panel-title">Estado de validación</h3>
+
+          <div class="panel-body">
+            <ng-container *ngIf="expression.trim(); else emptyState">
+              <div *ngIf="isValid; else errorState" class="status-ok">
+                <div class="status-dot status-dot-ok"></div>
+                <div>
+                  <p class="status-title">Expresión válida</p>
+                  <p class="status-text">
+                    Puedes continuar con la generación del árbol de expresión.
+                  </p>
+                </div>
+              </div>
+
+              <ng-template #errorState>
+                <div class="status-error-header">
+                  <div class="status-dot status-dot-error"></div>
+                  <p class="status-title">Errores de validación</p>
+                </div>
+
+                <ul class="error-list">
+                  <li *ngFor="let err of validationErrors">
+                    {{ err }}
+                  </li>
+                </ul>
+              </ng-template>
+            </ng-container>
+
+            <ng-template #emptyState>
+              <p class="status-text">
+                Ingresa una expresión para validar su sintaxis y reglas básicas.
+              </p>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Reglas -->
+        <div class="panel">
+          <h3 class="panel-title">Reglas</h3>
+          <ul class="rules-list">
+            <li>
+              <strong>Operandos:</strong> letras (a–z, A–Z) y dígitos (0–9).
+            </li>
+            <li>
+              <strong>Operadores permitidos:</strong>
+              {{ allowedOperators.join(', ') }}.
+            </li>
+            <li>
+              <strong>Paréntesis:</strong> deben estar correctamente balanceados.
+            </li>
+            <li>
+              <strong>Formato:</strong> no se permiten operadores consecutivos.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Ejemplos -->
+        <div class="panel">
+          <h3 class="panel-title">Ejemplos</h3>
+          <div class="examples-list">
+            <button
+              type="button"
+              class="example-chip"
+              *ngFor="let ex of examples"
+              (click)="form.patchValue({ expression: ex })"
+            >
+              {{ ex }}
+            </button>
+          </div>
+        </div>
+      </aside>
     </div>
-    <p class="workspace-card-text">
-      Aquí se integrará el formulario para ingresar expresiones matemáticas.
-    </p>
   </div>
 </div>

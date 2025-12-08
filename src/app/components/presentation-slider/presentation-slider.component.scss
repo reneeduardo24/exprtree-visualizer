@@ -10,26 +10,22 @@
   overflow: hidden;
   background: #000;
   color: #fff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* BACKGROUND GRID */
+/* ================= BACKGROUND GRID ================= */
 
 .bg-grid {
   position: absolute;
   inset: 0;
   opacity: 0.1;
-  background-image: linear-gradient(
-      to right,
-      rgb(99, 102, 241) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(to right, rgb(99, 102, 241) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(99, 102, 241) 1px, transparent 1px);
   background-size: 40px 40px;
+  pointer-events: none;
 }
 
-/* SWIPER CONTAINER */
+/* ================= SWIPER ================= */
 
 .slider-swiper,
 swiper-container.slider-swiper {
@@ -39,24 +35,28 @@ swiper-container.slider-swiper {
   touch-action: pan-y;
 }
 
-/* Cada slide ocupa todo el área del swiper */
-
 swiper-slide {
   width: 100%;
   height: 100%;
   display: flex !important;
   flex-direction: column;
+
+  /* Estas dos líneas son las que corrigen el problema definitivamente */
   justify-content: center;
+  align-items: center;
+
+  text-align: center;
 }
 
-/* SLIDE CONTAINER (contenido interno) */
+
+
+/* ================= SLIDE CONTENT ================= */
 
 .slide-container {
   position: relative;
   z-index: 1;
   height: 100%;
-  width: 100%;
-  max-width: 96rem; // ancho máximo tipo desktop-xl
+  max-width: 96rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,9 +65,19 @@ swiper-slide {
 
 .slide-content {
   width: 100%;
+  max-width: 56rem;
+  margin-inline: auto;
+
+  /* NUEVO: centramos todo el contenido de la slide */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: opacity 0.5s ease-in-out;
 }
 
-/* ================= UTILITY CLASSES ================= */
+
+/* ================= UTILITIES ================= */
 
 .center-column {
   display: flex;
@@ -100,7 +110,7 @@ swiper-slide {
   letter-spacing: -0.04em;
 }
 
-/* SUBTITLES */
+/* ================= SUBTITLES ================= */
 
 .subtitle {
   font-size: 1.2rem;
@@ -109,7 +119,7 @@ swiper-slide {
   margin-inline: auto;
 }
 
-/* DIVIDER */
+/* ================= DIVIDER ================= */
 
 .divider {
   height: 0.25rem;
@@ -118,7 +128,7 @@ swiper-slide {
   background: rgb(129, 140, 248);
 }
 
-/* ================= BUTTON: SCROLL DOWN ================= */
+/* ================= SCROLL BUTTON ================= */
 
 .scroll-down-btn {
   margin-top: 1rem;
@@ -134,16 +144,7 @@ swiper-slide {
   align-items: center;
   justify-content: center;
   animation: bounce 1.5s infinite;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.1s ease;
-
-  &:hover {
-    background: rgba(15, 23, 42, 0.95);
-    border-color: rgba(129, 140, 248, 0.6);
-    transform: translateY(-1px);
-  }
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
 }
 
 @keyframes bounce {
@@ -163,6 +164,7 @@ swiper-slide {
   gap: 2rem;
   width: 100%;
   max-width: 40rem;
+  margin-inline: auto;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -179,16 +181,13 @@ swiper-slide {
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(10px);
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
 
-  &:hover {
-    border-color: rgba(129, 140, 248, 0.6);
-    background: rgba(15, 23, 42, 0.9);
-    transform: translateY(-2px);
-  }
+.card-member:hover {
+  border-color: rgba(129, 140, 248, 0.6);
+  background: rgba(15, 23, 42, 0.9);
+  transform: translateY(-2px);
 }
 
 .avatar {
@@ -210,7 +209,16 @@ swiper-slide {
   text-align: center;
 }
 
-/* ================= SUPERVISOR CARD ================= */
+/* ================= SUPERVISOR ================= */
+
+.supervisor-section {
+  width: 100%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra título, línea y tarjeta en el eje X */
+  gap: 2rem;
+}
 
 .card-supervisor {
   display: flex;
@@ -222,6 +230,11 @@ swiper-slide {
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(10px);
+
+  /* CLAVE: nunca más ancha que su contenedor */
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
 }
 
 .supervisor-avatar {
@@ -241,13 +254,15 @@ swiper-slide {
   color: #9ca3af;
 }
 
-/* ================= TECHNOLOGIES GRID ================= */
+
+/* ================= TECHNOLOGIES ================= */
 
 .grid-technologies {
   display: grid;
   gap: 1rem;
   width: 100%;
   max-width: 48rem;
+  margin-inline: auto;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -266,33 +281,26 @@ swiper-slide {
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(10px);
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom right,
-      rgba(129, 140, 248, 0.2),
-      transparent
-    );
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
+.card-tech::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(129, 140, 248, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
 
-  &:hover {
-    border-color: rgba(129, 140, 248, 0.6);
-    background: rgba(15, 23, 42, 0.9);
-    transform: translateY(-2px);
+.card-tech:hover {
+  border-color: rgba(129, 140, 248, 0.6);
+  background: rgba(15, 23, 42, 0.9);
+  transform: translateY(-2px);
+}
 
-    &::before {
-      opacity: 1;
-    }
-  }
+.card-tech:hover::before {
+  opacity: 1;
 }
 
 .tech-name {
@@ -302,7 +310,7 @@ swiper-slide {
   font-weight: 600;
 }
 
-/* ================= SWIPER PAGINATION ================= */
+/* ================= PAGINATION ================= */
 
 .slider-swiper .swiper-pagination-bullet {
   background: #4b5563;
@@ -322,7 +330,7 @@ swiper-slide {
   bottom: 1.5rem;
 }
 
-/* ================= RESPONSIVE (MÓVIL) ================= */
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 640px) {
   .slider-root {
@@ -340,7 +348,6 @@ swiper-slide {
 
   .slide-content {
     max-width: 28rem;
-    margin-inline: auto;
   }
 
   .title-main {
@@ -375,7 +382,6 @@ swiper-slide {
     font-size: 1rem;
   }
 
-  /* En móvil dejamos que el swiper ajuste altura dinámicamente */
   .slider-swiper,
   swiper-container.slider-swiper {
     height: auto;

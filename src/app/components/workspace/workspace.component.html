@@ -1,23 +1,23 @@
-<section id="workspace" class="workspace-root">
-  <!-- Fondo con grid suave -->
-  <div class="workspace-grid">
-    <div class="workspace-grid-inner"></div>
-  </div>
+<section class="workspace-root" id="workspace">
+  <div class="workspace-bg"></div>
 
-  <!-- Orbes morados para el glow -->
-  <div class="workspace-orb workspace-orb-1"></div>
-  <div class="workspace-orb workspace-orb-2"></div>
+  <div class="workspace-container">
+    <header class="workspace-header">
+      <h1 class="workspace-title">Expression Tree Workspace</h1>
+      <p class="workspace-subtitle">
+        Desde la expresión ingresada hasta el árbol visual interactivo:
+        sigue cada paso del análisis, el parser recursivo y la construcción del árbol.
+      </p>
+    </header>
 
-  <!-- Contenido principal -->
-  <div class="workspace-inner">
-    <div class="workspace-header">
-      <h2 class="workspace-title">Expression Tree Workspace</h2>
-      <div class="workspace-title-underline"></div>
-    </div>
-
-    <div class="workspace-cards">
+    <div class="workspace-steps">
+      <!-- Paso 1: Entrada y validación -->
       <app-expression-input></app-expression-input>
-      <app-parser-view></app-parser-view>
+
+      <!-- Paso 2: Parser recursivo y simulación de construcción -->
+      <app-recursive-parser-panel></app-recursive-parser-panel>
+
+      <!-- Paso 3: Visualización del árbol (cuando esté listo) -->
       <app-tree-visualizer></app-tree-visualizer>
     </div>
   </div>
