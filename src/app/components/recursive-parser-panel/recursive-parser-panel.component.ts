@@ -19,7 +19,6 @@ interface BuildStep {
   action: string;
   stackSnapshot: ExpressionNode[];
   currentRoot?: ExpressionNode;
-  stackSize: number;
 }
 
 interface ParseResult {
@@ -182,7 +181,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
           action,
           stackSnapshot,
           currentRoot: stack[stack.length - 1],
-          stackSize: stack.length,
         });
       }
 

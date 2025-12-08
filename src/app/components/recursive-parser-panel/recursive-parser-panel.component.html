@@ -79,10 +79,6 @@
               <p class="step-action">
                 {{ currentStep.action }}
               </p>
-              <p class="step-stack">
-                Tamaño de la pila:
-                <span class="mono">{{ currentStep.stackSize }}</span>
-              </p>
             </div>
           </div>
 
@@ -98,7 +94,6 @@
                   <th>Paso</th>
                   <th>Token</th>
                   <th>Acción</th>
-                  <th>Pila</th>
                 </tr>
               </thead>
               <tbody>
@@ -109,7 +104,6 @@
                   <td class="mono">{{ step.step }}</td>
                   <td class="mono">{{ step.token }}</td>
                   <td>{{ step.action }}</td>
-                  <td class="mono">{{ step.stackSize }}</td>
                 </tr>
               </tbody>
             </table>
