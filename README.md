@@ -113,7 +113,7 @@ src/
 │   └── app.component.ts
 │
 └── styles.scss
-
+```
 🛠 Tecnologías Utilizadas
 
 Angular 19+ Standalone Components
@@ -132,4 +132,32 @@ Node.js 18+
 Angular CLI
 Git
 Instalar Angular CLI:
+```
+npm install -g @angular/cli
+```
+Clonar el repositorio
+```
+git clone https://github.com/reneeduardo24/exprtree-visualizer.git
+cd exprtree-visualizer
+```
+Instalar dependencias
+```
+npm install
+```
+Ejecutar el proyecto en modo desarrollo
+```
+ng serve
+```
+Abrir en navegador
+```
+http://localhost:4200
+```
+👨‍💻 Equipo de Desarrollo
 
+Eduardo Chavez
+Jesus Enrique Felix
+Raul Ortega
+Rene Hernandez
+
+Docente responsable:
+Dr. Gilberto Borrego Soto
