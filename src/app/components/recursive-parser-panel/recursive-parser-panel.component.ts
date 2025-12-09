@@ -96,10 +96,37 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     return this.parseResult.steps.length;
   }
 
-  // Árbol del paso actual (si no hay paso, usa árbol final)
-  get currentTree(): ExpressionNode | null {
-  return this.currentStep?.currentRoot ?? this.parseResult.tree ?? null;
+  // Árbol/forest del paso actual: usa la pila (stackSnapshot)
+get currentTree(): any {
+  const step = this.currentStep;
+
+  // Si no hay paso actual, regresamos el árbol final (por seguridad)
+  if (!step) {
+    return this.parseResult.tree;
+  }
+
+  const snapshot = step.stackSnapshot;
+
+  if (!snapshot || snapshot.length === 0) {
+    return undefined;
+  }
+
+  // Si solo hay un elemento en la pila, ya es un árbol válido
+  if (snapshot.length === 1) {
+    return snapshot[0];
+  }
+
+  // Si hay varios elementos en la pila, construimos una raíz virtual
+  // que solo sirve para agruparlos visualmente.
+  return {
+    id: 'virtual-root',
+    type: 'operator',
+    value: '',          // sin texto
+    isVirtual: true,    // bandera interna para el visualizador
+    children: snapshot, // hijos directos = elementos de la pila
+  };
 }
+
 
   // ================= NAVEGACIÓN DE PASOS =================
 

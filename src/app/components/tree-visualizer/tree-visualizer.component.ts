@@ -28,7 +28,8 @@ interface ExpressionNode {
   styleUrls: ['./tree-visualizer.component.scss'],
 })
 export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
-  @Input() tree: ExpressionNode | null = null;
+  // Puede ser un ExpressionNode o un nodo "virtual" con children[]
+  @Input() tree: any = null;
 
   @ViewChild('svg', { static: false }) svgRef!: ElementRef<SVGSVGElement>;
 
@@ -49,7 +50,7 @@ export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
     if (!this.svgRef) return;
 
     const svgEl = this.svgRef.nativeElement;
-    const svg = d3.select<SVGSVGElement, unknown>(svgEl);
+    const svg = d3.select(svgEl);
 
     // Limpiar contenido previo
     svg.selectAll('*').remove();
@@ -65,71 +66,73 @@ export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
 
     const g = svg.append('g').attr('transform', 'translate(20,40)');
 
-    // Convertimos tu árbol a jerarquía D3
-    const root = d3.hierarchy<ExpressionNode>(
-      this.tree as ExpressionNode,
-      (d: ExpressionNode) => {
-        const children: ExpressionNode[] = [];
-        if (d.left) children.push(d.left);
-        if (d.right) children.push(d.right);
-        return children.length ? children : null;
+    // Jerarquía D3:
+    // - Si el nodo tiene children[], usamos esos.
+    // - Si no, usamos left/right como hijos (árbol binario normal).
+    const root = d3.hierarchy<any>(this.tree, (d: any) => {
+      if (Array.isArray(d.children)) {
+        return d.children;
       }
-    );
+      const children: any[] = [];
+      if (d.left) children.push(d.left);
+      if (d.right) children.push(d.right);
+      return children;
+    });
 
-    const treeLayout = d3
-      .tree<ExpressionNode>()
-      .size([width - 40, height - 80]);
+    const treeLayout = d3.tree<any>().size([width - 40, height - 80]);
 
     treeLayout(root);
 
-    // Enlaces
-    const linkGenerator = d3
-      .linkVertical<
-        d3.HierarchyPointNode<ExpressionNode>,
-        d3.HierarchyPointNode<ExpressionNode>
-      >()
-      .x((d) => d.x)
-      .y((d) => d.y);
-
+    // ENLACES (aristas)
     g.selectAll('path.link')
       .data(root.links())
       .enter()
       .append('path')
       .attr('class', 'tree-link')
-      .attr(
-        'd',
-        (d) => `M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}`
-      )
+      .attr('d', (d) => `M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}`)
       .attr('fill', 'none')
-      .attr('stroke', '#e5e7eb')
-      .attr('stroke-width', 1.5);
+      // Si el enlace sale de la raíz virtual (depth 0), lo hacemos invisible
+      .attr('stroke', (d) => (d.source.depth === 0 && d.source.data.isVirtual ? 'transparent' : '#e5e7eb'))
+      .attr('stroke-width', (d) => (d.source.depth === 0 && d.source.data.isVirtual ? 0 : 1.5));
 
-    // Nodos
+    // NODOS
     const nodes = g
-      .selectAll('g.tree-node')
+      .selectAll('g.node')
       .data(root.descendants())
       .enter()
       .append('g')
       .attr('class', 'tree-node')
-      .attr('transform', (d: any) => `translate(${d.x},${d.y})`);
+      .attr('transform', (d) => `translate(${d.x},${d.y})`);
 
+    // Círculo del nodo
     nodes
       .append('circle')
-      .attr('r', 18)
       .attr('class', (d) =>
         d.data.type === 'operator' ? 'node-circle node-operator' : 'node-circle'
       )
+      // Si es la raíz virtual, radio 0 → no se ve
+      .attr('r', (d) => (d.depth === 0 && d.data.isVirtual ? 0 : 18))
       .attr('fill', '#ffffff')
       .attr('stroke', (d) =>
         d.data.type === 'operator' ? '#3b82f6' : '#1e293b'
       )
-      .attr('stroke-width', 2);
+      .attr('stroke-width', (d) =>
+        d.depth === 0 && d.data.isVirtual ? 0 : 2
+      );
 
+    // Texto dentro del nodo
     nodes
       .append('text')
       .attr('class', 'node-label')
-      .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
-      .text((d: any) => d.data.value);
+      .attr('dominant-baseline', 'middle')
+      .attr('fill', '#1e293b')
+      .text((d) => {
+        // La raíz virtual no muestra texto
+        if (d.depth === 0 && d.data.isVirtual) {
+          return '';
+        }
+        return d.data.value ?? '';
+      });
   }
 }
