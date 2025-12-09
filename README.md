@@ -155,9 +155,13 @@ http://localhost:4200
 👨‍💻 Equipo de Desarrollo
 
 Eduardo Chavez
+
 Jesus Enrique Felix
+
 Raul Ortega
+
 Rene Hernandez
 
 Docente responsable:
+
 Dr. Gilberto Borrego Soto
