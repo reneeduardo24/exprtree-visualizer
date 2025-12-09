@@ -1,3 +1,8 @@
+<!--
+  Visualizador del árbol utilizando un elemento <svg> como contenedor.
+  Si no existe árbol (tree === null), se muestra un mensaje alternativo.
+-->
+
 <div class="tree-visualizer-root">
   <ng-container *ngIf="tree; else noTree">
     <svg #svg class="tree-svg"></svg>

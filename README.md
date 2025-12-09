@@ -1,112 +1,135 @@
-**ExprTree Visualizer**  
-Visualización interactiva de árboles de expresión mediante Parser Recursivo.
+# ExprTree Visualizer  
+Visualización interactiva y paso a paso de árboles de expresión mediante Parser Basado en Pila y D3.js.
 
 ---
 
-**Descripción del Proyecto**
+## 📘 Descripción General del Proyecto
 
-ExprTree Visualizer es una aplicación web desarrollada en Angular Standalone diseñada para:
+**ExprTree Visualizer** es una aplicación web desarrollada con **Angular Standalone + D3.js** cuyo objetivo es:
 
-- Recibir expresiones matemáticas ingresadas por el usuario.  
-- Tokenizar la expresión y construir su árbol de expresión usando un Parser Recursivo.  
-- Mostrar la expresión equivalente en notación postfix.  
-- Visualizar el árbol generado mediante D3.js de forma interactiva.  
-- Explicar paso a paso el proceso del parser y la construcción del árbol.
+- Recibir y validar una expresión matemática ingresada por el usuario.  
+- Normalizar la expresión y convertirla a **notación postfix**.  
+- Simular **paso por paso** la construcción de un árbol de expresión usando un **parser basado en pila**.  
+- Mostrar la evolución del árbol en tiempo real mediante **D3.js**, desde los primeros nodos sueltos hasta el árbol final completamente construido.  
+- Explicar en cada paso cuál token se procesa, qué acción se toma y cómo cambia la pila.  
 
-El proyecto está pensado como herramienta educativa y demostrativa para el estudio de árboles, gramáticas, parsing recursivo y estructuras de datos, inspirado en la teoría presentada en **Grimaldi – Matemáticas Discretas**.
+El proyecto está diseñado como herramienta **educativa**, ideal para materias como:
 
-Además, incluye una sección visual tipo presentación (slides) donde se muestra la portada, el equipo, el docente y las tecnologías utilizadas.
+- Matemáticas Discretas  
+- Algoritmos y Estructuras de Datos  
+- Compiladores  
+- Parsing Recursivo / Construcción de Árboles Sintácticos  
 
----
+Además, incluye una presentación inicial estilo “slides” donde se muestra:
 
-**Tecnologías Utilizadas**
-
-- Angular 19+ Standalone  
-- TypeScript  
-- SCSS (SASS)  
-- D3.js (visualización de árboles)  
-- HTML5 / CSS3  
-- Node.js (entorno de ejecución)  
-- Git / GitHub (control de versiones)
+- Portada del proyecto  
+- Integrantes del equipo  
+- Docente responsable  
+- Tecnologías utilizadas  
 
 ---
 
-**Estructura Principal del Proyecto**
+## 🚀 Características Principales
+
+### ✔ Paso 1 — Entrada y conversión a postfix
+El usuario ingresa una expresión como:
+
+(a+b)*c
+
+
+El sistema:
+
+- Valida sintaxis, caracteres y paréntesis.  
+- Normaliza la expresión.  
+- Convierte la expresión a notación postfix utilizando un algoritmo de precedencia.  
+
+Ejemplo:
+
+(a+b)*c → a b + c *
+
+
+---
+
+### ✔ Paso 2 — Parser paso a paso y visualización dinámica con D3.js
+
+El parser procesa postfix token por token:
+
+- Si encuentra **operando**, se apila.  
+- Si encuentra **operador**, desapila dos nodos, crea un nuevo nodo operador y lo apila nuevamente.
+
+En cada paso:
+
+- Se genera un **BuildStep** con:
+  - token leído  
+  - acción realizada  
+  - snapshot de la pila  
+  - raíz actual del árbol parcial  
+
+La visualización:
+
+- Cuando hay múltiples elementos en la pila, se muestra una **raíz virtual** temporal para agruparlos.  
+- D3.js actualiza el árbol en cada cambio, mostrando cómo **evoluciona** desde nodos sueltos hasta el árbol final.  
+
+---
+
+## 🧩 Arquitectura del Proyecto
+
+### Componentes principales
+
+| Componente | Función |
+|-----------|---------|
+| **ExpressionInputComponent** | Entrada, validación y conversión a postfix |
+| **RecursiveParserPanelComponent** | Construcción del árbol + pasos detallados |
+| **TreeVisualizerComponent** | Visualización dinámica del árbol con D3 |
+| **PresentationSliderComponent** | Pantalla inicial estilo presentación |
+| **WorkspaceComponent** | Contenedor de los pasos del proyecto |
+
+### Servicios
+
+| Servicio | Función |
+|----------|---------|
+| **ExpressionStateService** | Estado global de la expresión y postfix |
+| **SlideService** | Datos para el carrusel de presentación |
+
+---
+
+## 📁 Estructura Actual del Proyecto
 
 ```text
 src/
 │
 ├── app/
 │   ├── core/
+│   │   ├── expression-state.service.ts
 │   │   └── slide.service.ts
 │   │
 │   ├── components/
-│   │   ├── presentation-slider/
-│   │   ├── workspace/
 │   │   ├── expression-input/
-│   │   ├── parser-view/
-│   │   └── tree-visualizer/
+│   │   ├── recursive-parser-panel/
+│   │   ├── tree-visualizer/
+│   │   ├── presentation-slider/
+│   │   └── workspace/
 │   │
 │   └── app.component.ts
 │
 └── styles.scss
-```
----
 
-**Requisitos Previos**
+🛠 Tecnologías Utilizadas
 
-Antes de clonar y ejecutar el proyecto, asegúrate de tener instalado:
+Angular 19+ Standalone Components
+TypeScript
+D3.js (renderizado SVG de árboles binarios)
+SCSS (SASS)
+HTML5 / CSS3
+Node.js
+Git / GitHub
 
-- Node.js 18 o superior  
-- Angular CLI  
-- Git
+📦 Instalación y Ejecución
 
+Requisitos previos
+
+Node.js 18+
+Angular CLI
+Git
 Instalar Angular CLI:
 
-npm install -g @angular/cli
-
----
-
-**Clonar el Repositorio**
-
-git clone https://github.com/reneeduardo24/exprtree-visualizer.git
-
-cd exprtree-visualizer
-
----
-
-**Instalar Dependencias**
-
-npm install
-
----
-
-**Ejecutar el Proyecto en Modo Desarrollo**
-
-ng serve
-
-Abrir en el navegador:
-
-http://localhost:4200
-
----
-
-**Compilación para Producción**
-
-ng build
-
-Los archivos generados se encuentran en:
-
-/dist/exprtree-visualizer/
-
----
-
-**Equipo de Desarrollo**
-
-- Eduardo Chavez  
-- Jesus Enrique Felix  
-- Raul Ortega  
-- Rene Hernandez  
-
-**Docente Responsable:**  
-Dr. Gilberto Borrego Soto

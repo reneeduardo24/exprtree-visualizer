@@ -1,7 +1,16 @@
+<!--
+  Sección principal del Workspace.
+  Aquí se muestran los dos pasos clave del sistema:
+  - Paso 1: Ingreso y validación de la expresión.
+  - Paso 2: Construcción del árbol mediante parser recursivo.
+-->
+
 <section class="workspace-root" id="workspace">
+  <!-- Fondo decorativo -->
   <div class="workspace-bg"></div>
 
   <div class="workspace-container">
+    <!-- Encabezado del área de trabajo -->
     <header class="workspace-header">
       <h1 class="workspace-title">Expression Tree Workspace</h1>
       <p class="workspace-subtitle">
@@ -10,11 +19,12 @@
       </p>
     </header>
 
+    <!-- Contenido principal del flujo -->
     <div class="workspace-steps">
-      <!-- Paso 1: Entrada y validación -->
+      <!-- Paso 1 -->
       <app-expression-input></app-expression-input>
 
-      <!-- Paso 2: Parser recursivo y simulación de construcción -->
+      <!-- Paso 2 -->
       <app-recursive-parser-panel></app-recursive-parser-panel>
     </div>
   </div>

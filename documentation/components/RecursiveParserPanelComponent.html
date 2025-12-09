@@ -1,0 +1,1819 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>exprtree-visualizer documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">exprtree-visualizer documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  RecursiveParserPanelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-recursive-parser-panel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                                <code><a href="../components/TreeVisualizerComponent.html" target="_self" >TreeVisualizerComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./recursive-parser-panel.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./recursive-parser-panel.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentStepIndex" >currentStepIndex</a>
+                            </li>
+                            <li>
+                                <a href="#expressionModel" >expressionModel</a>
+                            </li>
+                            <li>
+                                <a href="#parseResult" >parseResult</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#sub" >sub</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#buildTreeFromPostfix" >buildTreeFromPostfix</a>
+                            </li>
+                            <li>
+                                <a href="#goFirst" >goFirst</a>
+                            </li>
+                            <li>
+                                <a href="#goLast" >goLast</a>
+                            </li>
+                            <li>
+                                <a href="#goNext" >goNext</a>
+                            </li>
+                            <li>
+                                <a href="#goPrev" >goPrev</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#expression" >expression</a>
+                                </li>
+                                <li>
+                                    <a href="#normalizedExpression" >normalizedExpression</a>
+                                </li>
+                                <li>
+                                    <a href="#postfix" >postfix</a>
+                                </li>
+                                <li>
+                                    <a href="#currentStep" >currentStep</a>
+                                </li>
+                                <li>
+                                    <a href="#totalSteps" >totalSteps</a>
+                                </li>
+                                <li>
+                                    <a href="#currentTree" >currentTree</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(expressionState: <a href="../injectables/ExpressionStateService.html" target="_self">ExpressionStateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>expressionState</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ExpressionStateService.html" target="_self" >ExpressionStateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildTreeFromPostfix"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>buildTreeFromPostfix</b></span>
+                        <a href="#buildTreeFromPostfix"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildTreeFromPostfix(postfix: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="157"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:157</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>postfix</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ParseResult.html" target="_self" >ParseResult</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goFirst"></a>
+                    <span class="name">
+                        <span ><b>goFirst</b></span>
+                        <a href="#goFirst"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goFirst()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goLast"></a>
+                    <span class="name">
+                        <span ><b>goLast</b></span>
+                        <a href="#goLast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goLast()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goNext"></a>
+                    <span class="name">
+                        <span ><b>goNext</b></span>
+                        <a href="#goNext"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goNext()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goPrev"></a>
+                    <span class="name">
+                        <span ><b>goPrev</b></span>
+                        <a href="#goPrev"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goPrev()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="56"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentStepIndex"></a>
+                    <span class="name">
+                        <span ><b>currentStepIndex</b></span>
+                        <a href="#currentStepIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expressionModel"></a>
+                    <span class="name">
+                        <span ><b>expressionModel</b></span>
+                        <a href="#expressionModel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ExpressionInputModel.html" target="_self" >ExpressionInputModel | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parseResult"></a>
+                    <span class="name">
+                        <span ><b>parseResult</b></span>
+                        <a href="#parseResult"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ParseResult.html" target="_self" >ParseResult</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    steps: [],
+    isValid: false,
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sub"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>sub</b></span>
+                        <a href="#sub"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expression"></a>
+                        <span class="name"><b>expression</b><a href="#expression"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>expression()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:78</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="normalizedExpression"></a>
+                        <span class="name"><b>normalizedExpression</b><a href="#normalizedExpression"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>normalizedExpression()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:82</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="postfix"></a>
+                        <span class="name"><b>postfix</b><a href="#postfix"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>postfix()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:86</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentStep"></a>
+                        <span class="name"><b>currentStep</b><a href="#currentStep"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentStep()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:90</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="totalSteps"></a>
+                        <span class="name"><b>totalSteps</b><a href="#totalSteps"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>totalSteps()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:95</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentTree"></a>
+                        <span class="name"><b>currentTree</b><a href="#currentTree"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentTree()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="100" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:100</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Component, OnDestroy, OnInit } from &#x27;@angular/core&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import {
+  ExpressionInputModel,
+  ExpressionStateService,
+} from &#x27;../../core/expression-state.service&#x27;;
+import { TreeVisualizerComponent } from &#x27;../tree-visualizer/tree-visualizer.component&#x27;;
+
+type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27;;
+
+interface ExpressionNode {
+  id: string;
+  type: NodeType;
+  value: string;
+  left?: ExpressionNode;
+  right?: ExpressionNode;
+}
+
+interface BuildStep {
+  step: number;
+  token: string;
+  action: string;
+  stackSnapshot: ExpressionNode[];
+  currentRoot?: ExpressionNode;
+}
+
+interface ParseResult {
+  tree?: ExpressionNode;
+  steps: BuildStep[];
+  isValid: boolean;
+  errorMessage?: string;
+}
+
+@Component({
+  selector: &#x27;app-recursive-parser-panel&#x27;,
+  standalone: true,
+  imports: [CommonModule, TreeVisualizerComponent],
+  templateUrl: &#x27;./recursive-parser-panel.component.html&#x27;,
+  styleUrls: [&#x27;./recursive-parser-panel.component.scss&#x27;],
+})
+export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
+  expressionModel: ExpressionInputModel | null &#x3D; null;
+
+  parseResult: ParseResult &#x3D; {
+    steps: [],
+    isValid: false,
+  };
+
+  currentStepIndex &#x3D; 0;
+
+  private sub?: Subscription;
+
+  constructor(private expressionState: ExpressionStateService) {}
+
+  ngOnInit(): void {
+    this.sub &#x3D; this.expressionState.expression$.subscribe((model) &#x3D;&gt; {
+      this.expressionModel &#x3D; model;
+      if (model &amp;&amp; model.postfix.trim()) {
+        this.parseResult &#x3D; this.buildTreeFromPostfix(model.postfix);
+        this.currentStepIndex &#x3D; 0;
+      } else {
+        this.parseResult &#x3D; {
+          steps: [],
+          isValid: false,
+          errorMessage:
+            &#x27;No hay expresión disponible. Ingresa una expresión válida en el Paso 1.&#x27;,
+        };
+        this.currentStepIndex &#x3D; 0;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+  get expression(): string {
+    return this.expressionModel?.rawExpression ?? &#x27;&#x27;;
+  }
+
+  get normalizedExpression(): string {
+    return this.expressionModel?.normalizedExpression ?? &#x27;&#x27;;
+  }
+
+  get postfix(): string {
+    return this.expressionModel?.postfix ?? &#x27;&#x27;;
+  }
+
+  get currentStep(): BuildStep | undefined {
+    if (!this.parseResult.steps.length) return undefined;
+    return this.parseResult.steps[this.currentStepIndex];
+  }
+
+  get totalSteps(): number {
+    return this.parseResult.steps.length;
+  }
+
+  // Árbol/forest del paso actual: usa la pila (stackSnapshot)
+get currentTree(): any {
+  const step &#x3D; this.currentStep;
+
+  // Si no hay paso actual, regresamos el árbol final (por seguridad)
+  if (!step) {
+    return this.parseResult.tree;
+  }
+
+  const snapshot &#x3D; step.stackSnapshot;
+
+  if (!snapshot || snapshot.length &#x3D;&#x3D;&#x3D; 0) {
+    return undefined;
+  }
+
+  // Si solo hay un elemento en la pila, ya es un árbol válido
+  if (snapshot.length &#x3D;&#x3D;&#x3D; 1) {
+    return snapshot[0];
+  }
+
+  // Si hay varios elementos en la pila, construimos una raíz virtual
+  // que solo sirve para agruparlos visualmente.
+  return {
+    id: &#x27;virtual-root&#x27;,
+    type: &#x27;operator&#x27;,
+    value: &#x27;&#x27;,          // sin texto
+    isVirtual: true,    // bandera interna para el visualizador
+    children: snapshot, // hijos directos &#x3D; elementos de la pila
+  };
+}
+
+
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; NAVEGACIÓN DE PASOS &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+
+  goFirst(): void {
+    if (!this.totalSteps) return;
+    this.currentStepIndex &#x3D; 0;
+  }
+
+  goPrev(): void {
+    if (this.currentStepIndex &gt; 0) {
+      this.currentStepIndex--;
+    }
+  }
+
+  goNext(): void {
+    if (this.currentStepIndex &lt; this.totalSteps - 1) {
+      this.currentStepIndex++;
+    }
+  }
+
+  goLast(): void {
+    if (!this.totalSteps) return;
+    this.currentStepIndex &#x3D; this.totalSteps - 1;
+  }
+
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; LÓGICA DEL PARSER (postfix → árbol + pasos) &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+
+  private buildTreeFromPostfix(postfix: string): ParseResult {
+    const tokens &#x3D; postfix.split(/\s+/).filter(Boolean);
+    const stack: ExpressionNode[] &#x3D; [];
+    const steps: BuildStep[] &#x3D; [];
+
+    const isOperator &#x3D; (token: string): boolean &#x3D;&gt;
+      [&#x27;+&#x27;, &#x27;-&#x27;, &#x27;*&#x27;, &#x27;/&#x27;, &#x27;\\&#x27;, &#x27;^&#x27;].includes(token);
+
+    const isOperand &#x3D; (token: string): boolean &#x3D;&gt;
+      /^[a-zA-Z0-9]+$/.test(token);
+
+    const generateId &#x3D; (): string &#x3D;&gt; {
+      if (typeof crypto !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; &#x27;randomUUID&#x27; in crypto) {
+        return crypto.randomUUID();
+      }
+      return Math.random().toString(36).substring(2, 10);
+    };
+
+    let stepCounter &#x3D; 1;
+
+    try {
+      for (const token of tokens) {
+        let action: string;
+
+        if (isOperand(token)) {
+          const type: NodeType &#x3D; /^[0-9]+$/.test(token)
+            ? &#x27;number&#x27;
+            : &#x27;variable&#x27;;
+          const node: ExpressionNode &#x3D; {
+            id: generateId(),
+            type,
+            value: token,
+          };
+          stack.push(node);
+          action &#x3D; &#x60;Token &quot;${token}&quot;: operando, se apila como nodo hoja.&#x60;;
+        } else if (isOperator(token)) {
+          if (stack.length &lt; 2) {
+            throw new Error(
+              &#x60;No hay suficientes operandos en la pila para el operador &quot;${token}&quot;.&#x60;
+            );
+          }
+          const right &#x3D; stack.pop() as ExpressionNode;
+          const left &#x3D; stack.pop() as ExpressionNode;
+
+          const node: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: token,
+            left,
+            right,
+          };
+
+          stack.push(node);
+          action &#x3D;
+            &#x27;Token &quot;&#x27; +
+            token +
+            &#x27;&quot;: operador, se desapilan 2 nodos y se crea un nodo operador.&#x27;;
+        } else {
+          throw new Error(&#x60;Token no reconocido en postfix: &quot;${token}&quot;.&#x60;);
+        }
+
+        const stackSnapshot &#x3D; [...stack];
+
+        steps.push({
+          step: stepCounter++,
+          token,
+          action,
+          stackSnapshot,
+          currentRoot: stack[stack.length - 1],
+        });
+      }
+
+      if (stack.length !&#x3D;&#x3D; 1) {
+        throw new Error(
+          &#x60;La pila final no tiene exactamente un elemento. Tamaño actual: ${stack.length}.&#x60;
+        );
+      }
+
+      const finalTree &#x3D; stack[0];
+
+      return {
+        tree: finalTree,
+        steps,
+        isValid: true,
+      };
+    } catch (error) {
+      return {
+        steps,
+        isValid: false,
+        errorMessage:
+          error instanceof Error
+            ? error.message
+            : &#x27;Error desconocido al construir el árbol.&#x27;,
+      };
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;parser-root&quot;&gt;
+  &lt;div class&#x3D;&quot;parser-bg-grid&quot;&gt;&lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;parser-container&quot;&gt;
+    &lt;!-- Encabezado --&gt;
+    &lt;header class&#x3D;&quot;parser-header&quot;&gt;
+      &lt;div class&#x3D;&quot;parser-step-badge&quot;&gt;2&lt;/div&gt;
+      &lt;div&gt;
+        &lt;h2 class&#x3D;&quot;parser-title&quot;&gt;Parser (construcción del árbol)&lt;/h2&gt;
+        &lt;p class&#x3D;&quot;parser-subtitle&quot;&gt;
+          Simulación paso a paso de la construcción del árbol de expresión a partir de la notación postfix.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;!-- Resumen de expresión --&gt;
+    &lt;section class&#x3D;&quot;parser-summary-card&quot;&gt;
+      &lt;div class&#x3D;&quot;summary-row&quot;&gt;
+        &lt;span class&#x3D;&quot;summary-label&quot;&gt;Expresión original&lt;/span&gt;
+        &lt;span class&#x3D;&quot;summary-value mono&quot;&gt;{{ expression }}&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;summary-row&quot;&gt;
+        &lt;span class&#x3D;&quot;summary-label&quot;&gt;Expresión normalizada&lt;/span&gt;
+        &lt;span class&#x3D;&quot;summary-value mono&quot;&gt;{{ normalizedExpression }}&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;summary-row&quot;&gt;
+        &lt;span class&#x3D;&quot;summary-label&quot;&gt;Postfix&lt;/span&gt;
+        &lt;span class&#x3D;&quot;summary-value mono postfix-value&quot;&gt;{{ postfix }}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;!-- Contenido principal --&gt;
+    &lt;ng-container *ngIf&#x3D;&quot;parseResult.isValid; else errorState&quot;&gt;
+      &lt;div class&#x3D;&quot;parser-layout&quot;&gt;
+        &lt;!-- Panel de pasos --&gt;
+        &lt;section class&#x3D;&quot;panel steps-panel&quot;&gt;
+          &lt;div class&#x3D;&quot;panel-header&quot;&gt;
+            &lt;h3 class&#x3D;&quot;panel-title&quot;&gt;Pasos de construcción&lt;/h3&gt;
+            &lt;p class&#x3D;&quot;panel-subtitle&quot;&gt;
+              Navega entre los pasos para ver cómo evoluciona el árbol de expresión.
+            &lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;!-- Controles de navegación --&gt;
+          &lt;div class&#x3D;&quot;step-controls&quot; *ngIf&#x3D;&quot;totalSteps &gt; 0&quot;&gt;
+            &lt;div class&#x3D;&quot;step-buttons&quot;&gt;
+              &lt;button
+                class&#x3D;&quot;btn-nav&quot;
+                type&#x3D;&quot;button&quot;
+                (click)&#x3D;&quot;goFirst()&quot;
+                [disabled]&#x3D;&quot;currentStepIndex &#x3D;&#x3D;&#x3D; 0&quot;
+              &gt;
+                «
+              &lt;/button&gt;
+              &lt;button
+                class&#x3D;&quot;btn-nav&quot;
+                type&#x3D;&quot;button&quot;
+                (click)&#x3D;&quot;goPrev()&quot;
+                [disabled]&#x3D;&quot;currentStepIndex &#x3D;&#x3D;&#x3D; 0&quot;
+              &gt;
+                ‹
+              &lt;/button&gt;
+              &lt;span class&#x3D;&quot;step-indicator&quot;&gt;
+                Paso {{ currentStep?.step }} de {{ totalSteps }}
+              &lt;/span&gt;
+              &lt;button
+                class&#x3D;&quot;btn-nav&quot;
+                type&#x3D;&quot;button&quot;
+                (click)&#x3D;&quot;goNext()&quot;
+                [disabled]&#x3D;&quot;currentStepIndex &#x3D;&#x3D;&#x3D; totalSteps - 1&quot;
+              &gt;
+                ›
+              &lt;/button&gt;
+              &lt;button
+                class&#x3D;&quot;btn-nav&quot;
+                type&#x3D;&quot;button&quot;
+                (click)&#x3D;&quot;goLast()&quot;
+                [disabled]&#x3D;&quot;currentStepIndex &#x3D;&#x3D;&#x3D; totalSteps - 1&quot;
+              &gt;
+                »
+              &lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;step-meta&quot; *ngIf&#x3D;&quot;currentStep&quot;&gt;
+              &lt;p class&#x3D;&quot;step-token&quot;&gt;
+                Token actual:
+                &lt;span class&#x3D;&quot;mono highlight-token&quot;&gt;
+                  &quot;{{ currentStep.token }}&quot;
+                &lt;/span&gt;
+              &lt;/p&gt;
+              &lt;p class&#x3D;&quot;step-action&quot;&gt;
+                {{ currentStep.action }}
+              &lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!totalSteps&quot; class&#x3D;&quot;empty-message&quot;&gt;
+            No hay pasos generados. Verifica que la notación postfix no esté vacía.
+          &lt;/div&gt;
+
+          &lt;!-- Tabla de pasos --&gt;
+          &lt;div class&#x3D;&quot;steps-table-wrapper&quot; *ngIf&#x3D;&quot;totalSteps &gt; 0&quot;&gt;
+            &lt;table class&#x3D;&quot;steps-table&quot;&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;
+                  &lt;th&gt;Paso&lt;/th&gt;
+                  &lt;th&gt;Token&lt;/th&gt;
+                  &lt;th&gt;Acción&lt;/th&gt;
+                &lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr
+                  *ngFor&#x3D;&quot;let step of parseResult.steps&quot;
+                  [class.step-active]&#x3D;&quot;step.step &#x3D;&#x3D;&#x3D; currentStep?.step&quot;
+                &gt;
+                  &lt;td class&#x3D;&quot;mono&quot;&gt;{{ step.step }}&lt;/td&gt;
+                  &lt;td class&#x3D;&quot;mono&quot;&gt;{{ step.token }}&lt;/td&gt;
+                  &lt;td&gt;{{ step.action }}&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+
+        &lt;!-- Panel de árbol visual --&gt;
+        &lt;section class&#x3D;&quot;panel tree-panel&quot;&gt;
+          &lt;div class&#x3D;&quot;panel-header&quot;&gt;
+            &lt;h3 class&#x3D;&quot;panel-title&quot;&gt;Árbol parcial&lt;/h3&gt;
+            &lt;p class&#x3D;&quot;panel-subtitle&quot;&gt;
+              Visualización del árbol correspondiente al paso seleccionado.
+            &lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;app-tree-visualizer [tree]&#x3D;&quot;currentTree&quot;&gt;&lt;/app-tree-visualizer&gt;
+
+          &lt;div
+            class&#x3D;&quot;final-message&quot;
+            *ngIf&#x3D;&quot;parseResult.tree &amp;&amp; currentStepIndex &#x3D;&#x3D;&#x3D; totalSteps - 1&quot;
+          &gt;
+            &lt;p class&#x3D;&quot;final-title&quot;&gt;Árbol completo construido exitosamente.&lt;/p&gt;
+            &lt;p class&#x3D;&quot;final-text&quot;&gt;
+              Puedes regresar a pasos anteriores para revisar cómo fue evolucionando el árbol de expresión.
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+    &lt;/ng-container&gt;
+
+    &lt;!-- Estado de error --&gt;
+    &lt;ng-template #errorState&gt;
+      &lt;section class&#x3D;&quot;panel error-panel&quot;&gt;
+        &lt;h3 class&#x3D;&quot;panel-title&quot;&gt;Error al construir el árbol&lt;/h3&gt;
+        &lt;p class&#x3D;&quot;panel-subtitle&quot;&gt;
+          Ocurrió un problema al procesar la notación postfix.
+        &lt;/p&gt;
+        &lt;p class&#x3D;&quot;error-message&quot;&gt;
+          {{ parseResult.errorMessage || &#x27;Error desconocido.&#x27; }}
+        &lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/ng-template&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./recursive-parser-panel.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.parser-root {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 3rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #e5e7eb;
+}
+
+.parser-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image: linear-gradient(
+      rgba(129, 140, 248, 0.5) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.5) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.parser-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  width: 100%;
+}
+
+/* Encabezado */
+
+.parser-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.parser-step-badge {
+  height: 2.3rem;
+  width: 2.3rem;
+  border-radius: 9999px;
+  background: rgba(129, 140, 248, 0.2);
+  border: 1px solid rgba(129, 140, 248, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c7d2fe;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.parser-title {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #f9fafb;
+}
+
+.parser-subtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* Resumen */
+
+.parser-summary-card {
+  border-radius: 1.25rem;
+  border: 1px solid #1f2937;
+  background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.summary-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.summary-value {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.postfix-value {
+  color: #a5b4fc;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    &#x27;Liberation Mono&#x27;, &#x27;Courier New&#x27;, monospace;
+}
+
+/* Layout principal */
+
+.parser-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 960px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Panel genérico */
+
+.panel {
+  border-radius: 1.25rem;
+  border: 1px solid #1f2937;
+  background: radial-gradient(circle at top left, #0f172a 0, #020617 60%);
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+}
+
+.panel-header {
+  margin-bottom: 1rem;
+}
+
+.panel-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.panel-subtitle {
+  font-size: 0.82rem;
+  color: #9ca3af;
+}
+
+/* Controles de pasos */
+
+.step-controls {
+  margin-bottom: 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid #1f2937;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.step-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.btn-nav {
+  height: 1.9rem;
+  width: 1.9rem;
+  border-radius: 9999px;
+  border: 1px solid #1f2937;
+  background: #020617;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+
+  &amp;:hover:not(:disabled) {
+    background: #111827;
+    border-color: rgba(129, 140, 248, 0.7);
+    transform: translateY(-1px);
+  }
+
+  &amp;:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.step-indicator {
+  font-size: 0.8rem;
+  color: #e5e7eb;
+  margin-left: 0.35rem;
+}
+
+.step-meta {
+  font-size: 0.8rem;
+  color: #d1d5db;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.highlight-token {
+  color: #a5b4fc;
+}
+
+.step-token {
+  font-weight: 500;
+}
+
+.step-action {
+  color: #cbd5f5;
+}
+
+.step-stack {
+  color: #9ca3af;
+}
+
+/* Tabla de pasos */
+
+.steps-table-wrapper {
+  margin-top: 0.75rem;
+  max-height: 260px;
+  overflow: auto;
+  border-radius: 0.75rem;
+  border: 1px solid #1f2937;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.steps-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+
+  th,
+  td {
+    padding: 0.45rem 0.6rem;
+    text-align: left;
+  }
+
+  thead {
+    background: rgba(15, 23, 42, 0.9);
+
+    th {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #9ca3af;
+      border-bottom: 1px solid #1f2937;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #111827;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: rgba(30, 64, 175, 0.18);
+  }
+}
+
+.step-active {
+  background: rgba(79, 70, 229, 0.22);
+}
+
+/* Árbol ASCII */
+
+.tree-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ascii-tree {
+  border-radius: 0.75rem;
+  border: 1px solid #1f2937;
+  background: #020617;
+  padding: 0.85rem 1rem;
+  font-size: 0.8rem;
+  color: #e5e7eb;
+  overflow-x: auto;
+  min-height: 160px;
+  max-height: 280px;
+}
+
+.final-message {
+  margin-top: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(22, 163, 74, 0.12);
+  padding: 0.75rem 0.9rem;
+}
+
+.final-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #bbf7d0;
+}
+
+.final-text {
+  font-size: 0.78rem;
+  color: #a7f3d0;
+}
+
+/* Errores / vacíos */
+
+.empty-message {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+.error-panel {
+  margin-top: 1.5rem;
+}
+
+.error-message {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #fecaca;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="parser-root">  <div class="parser-bg-grid"></div>  <div class="parser-container">    <!-- Encabezado -->    <header class="parser-header">      <div class="parser-step-badge">2</div>      <div>        <h2 class="parser-title">Parser (construcción del árbol)</h2>        <p class="parser-subtitle">          Simulación paso a paso de la construcción del árbol de expresión a partir de la notación postfix.        </p>      </div>    </header>    <!-- Resumen de expresión -->    <section class="parser-summary-card">      <div class="summary-row">        <span class="summary-label">Expresión original</span>        <span class="summary-value mono">{{ expression }}</span>      </div>      <div class="summary-row">        <span class="summary-label">Expresión normalizada</span>        <span class="summary-value mono">{{ normalizedExpression }}</span>      </div>      <div class="summary-row">        <span class="summary-label">Postfix</span>        <span class="summary-value mono postfix-value">{{ postfix }}</span>      </div>    </section>    <!-- Contenido principal -->    <ng-container *ngIf="parseResult.isValid; else errorState">      <div class="parser-layout">        <!-- Panel de pasos -->        <section class="panel steps-panel">          <div class="panel-header">            <h3 class="panel-title">Pasos de construcción</h3>            <p class="panel-subtitle">              Navega entre los pasos para ver cómo evoluciona el árbol de expresión.            </p>          </div>          <!-- Controles de navegación -->          <div class="step-controls" *ngIf="totalSteps > 0">            <div class="step-buttons">              <button                class="btn-nav"                type="button"                (click)="goFirst()"                [disabled]="currentStepIndex === 0"              >                «              </button>              <button                class="btn-nav"                type="button"                (click)="goPrev()"                [disabled]="currentStepIndex === 0"              >                ‹              </button>              <span class="step-indicator">                Paso {{ currentStep?.step }} de {{ totalSteps }}              </span>              <button                class="btn-nav"                type="button"                (click)="goNext()"                [disabled]="currentStepIndex === totalSteps - 1"              >                ›              </button>              <button                class="btn-nav"                type="button"                (click)="goLast()"                [disabled]="currentStepIndex === totalSteps - 1"              >                »              </button>            </div>            <div class="step-meta" *ngIf="currentStep">              <p class="step-token">                Token actual:                <span class="mono highlight-token">                  "{{ currentStep.token }}"                </span>              </p>              <p class="step-action">                {{ currentStep.action }}              </p>            </div>          </div>          <div *ngIf="!totalSteps" class="empty-message">            No hay pasos generados. Verifica que la notación postfix no esté vacía.          </div>          <!-- Tabla de pasos -->          <div class="steps-table-wrapper" *ngIf="totalSteps > 0">            <table class="steps-table">              <thead>                <tr>                  <th>Paso</th>                  <th>Token</th>                  <th>Acción</th>                </tr>              </thead>              <tbody>                <tr                  *ngFor="let step of parseResult.steps"                  [class.step-active]="step.step === currentStep?.step"                >                  <td class="mono">{{ step.step }}</td>                  <td class="mono">{{ step.token }}</td>                  <td>{{ step.action }}</td>                </tr>              </tbody>            </table>          </div>        </section>        <!-- Panel de árbol visual -->        <section class="panel tree-panel">          <div class="panel-header">            <h3 class="panel-title">Árbol parcial</h3>            <p class="panel-subtitle">              Visualización del árbol correspondiente al paso seleccionado.            </p>          </div>          <app-tree-visualizer [tree]="currentTree"></app-tree-visualizer>          <div            class="final-message"            *ngIf="parseResult.tree && currentStepIndex === totalSteps - 1"          >            <p class="final-title">Árbol completo construido exitosamente.</p>            <p class="final-text">              Puedes regresar a pasos anteriores para revisar cómo fue evolucionando el árbol de expresión.            </p>          </div>        </section>      </div>    </ng-container>    <!-- Estado de error -->    <ng-template #errorState>      <section class="panel error-panel">        <h3 class="panel-title">Error al construir el árbol</h3>        <p class="panel-subtitle">          Ocurrió un problema al procesar la notación postfix.        </p>        <p class="error-message">          {{ parseResult.errorMessage || \'Error desconocido.\' }}        </p>      </section>    </ng-template>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'ParserViewComponent', 'selector': 'app-parser-view'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RecursiveParserPanelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RecursiveParserPanelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

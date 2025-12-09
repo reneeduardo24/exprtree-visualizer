@@ -1,0 +1,866 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>exprtree-visualizer documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">exprtree-visualizer documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TreeVisualizerComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/tree-visualizer/tree-visualizer.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>AfterViewInit</code>
+                <code>OnChanges</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tree-visualizer</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./tree-visualizer.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tree-visualizer.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#initialized" >initialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#svgRef" >svgRef</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#renderTree" >renderTree</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#tree" >tree</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tree"></a>
+                        <b>tree</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/tree-visualizer/tree-visualizer.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="38"
+                                    class="link-to-prism">src/app/components/tree-visualizer/tree-visualizer.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: SimpleChanges)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/app/components/tree-visualizer/tree-visualizer.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changes</td>
+                                            <td>
+                                                        <code>SimpleChanges</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renderTree"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>renderTree</b></span>
+                        <a href="#renderTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>renderTree()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/app/components/tree-visualizer/tree-visualizer.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initialized"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>initialized</b></span>
+                        <a href="#initialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/tree-visualizer/tree-visualizer.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="svgRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>svgRef</b></span>
+                        <a href="#svgRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef&lt;SVGSVGElement&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;svg&#x27;, {static: false})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/tree-visualizer/tree-visualizer.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from &#x27;@angular/core&#x27;;
+import * as d3 from &#x27;d3&#x27;;
+
+type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27;;
+
+interface ExpressionNode {
+  id: string;
+  type: NodeType;
+  value: string;
+  left?: ExpressionNode;
+  right?: ExpressionNode;
+}
+
+@Component({
+  selector: &#x27;app-tree-visualizer&#x27;,
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: &#x27;./tree-visualizer.component.html&#x27;,
+  styleUrls: [&#x27;./tree-visualizer.component.scss&#x27;],
+})
+export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
+  // Puede ser un ExpressionNode o un nodo &quot;virtual&quot; con children[]
+  @Input() tree: any &#x3D; null;
+
+  @ViewChild(&#x27;svg&#x27;, { static: false }) svgRef!: ElementRef&lt;SVGSVGElement&gt;;
+
+  private initialized &#x3D; false;
+
+  ngAfterViewInit(): void {
+    this.initialized &#x3D; true;
+    this.renderTree();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes[&#x27;tree&#x27;] &amp;&amp; this.initialized) {
+      this.renderTree();
+    }
+  }
+
+  private renderTree(): void {
+    if (!this.svgRef) return;
+
+    const svgEl &#x3D; this.svgRef.nativeElement;
+    const svg &#x3D; d3.select(svgEl);
+
+    // Limpiar contenido previo
+    svg.selectAll(&#x27;*&#x27;).remove();
+
+    if (!this.tree) {
+      return;
+    }
+
+    const width &#x3D; svgEl.clientWidth || 600;
+    const height &#x3D; svgEl.clientHeight || 400;
+
+    svg.attr(&#x27;viewBox&#x27;, &#x60;0 0 ${width} ${height}&#x60;);
+
+    const g &#x3D; svg.append(&#x27;g&#x27;).attr(&#x27;transform&#x27;, &#x27;translate(20,40)&#x27;);
+
+    // Jerarquía D3:
+    // - Si el nodo tiene children[], usamos esos.
+    // - Si no, usamos left/right como hijos (árbol binario normal).
+    const root &#x3D; d3.hierarchy&lt;any&gt;(this.tree, (d: any) &#x3D;&gt; {
+      if (Array.isArray(d.children)) {
+        return d.children;
+      }
+      const children: any[] &#x3D; [];
+      if (d.left) children.push(d.left);
+      if (d.right) children.push(d.right);
+      return children;
+    });
+
+    const treeLayout &#x3D; d3.tree&lt;any&gt;().size([width - 40, height - 80]);
+
+    treeLayout(root);
+
+    // ENLACES (aristas)
+    g.selectAll(&#x27;path.link&#x27;)
+      .data(root.links())
+      .enter()
+      .append(&#x27;path&#x27;)
+      .attr(&#x27;class&#x27;, &#x27;tree-link&#x27;)
+      .attr(&#x27;d&#x27;, (d) &#x3D;&gt; &#x60;M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}&#x60;)
+      .attr(&#x27;fill&#x27;, &#x27;none&#x27;)
+      // Si el enlace sale de la raíz virtual (depth 0), lo hacemos invisible
+      .attr(&#x27;stroke&#x27;, (d) &#x3D;&gt; (d.source.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.source.data.isVirtual ? &#x27;transparent&#x27; : &#x27;#e5e7eb&#x27;))
+      .attr(&#x27;stroke-width&#x27;, (d) &#x3D;&gt; (d.source.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.source.data.isVirtual ? 0 : 1.5));
+
+    // NODOS
+    const nodes &#x3D; g
+      .selectAll(&#x27;g.node&#x27;)
+      .data(root.descendants())
+      .enter()
+      .append(&#x27;g&#x27;)
+      .attr(&#x27;class&#x27;, &#x27;tree-node&#x27;)
+      .attr(&#x27;transform&#x27;, (d) &#x3D;&gt; &#x60;translate(${d.x},${d.y})&#x60;);
+
+    // Círculo del nodo
+    nodes
+      .append(&#x27;circle&#x27;)
+      .attr(&#x27;class&#x27;, (d) &#x3D;&gt;
+        d.data.type &#x3D;&#x3D;&#x3D; &#x27;operator&#x27; ? &#x27;node-circle node-operator&#x27; : &#x27;node-circle&#x27;
+      )
+      // Si es la raíz virtual, radio 0 → no se ve
+      .attr(&#x27;r&#x27;, (d) &#x3D;&gt; (d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual ? 0 : 18))
+      .attr(&#x27;fill&#x27;, &#x27;#ffffff&#x27;)
+      .attr(&#x27;stroke&#x27;, (d) &#x3D;&gt;
+        d.data.type &#x3D;&#x3D;&#x3D; &#x27;operator&#x27; ? &#x27;#3b82f6&#x27; : &#x27;#1e293b&#x27;
+      )
+      .attr(&#x27;stroke-width&#x27;, (d) &#x3D;&gt;
+        d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual ? 0 : 2
+      );
+
+    // Texto dentro del nodo
+    nodes
+      .append(&#x27;text&#x27;)
+      .attr(&#x27;class&#x27;, &#x27;node-label&#x27;)
+      .attr(&#x27;text-anchor&#x27;, &#x27;middle&#x27;)
+      .attr(&#x27;dominant-baseline&#x27;, &#x27;middle&#x27;)
+      .attr(&#x27;fill&#x27;, &#x27;#1e293b&#x27;)
+      .text((d) &#x3D;&gt; {
+        // La raíz virtual no muestra texto
+        if (d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual) {
+          return &#x27;&#x27;;
+        }
+        return d.data.value ?? &#x27;&#x27;;
+      });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;tree-visualizer-root&quot;&gt;
+  &lt;ng-container *ngIf&#x3D;&quot;tree; else noTree&quot;&gt;
+    &lt;svg #svg class&#x3D;&quot;tree-svg&quot;&gt;&lt;/svg&gt;
+  &lt;/ng-container&gt;
+
+  &lt;ng-template #noTree&gt;
+    &lt;p class&#x3D;&quot;tree-empty&quot;&gt;No hay árbol disponible.&lt;/p&gt;
+  &lt;/ng-template&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./tree-visualizer.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.tree-visualizer-root {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.tree-svg {
+  width: 100%;
+  height: 360px;
+}
+
+.tree-empty {
+  font-family: monospace;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.tree-link {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.8);
+  stroke-width: 1.5px;
+}
+
+/* Nodo genérico (hojas) */
+.tree-node .node-circle {
+  fill: #ffffff;       
+  stroke: #1e293b;       
+  stroke-width: 2px;
+}
+
+/* Nodo operador (para distinguirlos del resto) */
+.tree-node .node-operator {
+  fill: #ffffff;      
+  stroke: #3b82f6;    
+  stroke-width: 2px;
+}
+
+/* Texto dentro del nodo */
+.node-label {
+  fill: #1e293b;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: system-ui, -apple-system, &#x27;Segoe UI&#x27;, sans-serif;
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="tree-visualizer-root">  <ng-container *ngIf="tree; else noTree">    <svg #svg class="tree-svg"></svg>  </ng-container>  <ng-template #noTree>    <p class="tree-empty">No hay árbol disponible.</p>  </ng-template></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'ParserViewComponent', 'selector': 'app-parser-view'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TreeVisualizerComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TreeVisualizerComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

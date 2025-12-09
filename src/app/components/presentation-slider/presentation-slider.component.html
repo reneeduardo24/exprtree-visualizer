@@ -1,3 +1,15 @@
+<!--
+  Slider principal de presentación del proyecto.
+  Utiliza <swiper-container> y <swiper-slide> (Web Components) para generar
+  un carrusel dinámico que cambia automáticamente cada pocos segundos.
+
+  Cada diapositiva se representa según su tipo:
+  - 'title': pantalla de bienvenida con botón para continuar.
+  - 'team': integrantes del proyecto.
+  - 'supervisor': información del docente.
+  - 'technologies': tecnologías utilizadas.
+-->
+
 <section class="slider-root">
   <div class="bg-grid"></div>
 
@@ -17,7 +29,8 @@
       <div class="slide-container">
         <div class="slide-content">
           <ng-container [ngSwitch]="slide.type">
-            <!-- TITLE -->
+            
+            <!-- ========== TÍTULO PRINCIPAL ========== -->
             <ng-container *ngSwitchCase="'title'">
               <div class="center-column text-center space-y">
                 <div class="space-y">
@@ -25,6 +38,8 @@
                   <p class="subtitle">{{ slide.subtitle }}</p>
                 </div>
                 <div class="divider"></div>
+
+                <!-- Botón para desplazarse al workspace -->
                 <button
                   type="button"
                   class="scroll-down-btn"
@@ -35,7 +50,7 @@
               </div>
             </ng-container>
 
-            <!-- TEAM -->
+            <!-- ========== INTEGRANTES DEL EQUIPO ========== -->
             <ng-container *ngSwitchCase="'team'">
               <div class="center-column space-y">
                 <h2 class="title-section">{{ slide.title }}</h2>
@@ -52,7 +67,7 @@
               </div>
             </ng-container>
 
-            <!-- SUPERVISOR -->
+            <!-- ========== DOCENTE / SUPERVISOR ========== -->
             <ng-container *ngSwitchCase="'supervisor'">
               <div class="center-column space-y supervisor-section">
                 <h2 class="title-section">{{ slide.title }}</h2>
@@ -72,22 +87,20 @@
               </div>
             </ng-container>
 
-            <!-- TECHNOLOGIES -->
+            <!-- ========== TECNOLOGÍAS UTILIZADAS ========== -->
             <ng-container *ngSwitchCase="'technologies'">
               <div class="center-column space-y">
                 <h2 class="title-section">{{ slide.title }}</h2>
                 <div class="divider"></div>
 
                 <div class="grid-technologies">
-                  <div
-                    class="card-tech"
-                    *ngFor="let tech of slide.technologies"
-                  >
+                  <div class="card-tech" *ngFor="let tech of slide.technologies">
                     <p class="tech-name">{{ tech }}</p>
                   </div>
                 </div>
               </div>
             </ng-container>
+
           </ng-container>
         </div>
       </div>

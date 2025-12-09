@@ -1,13 +1,29 @@
+<!--
+  Archivo HTML principal que sirve como contenedor de la aplicación Angular.
+  Angular reemplaza dinámicamente el elemento <app-root> con la estructura del
+  componente raíz definido en AppComponent.
+-->
+
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>ExprtreeVisualizer</title>
+
+  <!-- Título mostrado en la pestaña del navegador -->
+  <title>ExprTree Visualizer</title>
+
+  <!-- Base href necesario para el sistema de rutas de Angular -->
   <base href="/">
+
+  <!-- Configuración responsive para dispositivos móviles -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Ícono de la página -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
+  <!-- Punto de montaje donde Angular renderiza AppComponent -->
   <app-root></app-root>
 </body>
 </html>
