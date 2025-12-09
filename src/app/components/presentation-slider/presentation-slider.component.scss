@@ -1,4 +1,5 @@
 /* ================= SLIDER ROOT ================= */
+/* Centrado perfecto en todos los tamaños */
 
 .slider-root {
   position: relative;
@@ -21,7 +22,7 @@
   opacity: 0.1;
   background-image: linear-gradient(to right, rgb(99, 102, 241) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(99, 102, 241) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: clamp(30px, 5vw, 50px) clamp(30px, 5vw, 50px);
   pointer-events: none;
 }
 
@@ -40,42 +41,39 @@ swiper-slide {
   height: 100%;
   display: flex !important;
   flex-direction: column;
-
-  /* Estas dos líneas son las que corrigen el problema definitivamente */
   justify-content: center;
   align-items: center;
-
   text-align: center;
+  padding: clamp(1rem, 5vh, 2rem) clamp(0.75rem, 5vw, 2rem);
 }
 
-
-
 /* ================= SLIDE CONTENT ================= */
+/* Centrado recursivo total con márgenes automáticos */
 
 .slide-container {
   position: relative;
   z-index: 1;
-  height: 100%;
-  max-width: 96rem;
+  height: auto;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-inline: 2rem;
+  padding: 0;
+  margin: 0 auto;
 }
 
 .slide-content {
   width: 100%;
-  max-width: 56rem;
-  margin-inline: auto;
-
-  /* NUEVO: centramos todo el contenido de la slide */
+  max-width: clamp(16rem, 95vw, 56rem);
+  margin: 0 auto;
+  padding: clamp(1rem, 4vw, 2rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  transition: opacity 0.5s ease-in-out;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 2.5rem);
 }
-
 
 /* ================= UTILITIES ================= */
 
@@ -84,6 +82,7 @@ swiper-slide {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .text-center {
@@ -91,56 +90,70 @@ swiper-slide {
 }
 
 .space-y {
-  gap: 2rem;
+  gap: clamp(1.5rem, 4vh, 2.5rem);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 /* ================= TITLES ================= */
+/* Escalado fluido con clamp() y línea-height mejorado */
 
 .title-main {
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-size: clamp(1.75rem, 7vw, 4.5rem);
   font-weight: 800;
   letter-spacing: -0.05em;
+  line-height: 1.15;
+  width: 100%;
+  word-break: break-word;
 }
 
 .title-section {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(1.4rem, 5vw, 3.2rem);
   font-weight: 700;
   letter-spacing: -0.04em;
+  line-height: 1.2;
+  width: 100%;
 }
 
 /* ================= SUBTITLES ================= */
+/* Subtítulo más flexible en móvil */
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   color: #9ca3af;
-  max-width: 40rem;
-  margin-inline: auto;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 1.6;
+  padding: 0 clamp(0.5rem, 2vw, 1rem);
 }
 
 /* ================= DIVIDER ================= */
+/* Divider centrado y responsivo */
 
 .divider {
-  height: 0.25rem;
-  width: 8rem;
+  height: clamp(2px, 0.3vh, 4px);
+  width: clamp(3rem, 20vw, 8rem);
   border-radius: 9999px;
   background: rgb(129, 140, 248);
+  margin: 0 auto;
 }
 
 /* ================= SCROLL BUTTON ================= */
 
 .scroll-down-btn {
-  margin-top: 1rem;
-  height: 2.5rem;
-  width: 2.5rem;
+  margin-top: clamp(0.75rem, 2vh, 1.5rem);
+  height: clamp(2.2rem, 8vw, 2.5rem);
+  width: clamp(2.2rem, 8vw, 2.5rem);
   border-radius: 9999px;
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.9);
   color: #e5e7eb;
   cursor: pointer;
   display: flex;
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
   align-items: center;
   justify-content: center;
   animation: bounce 1.5s infinite;
@@ -148,40 +161,40 @@ swiper-slide {
 }
 
 @keyframes bounce {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(5px);
+    transform: translateY(clamp(3px, 1vh, 5px));
   }
 }
 
 /* ================= TEAM GRID ================= */
+/* Grid totalmente responsivo con auto-fit */
 
 .grid-members {
   display: grid;
-  gap: 2rem;
+  gap: clamp(1rem, 3vw, 2rem);
   width: 100%;
-  max-width: 40rem;
-  margin-inline: auto;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  max-width: clamp(16rem, 95vw, 40rem);
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(10rem, 35vw, 15rem), 1fr));
+  place-items: center;
 }
 
 .card-member {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding: 2rem;
-  border-radius: 1rem;
+  gap: clamp(0.5rem, 1.5vw, 0.75rem);
+  padding: clamp(1rem, 4vw, 2rem);
+  border-radius: clamp(0.75rem, 1.5vw, 1rem);
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(10px);
   transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  width: 100%;
+  height: 100%;
 }
 
 .card-member:hover {
@@ -192,96 +205,104 @@ swiper-slide {
 
 .avatar {
   display: flex;
-  height: 5rem;
-  width: 5rem;
+  height: clamp(3rem, 10vw, 5rem);
+  width: clamp(3rem, 10vw, 5rem);
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
   background: rgba(129, 140, 248, 0.2);
   color: rgb(129, 140, 248);
-  font-size: 2rem;
+  font-size: clamp(1.3rem, 4vw, 2rem);
   font-weight: 700;
+  flex-shrink: 0;
 }
 
 .member-name {
-  font-size: 1.25rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
   font-weight: 600;
   text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
 /* ================= SUPERVISOR ================= */
+/* Tarjeta supervisor centrada perfectamente */
 
 .supervisor-section {
   width: 100%;
-  margin-inline: auto;
+  max-width: clamp(16rem, 95vw, 56rem);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center; /* centra título, línea y tarjeta en el eje X */
-  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 2.5rem);
 }
 
 .card-supervisor {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 3rem;
-  border-radius: 1.25rem;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1rem);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border-radius: clamp(1rem, 2vw, 1.25rem);
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(10px);
-
-  /* CLAVE: nunca más ancha que su contenedor */
   width: 100%;
-  max-width: 40rem;
-  margin-inline: auto;
+  max-width: clamp(16rem, 90vw, 40rem);
+  margin: 0 auto;
 }
 
 .supervisor-avatar {
-  height: 6rem;
-  width: 6rem;
-  font-size: 2.5rem;
+  height: clamp(4rem, 12vw, 6rem);
+  width: clamp(4rem, 12vw, 6rem);
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  flex-shrink: 0;
 }
 
 .supervisor-name {
-  font-size: 1.75rem;
+  font-size: clamp(1.2rem, 4vw, 1.75rem);
   font-weight: 700;
   text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
 .supervisor-position {
-  font-size: 1.1rem;
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
   color: #9ca3af;
+  text-align: center;
 }
 
-
 /* ================= TECHNOLOGIES ================= */
+/* Grid technologies totalmente responsivo */
 
 .grid-technologies {
   display: grid;
-  gap: 1rem;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
   width: 100%;
-  max-width: 48rem;
-  margin-inline: auto;
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  max-width: clamp(16rem, 95vw, 48rem);
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(8rem, 28vw, 12rem), 1fr));
+  place-items: center;
 }
 
 .card-tech {
   position: relative;
   overflow: hidden;
-  padding: 1.5rem;
-  border-radius: 0.9rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border-radius: clamp(0.65rem, 1.5vw, 0.9rem);
   border: 1px solid #1f2937;
   background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(10px);
   transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-tech::before {
@@ -306,8 +327,11 @@ swiper-slide {
 .tech-name {
   position: relative;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
   font-weight: 600;
+  line-height: 1.4;
+  word-break: break-word;
+  z-index: 1;
 }
 
 /* ================= PAGINATION ================= */
@@ -315,76 +339,17 @@ swiper-slide {
 .slider-swiper .swiper-pagination-bullet {
   background: #4b5563;
   opacity: 1;
-  width: 8px;
-  height: 8px;
+  width: clamp(6px, 1vw, 8px);
+  height: clamp(6px, 1vw, 8px);
   transition: width 0.2s ease, background-color 0.2s ease;
 }
 
 .slider-swiper .swiper-pagination-bullet-active {
   background: rgb(129, 140, 248);
-  width: 24px;
+  width: clamp(18px, 4vw, 24px);
   border-radius: 9999px;
 }
 
 .slider-swiper .swiper-pagination {
-  bottom: 1.5rem;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 640px) {
-  .slider-root {
-    height: auto;
-    min-height: 100vh;
-    align-items: flex-start;
-    padding-top: 3.5rem;
-    padding-bottom: 3rem;
-  }
-
-  .slide-container {
-    align-items: flex-start;
-    padding-inline: 1.25rem;
-  }
-
-  .slide-content {
-    max-width: 28rem;
-  }
-
-  .title-main {
-    font-size: 2.1rem;
-  }
-
-  .title-section {
-    font-size: 1.6rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
-  }
-
-  .grid-members {
-    gap: 1.25rem;
-    max-width: 100%;
-  }
-
-  .card-member {
-    padding: 1.25rem 1.5rem;
-    border-radius: 1rem;
-  }
-
-  .avatar {
-    height: 3.5rem;
-    width: 3.5rem;
-    font-size: 1.4rem;
-  }
-
-  .member-name {
-    font-size: 1rem;
-  }
-
-  .slider-swiper,
-  swiper-container.slider-swiper {
-    height: auto;
-    min-height: 100vh;
-  }
+  bottom: clamp(1rem, 2vh, 1.5rem);
 }
