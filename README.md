@@ -13,20 +13,6 @@ Visualización interactiva y paso a paso de árboles de expresión mediante Pars
 - Mostrar la evolución del árbol en tiempo real mediante **D3.js**, desde los primeros nodos sueltos hasta el árbol final completamente construido.  
 - Explicar en cada paso cuál token se procesa, qué acción se toma y cómo cambia la pila.  
 
-El proyecto está diseñado como herramienta **educativa**, ideal para materias como:
-
-- Matemáticas Discretas  
-- Algoritmos y Estructuras de Datos  
-- Compiladores  
-- Parsing Recursivo / Construcción de Árboles Sintácticos  
-
-Además, incluye una presentación inicial estilo “slides” donde se muestra:
-
-- Portada del proyecto  
-- Integrantes del equipo  
-- Docente responsable  
-- Tecnologías utilizadas  
-
 ---
 
 ## 🚀 Características Principales
