@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ExpressionInputModel, ExpressionStateService } from '../../core/expression-state.service';
+import {
+  ExpressionInputModel,
+  ExpressionStateService,
+} from '../../core/expression-state.service';
+import { TreeVisualizerComponent } from '../tree-visualizer/tree-visualizer.component';
 
 type NodeType = 'operator' | 'number' | 'variable';
 
@@ -31,7 +35,7 @@ interface ParseResult {
 @Component({
   selector: 'app-recursive-parser-panel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TreeVisualizerComponent],
   templateUrl: './recursive-parser-panel.component.html',
   styleUrls: ['./recursive-parser-panel.component.scss'],
 })
@@ -59,7 +63,8 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         this.parseResult = {
           steps: [],
           isValid: false,
-          errorMessage: 'No hay expresión disponible. Ingresa una expresión válida en el Paso 1.',
+          errorMessage:
+            'No hay expresión disponible. Ingresa una expresión válida en el Paso 1.',
         };
         this.currentStepIndex = 0;
       }
@@ -90,6 +95,11 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
   get totalSteps(): number {
     return this.parseResult.steps.length;
   }
+
+  // Árbol del paso actual (si no hay paso, usa árbol final)
+  get currentTree(): ExpressionNode | null {
+  return this.currentStep?.currentRoot ?? this.parseResult.tree ?? null;
+}
 
   // ================= NAVEGACIÓN DE PASOS =================
 
@@ -142,7 +152,9 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         let action: string;
 
         if (isOperand(token)) {
-          const type: NodeType = /^[0-9]+$/.test(token) ? 'number' : 'variable';
+          const type: NodeType = /^[0-9]+$/.test(token)
+            ? 'number'
+            : 'variable';
           const node: ExpressionNode = {
             id: generateId(),
             type,
@@ -168,7 +180,10 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
           };
 
           stack.push(node);
-          action = `Token "${token}": operador, se desapilan 2 nodos y se crea un nodo operador.`;
+          action =
+            'Token "' +
+            token +
+            '": operador, se desapilan 2 nodos y se crea un nodo operador.';
         } else {
           throw new Error(`Token no reconocido en postfix: "${token}".`);
         }
@@ -207,41 +222,5 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
             : 'Error desconocido al construir el árbol.',
       };
     }
-  }
-
-  // ================= RENDER ASCII TREE =================
-
-  renderAsciiTree(node: ExpressionNode | undefined): string {
-    return this.renderAsciiNode(node, '', null);
-  }
-
-  private renderAsciiNode(
-    node: ExpressionNode | undefined,
-    prefix: string,
-    isLeft: boolean | null
-  ): string {
-    if (!node) {
-      return 'No hay árbol disponible';
-    }
-
-    let result = '';
-
-    if (prefix === '') {
-      result += node.value + '\n';
-    } else {
-      result += prefix + (isLeft === null ? '' : isLeft ? '├─ ' : '└─ ') + node.value + '\n';
-    }
-
-    const children: ExpressionNode[] = [];
-    if (node.left) children.push(node.left);
-    if (node.right) children.push(node.right);
-
-    children.forEach((child, index) => {
-      const isLastChild = index === children.length - 1;
-      const newPrefix = prefix + (isLeft === null ? '' : isLeft ? '│  ' : '   ');
-      result += this.renderAsciiNode(child, newPrefix, !isLastChild);
-    });
-
-    return result;
   }
 }

@@ -6,9 +6,9 @@
     <header class="parser-header">
       <div class="parser-step-badge">2</div>
       <div>
-        <h2 class="parser-title">Parser Recursivo</h2>
+        <h2 class="parser-title">Parser (construcción del árbol)</h2>
         <p class="parser-subtitle">
-          Simulación de la construcción del árbol de expresión a partir de la notación postfix.
+          Simulación paso a paso de la construcción del árbol de expresión a partir de la notación postfix.
         </p>
       </div>
     </header>
@@ -37,17 +37,27 @@
           <div class="panel-header">
             <h3 class="panel-title">Pasos de construcción</h3>
             <p class="panel-subtitle">
-              Navega entre los pasos para ver cómo evoluciona la pila y el árbol.
+              Navega entre los pasos para ver cómo evoluciona el árbol de expresión.
             </p>
           </div>
 
           <!-- Controles de navegación -->
           <div class="step-controls" *ngIf="totalSteps > 0">
             <div class="step-buttons">
-              <button class="btn-nav" type="button" (click)="goFirst()" [disabled]="currentStepIndex === 0">
+              <button
+                class="btn-nav"
+                type="button"
+                (click)="goFirst()"
+                [disabled]="currentStepIndex === 0"
+              >
                 «
               </button>
-              <button class="btn-nav" type="button" (click)="goPrev()" [disabled]="currentStepIndex === 0">
+              <button
+                class="btn-nav"
+                type="button"
+                (click)="goPrev()"
+                [disabled]="currentStepIndex === 0"
+              >
                 ‹
               </button>
               <span class="step-indicator">
@@ -74,7 +84,9 @@
             <div class="step-meta" *ngIf="currentStep">
               <p class="step-token">
                 Token actual:
-                <span class="mono highlight-token">"{{ currentStep.token }}"</span>
+                <span class="mono highlight-token">
+                  "{{ currentStep.token }}"
+                </span>
               </p>
               <p class="step-action">
                 {{ currentStep.action }}
@@ -110,18 +122,16 @@
           </div>
         </section>
 
-        <!-- Panel de árbol ASCII -->
+        <!-- Panel de árbol visual -->
         <section class="panel tree-panel">
           <div class="panel-header">
             <h3 class="panel-title">Árbol parcial</h3>
             <p class="panel-subtitle">
-              Vista en texto del árbol resultante según el paso seleccionado.
+              Visualización del árbol correspondiente al paso seleccionado.
             </p>
           </div>
 
-          <pre class="ascii-tree">
-{{ renderAsciiTree(currentStep?.currentRoot || parseResult.tree) }}
-          </pre>
+          <app-tree-visualizer [tree]="currentTree"></app-tree-visualizer>
 
           <div
             class="final-message"
@@ -129,7 +139,7 @@
           >
             <p class="final-title">Árbol completo construido exitosamente.</p>
             <p class="final-text">
-              Puedes regresar a pasos anteriores para revisar cómo fue evolucionando la pila y el árbol.
+              Puedes regresar a pasos anteriores para revisar cómo fue evolucionando el árbol de expresión.
             </p>
           </div>
         </section>
