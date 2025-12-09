@@ -162,6 +162,7 @@ Raul Ortega
 
 Rene Hernandez
 
+
 Docente responsable:
 
 Dr. Gilberto Borrego Soto
