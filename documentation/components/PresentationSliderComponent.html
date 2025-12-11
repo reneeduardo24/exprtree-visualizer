@@ -269,12 +269,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:43</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Constructor que inyecta el servicio de diapositivas y
+carga inmediatamente la información para el carrusel.</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -283,6 +286,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -297,6 +301,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Servicio que provee los datos de presentación.</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -326,9 +334,16 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:43</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Evento que se emite cuando el usuario presiona el botón
+para desplazarse hacia la zona de trabajo (workspace).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -359,14 +374,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="27"
-                                    class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:27</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:59</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Dispara el evento <code>requestScrollToWorkspace</code> hacia el componente padre.
+El padre es responsable de manejar el scroll real.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -406,10 +424,17 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/components/presentation-slider/presentation-slider.component.ts:37</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Arreglo de diapositivas cargadas desde SlideService.
+Cada diapositiva contiene su tipo, título y datos asociados.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -437,14 +462,32 @@ import { Slide, SlideService } from &#x27;../../core/slide.service&#x27;;
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PresentationSliderComponent {
+  /**
+   * Arreglo de diapositivas cargadas desde SlideService.
+   * Cada diapositiva contiene su tipo, título y datos asociados.
+   */
   slides: Slide[] &#x3D; [];
 
+  /**
+   * Evento que se emite cuando el usuario presiona el botón
+   * para desplazarse hacia la zona de trabajo (workspace).
+   */
   @Output() requestScrollToWorkspace &#x3D; new EventEmitter&lt;void&gt;();
 
+  /**
+   * Constructor que inyecta el servicio de diapositivas y
+   * carga inmediatamente la información para el carrusel.
+   *
+   * @param slideService Servicio que provee los datos de presentación.
+   */
   constructor(private slideService: SlideService) {
     this.slides &#x3D; this.slideService.getSlides();
   }
 
+  /**
+   * Dispara el evento &#x60;requestScrollToWorkspace&#x60; hacia el componente padre.
+   * El padre es responsable de manejar el scroll real.
+   */
   triggerScrollToWorkspace(): void {
     this.requestScrollToWorkspace.emit();
   }
@@ -453,7 +496,19 @@ export class PresentationSliderComponent {
     </div>
 
     <div class="tab-pane fade " id="templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;section class&#x3D;&quot;slider-root&quot;&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;!--
+  Slider principal de presentación del proyecto.
+  Utiliza &lt;swiper-container&gt; y &lt;swiper-slide&gt; (Web Components) para generar
+  un carrusel dinámico que cambia automáticamente cada pocos segundos.
+
+  Cada diapositiva se representa según su tipo:
+  - &#x27;title&#x27;: pantalla de bienvenida con botón para continuar.
+  - &#x27;team&#x27;: integrantes del proyecto.
+  - &#x27;supervisor&#x27;: información del docente.
+  - &#x27;technologies&#x27;: tecnologías utilizadas.
+--&gt;
+
+&lt;section class&#x3D;&quot;slider-root&quot;&gt;
   &lt;div class&#x3D;&quot;bg-grid&quot;&gt;&lt;/div&gt;
 
   &lt;swiper-container
@@ -472,7 +527,8 @@ export class PresentationSliderComponent {
       &lt;div class&#x3D;&quot;slide-container&quot;&gt;
         &lt;div class&#x3D;&quot;slide-content&quot;&gt;
           &lt;ng-container [ngSwitch]&#x3D;&quot;slide.type&quot;&gt;
-            &lt;!-- TITLE --&gt;
+            
+            &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; TÍTULO PRINCIPAL &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
             &lt;ng-container *ngSwitchCase&#x3D;&quot;&#x27;title&#x27;&quot;&gt;
               &lt;div class&#x3D;&quot;center-column text-center space-y&quot;&gt;
                 &lt;div class&#x3D;&quot;space-y&quot;&gt;
@@ -480,6 +536,8 @@ export class PresentationSliderComponent {
                   &lt;p class&#x3D;&quot;subtitle&quot;&gt;{{ slide.subtitle }}&lt;/p&gt;
                 &lt;/div&gt;
                 &lt;div class&#x3D;&quot;divider&quot;&gt;&lt;/div&gt;
+
+                &lt;!-- Botón para desplazarse al workspace --&gt;
                 &lt;button
                   type&#x3D;&quot;button&quot;
                   class&#x3D;&quot;scroll-down-btn&quot;
@@ -490,7 +548,7 @@ export class PresentationSliderComponent {
               &lt;/div&gt;
             &lt;/ng-container&gt;
 
-            &lt;!-- TEAM --&gt;
+            &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; INTEGRANTES DEL EQUIPO &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
             &lt;ng-container *ngSwitchCase&#x3D;&quot;&#x27;team&#x27;&quot;&gt;
               &lt;div class&#x3D;&quot;center-column space-y&quot;&gt;
                 &lt;h2 class&#x3D;&quot;title-section&quot;&gt;{{ slide.title }}&lt;/h2&gt;
@@ -507,7 +565,7 @@ export class PresentationSliderComponent {
               &lt;/div&gt;
             &lt;/ng-container&gt;
 
-            &lt;!-- SUPERVISOR --&gt;
+            &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; DOCENTE / SUPERVISOR &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
             &lt;ng-container *ngSwitchCase&#x3D;&quot;&#x27;supervisor&#x27;&quot;&gt;
               &lt;div class&#x3D;&quot;center-column space-y supervisor-section&quot;&gt;
                 &lt;h2 class&#x3D;&quot;title-section&quot;&gt;{{ slide.title }}&lt;/h2&gt;
@@ -527,22 +585,20 @@ export class PresentationSliderComponent {
               &lt;/div&gt;
             &lt;/ng-container&gt;
 
-            &lt;!-- TECHNOLOGIES --&gt;
+            &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; TECNOLOGÍAS UTILIZADAS &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
             &lt;ng-container *ngSwitchCase&#x3D;&quot;&#x27;technologies&#x27;&quot;&gt;
               &lt;div class&#x3D;&quot;center-column space-y&quot;&gt;
                 &lt;h2 class&#x3D;&quot;title-section&quot;&gt;{{ slide.title }}&lt;/h2&gt;
                 &lt;div class&#x3D;&quot;divider&quot;&gt;&lt;/div&gt;
 
                 &lt;div class&#x3D;&quot;grid-technologies&quot;&gt;
-                  &lt;div
-                    class&#x3D;&quot;card-tech&quot;
-                    *ngFor&#x3D;&quot;let tech of slide.technologies&quot;
-                  &gt;
+                  &lt;div class&#x3D;&quot;card-tech&quot; *ngFor&#x3D;&quot;let tech of slide.technologies&quot;&gt;
                     &lt;p class&#x3D;&quot;tech-name&quot;&gt;{{ tech }}&lt;/p&gt;
                   &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/ng-container&gt;
+
           &lt;/ng-container&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -939,8 +995,8 @@ swiper-slide {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><section class="slider-root">  <div class="bg-grid"></div>  <swiper-container    class="slider-swiper"    slides-per-view="1"    loop="true"    speed="600"    autoplay-delay="7000"    autoplay-disable-on-interaction="false"    pagination="true"    grab-cursor="true"    allow-touch-move="true"    simulate-touch="true"  >    <swiper-slide *ngFor="let slide of slides">      <div class="slide-container">        <div class="slide-content">          <ng-container [ngSwitch]="slide.type">            <!-- TITLE -->            <ng-container *ngSwitchCase="\'title\'">              <div class="center-column text-center space-y">                <div class="space-y">                  <h1 class="title-main">{{ slide.title }}</h1>                  <p class="subtitle">{{ slide.subtitle }}</p>                </div>                <div class="divider"></div>                <button                  type="button"                  class="scroll-down-btn"                  (click)="triggerScrollToWorkspace()"                >                  ↓                </button>              </div>            </ng-container>            <!-- TEAM -->            <ng-container *ngSwitchCase="\'team\'">              <div class="center-column space-y">                <h2 class="title-section">{{ slide.title }}</h2>                <div class="divider"></div>                <div class="grid-members">                  <div class="card-member" *ngFor="let member of slide.members">                    <div class="avatar">                      {{ member.name.charAt(0) }}                    </div>                    <h3 class="member-name">{{ member.name }}</h3>                  </div>                </div>              </div>            </ng-container>            <!-- SUPERVISOR -->            <ng-container *ngSwitchCase="\'supervisor\'">              <div class="center-column space-y supervisor-section">                <h2 class="title-section">{{ slide.title }}</h2>                <div class="divider"></div>                <div class="card-supervisor">                  <div class="avatar supervisor-avatar">                    {{ slide.supervisor?.name?.charAt(0) }}                  </div>                  <h3 class="supervisor-name">                    {{ slide.supervisor?.name }}                  </h3>                  <p class="supervisor-position">                    {{ slide.supervisor?.position }}                  </p>                </div>              </div>            </ng-container>            <!-- TECHNOLOGIES -->            <ng-container *ngSwitchCase="\'technologies\'">              <div class="center-column space-y">                <h2 class="title-section">{{ slide.title }}</h2>                <div class="divider"></div>                <div class="grid-technologies">                  <div                    class="card-tech"                    *ngFor="let tech of slide.technologies"                  >                    <p class="tech-name">{{ tech }}</p>                  </div>                </div>              </div>            </ng-container>          </ng-container>        </div>      </div>    </swiper-slide>  </swiper-container></section></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'ParserViewComponent', 'selector': 'app-parser-view'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
+        var COMPONENT_TEMPLATE = '<div><!--  Slider principal de presentación del proyecto.  Utiliza <swiper-container> y <swiper-slide> (Web Components) para generar  un carrusel dinámico que cambia automáticamente cada pocos segundos.  Cada diapositiva se representa según su tipo:  - \'title\': pantalla de bienvenida con botón para continuar.  - \'team\': integrantes del proyecto.  - \'supervisor\': información del docente.  - \'technologies\': tecnologías utilizadas.--><section class="slider-root">  <div class="bg-grid"></div>  <swiper-container    class="slider-swiper"    slides-per-view="1"    loop="true"    speed="600"    autoplay-delay="7000"    autoplay-disable-on-interaction="false"    pagination="true"    grab-cursor="true"    allow-touch-move="true"    simulate-touch="true"  >    <swiper-slide *ngFor="let slide of slides">      <div class="slide-container">        <div class="slide-content">          <ng-container [ngSwitch]="slide.type">                        <!-- ========== TÍTULO PRINCIPAL ========== -->            <ng-container *ngSwitchCase="\'title\'">              <div class="center-column text-center space-y">                <div class="space-y">                  <h1 class="title-main">{{ slide.title }}</h1>                  <p class="subtitle">{{ slide.subtitle }}</p>                </div>                <div class="divider"></div>                <!-- Botón para desplazarse al workspace -->                <button                  type="button"                  class="scroll-down-btn"                  (click)="triggerScrollToWorkspace()"                >                  ↓                </button>              </div>            </ng-container>            <!-- ========== INTEGRANTES DEL EQUIPO ========== -->            <ng-container *ngSwitchCase="\'team\'">              <div class="center-column space-y">                <h2 class="title-section">{{ slide.title }}</h2>                <div class="divider"></div>                <div class="grid-members">                  <div class="card-member" *ngFor="let member of slide.members">                    <div class="avatar">                      {{ member.name.charAt(0) }}                    </div>                    <h3 class="member-name">{{ member.name }}</h3>                  </div>                </div>              </div>            </ng-container>            <!-- ========== DOCENTE / SUPERVISOR ========== -->            <ng-container *ngSwitchCase="\'supervisor\'">              <div class="center-column space-y supervisor-section">                <h2 class="title-section">{{ slide.title }}</h2>                <div class="divider"></div>                <div class="card-supervisor">                  <div class="avatar supervisor-avatar">                    {{ slide.supervisor?.name?.charAt(0) }}                  </div>                  <h3 class="supervisor-name">                    {{ slide.supervisor?.name }}                  </h3>                  <p class="supervisor-position">                    {{ slide.supervisor?.position }}                  </p>                </div>              </div>            </ng-container>            <!-- ========== TECNOLOGÍAS UTILIZADAS ========== -->            <ng-container *ngSwitchCase="\'technologies\'">              <div class="center-column space-y">                <h2 class="title-section">{{ slide.title }}</h2>                <div class="divider"></div>                <div class="grid-technologies">                  <div class="card-tech" *ngFor="let tech of slide.technologies">                    <p class="tech-name">{{ tech }}</p>                  </div>                </div>              </div>            </ng-container>          </ng-container>        </div>      </div>    </swiper-slide>  </swiper-container></section></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'PresentationSliderComponent'};
 </script>

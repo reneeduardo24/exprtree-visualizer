@@ -249,10 +249,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#buildTreeFromPostfix" >buildTreeFromPostfix</a>
-                            </li>
-                            <li>
                                 <a href="#goFirst" >goFirst</a>
                             </li>
                             <li>
@@ -269,6 +265,14 @@
                             </li>
                             <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#parseRecursiveInfix" >parseRecursiveInfix</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#tokenize" >tokenize</a>
                             </li>
                         </ul>
                     </td>
@@ -322,7 +326,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:60</a></div>
                             </td>
                         </tr>
 
@@ -373,75 +377,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="buildTreeFromPostfix"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>buildTreeFromPostfix</b></span>
-                        <a href="#buildTreeFromPostfix"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>buildTreeFromPostfix(postfix: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="157"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:157</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>postfix</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../interfaces/ParseResult.html" target="_self" >ParseResult</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="goFirst"></a>
                     <span class="name">
                         <span ><b>goFirst</b></span>
@@ -458,8 +393,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="133"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:133</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:118</a></div>
                         </td>
                     </tr>
 
@@ -495,8 +430,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="150"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:150</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:131</a></div>
                         </td>
                     </tr>
 
@@ -532,8 +467,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="144"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:144</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:127</a></div>
                         </td>
                     </tr>
 
@@ -569,8 +504,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="138"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:138</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:123</a></div>
                         </td>
                     </tr>
 
@@ -606,14 +541,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="74"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:74</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:84</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Limpia la suscripción al destruir el componente.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -643,19 +580,169 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="56"
-                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:56</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:65</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Se subscribe al estado de la expresión y dispara el parseo.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parseRecursiveInfix"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>parseRecursiveInfix</b></span>
+                        <a href="#parseRecursiveInfix"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>parseRecursiveInfix(expr: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Analiza la expresión infija (normalizada) y construye el árbol.
+Devuelve el árbol final y los pasos de construcción para la UI.</p>
+<p>Gramática (resumida):
+Expression := Term ((&#39;+&#39;|&#39;-&#39;) Term)*
+Term := Factor ((&#39;<em>&#39;|&#39;/&#39;|&#39;\&#39;) Factor)</em>
+Factor := Number | Identifier | &#39;(&#39; Expression &#39;)&#39; | &#39;-&#39; Factor</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>expr</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ParseResult.html" target="_self" >ParseResult</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tokenize"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>tokenize</b></span>
+                        <a href="#tokenize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>tokenize(expr: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="362"
+                                    class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:362</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera tokens a partir de la cadena normalizada.
+Acepta: números enteros, identificadores (letras), operadores y paréntesis.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>expr</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -690,10 +777,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:58</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Índice del paso mostrado en la UI.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -721,10 +814,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:43</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:52</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Modelo de entrada publicado por el componente de expresiones.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -747,18 +846,21 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>{
-    steps: [],
-    isValid: false,
-  }</code>
+                        <i>Default value : </i><code>{ steps: [], isValid: false }</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:55</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resultado del parser: árbol, pasos y estado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -783,7 +885,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -812,7 +914,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:78</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:90</a></div>
                                 </td>
                             </tr>
 
@@ -834,7 +936,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:82</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:94</a></div>
                                 </td>
                             </tr>
 
@@ -856,7 +958,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:86</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:98</a></div>
                                 </td>
                             </tr>
 
@@ -878,7 +980,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:90</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:102</a></div>
                                 </td>
                             </tr>
 
@@ -900,7 +1002,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:95</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:107</a></div>
                                 </td>
                             </tr>
 
@@ -922,9 +1024,20 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="100" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:100</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">src/app/components/recursive-parser-panel/recursive-parser-panel.component.ts:112</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Árbol parcial a pasar al visualizador (currentRoot del paso o árbol final).</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code>ExpressionNode | undefined</code>
+
+                                </div>
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -942,7 +1055,7 @@ import {
 } from &#x27;../../core/expression-state.service&#x27;;
 import { TreeVisualizerComponent } from &#x27;../tree-visualizer/tree-visualizer.component&#x27;;
 
-type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27;;
+type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27; | &#x27;unary&#x27;;
 
 interface ExpressionNode {
   id: string;
@@ -950,13 +1063,13 @@ interface ExpressionNode {
   value: string;
   left?: ExpressionNode;
   right?: ExpressionNode;
+  isVirtual?: boolean;
 }
 
 interface BuildStep {
   step: number;
   token: string;
   action: string;
-  stackSnapshot: ExpressionNode[];
   currentRoot?: ExpressionNode;
 }
 
@@ -975,40 +1088,44 @@ interface ParseResult {
   styleUrls: [&#x27;./recursive-parser-panel.component.scss&#x27;],
 })
 export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
+  /** Modelo de entrada publicado por el componente de expresiones. */
   expressionModel: ExpressionInputModel | null &#x3D; null;
 
-  parseResult: ParseResult &#x3D; {
-    steps: [],
-    isValid: false,
-  };
+  /** Resultado del parser: árbol, pasos y estado. */
+  parseResult: ParseResult &#x3D; { steps: [], isValid: false };
 
+  /** Índice del paso mostrado en la UI. */
   currentStepIndex &#x3D; 0;
 
   private sub?: Subscription;
 
   constructor(private expressionState: ExpressionStateService) {}
 
+  /** Se subscribe al estado de la expresión y dispara el parseo. */
   ngOnInit(): void {
     this.sub &#x3D; this.expressionState.expression$.subscribe((model) &#x3D;&gt; {
       this.expressionModel &#x3D; model;
-      if (model &amp;&amp; model.postfix.trim()) {
-        this.parseResult &#x3D; this.buildTreeFromPostfix(model.postfix);
+
+      if (model &amp;&amp; model.normalizedExpression &amp;&amp; model.normalizedExpression.trim()) {
+        this.parseResult &#x3D; this.parseRecursiveInfix(model.normalizedExpression);
         this.currentStepIndex &#x3D; 0;
       } else {
         this.parseResult &#x3D; {
           steps: [],
           isValid: false,
-          errorMessage:
-            &#x27;No hay expresión disponible. Ingresa una expresión válida en el Paso 1.&#x27;,
+          errorMessage: &#x27;No hay expresión disponible. Ingresa una expresión válida.&#x27;,
         };
         this.currentStepIndex &#x3D; 0;
       }
     });
   }
 
+  /** Limpia la suscripción al destruir el componente. */
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
+
+  /* ------------------ Getters ------------------ */
 
   get expression(): string {
     return this.expressionModel?.rawExpression ?? &#x27;&#x27;;
@@ -1031,39 +1148,12 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     return this.parseResult.steps.length;
   }
 
-  // Árbol/forest del paso actual: usa la pila (stackSnapshot)
-get currentTree(): any {
-  const step &#x3D; this.currentStep;
-
-  // Si no hay paso actual, regresamos el árbol final (por seguridad)
-  if (!step) {
-    return this.parseResult.tree;
+  /** Árbol parcial a pasar al visualizador (currentRoot del paso o árbol final). */
+  get currentTree(): ExpressionNode | undefined {
+    return this.currentStep?.currentRoot ?? this.parseResult.tree;
   }
 
-  const snapshot &#x3D; step.stackSnapshot;
-
-  if (!snapshot || snapshot.length &#x3D;&#x3D;&#x3D; 0) {
-    return undefined;
-  }
-
-  // Si solo hay un elemento en la pila, ya es un árbol válido
-  if (snapshot.length &#x3D;&#x3D;&#x3D; 1) {
-    return snapshot[0];
-  }
-
-  // Si hay varios elementos en la pila, construimos una raíz virtual
-  // que solo sirve para agruparlos visualmente.
-  return {
-    id: &#x27;virtual-root&#x27;,
-    type: &#x27;operator&#x27;,
-    value: &#x27;&#x27;,          // sin texto
-    isVirtual: true,    // bandera interna para el visualizador
-    children: snapshot, // hijos directos &#x3D; elementos de la pila
-  };
-}
-
-
-  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; NAVEGACIÓN DE PASOS &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  /* -------------- Navegación de pasos -------------- */
 
   goFirst(): void {
     if (!this.totalSteps) return;
@@ -1071,15 +1161,11 @@ get currentTree(): any {
   }
 
   goPrev(): void {
-    if (this.currentStepIndex &gt; 0) {
-      this.currentStepIndex--;
-    }
+    if (this.currentStepIndex &gt; 0) this.currentStepIndex--;
   }
 
   goNext(): void {
-    if (this.currentStepIndex &lt; this.totalSteps - 1) {
-      this.currentStepIndex++;
-    }
+    if (this.currentStepIndex &lt; this.totalSteps - 1) this.currentStepIndex++;
   }
 
   goLast(): void {
@@ -1087,103 +1173,265 @@ get currentTree(): any {
     this.currentStepIndex &#x3D; this.totalSteps - 1;
   }
 
-  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; LÓGICA DEL PARSER (postfix → árbol + pasos) &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  /* --------------- Parser recursivo --------------- */
 
-  private buildTreeFromPostfix(postfix: string): ParseResult {
-    const tokens &#x3D; postfix.split(/\s+/).filter(Boolean);
-    const stack: ExpressionNode[] &#x3D; [];
+  /**
+   * Analiza la expresión infija (normalizada) y construye el árbol.
+   * Devuelve el árbol final y los pasos de construcción para la UI.
+   *
+   * Gramática (resumida):
+   * Expression :&#x3D; Term ((&#x27;+&#x27;|&#x27;-&#x27;) Term)*
+   * Term :&#x3D; Factor ((&#x27;*&#x27;|&#x27;/&#x27;|&#x27;\\&#x27;) Factor)*
+   * Factor :&#x3D; Number | Identifier | &#x27;(&#x27; Expression &#x27;)&#x27; | &#x27;-&#x27; Factor
+   */
+  private parseRecursiveInfix(expr: string): ParseResult {
+    const tokens &#x3D; this.tokenize(expr);
+    let pos &#x3D; 0;
     const steps: BuildStep[] &#x3D; [];
-
-    const isOperator &#x3D; (token: string): boolean &#x3D;&gt;
-      [&#x27;+&#x27;, &#x27;-&#x27;, &#x27;*&#x27;, &#x27;/&#x27;, &#x27;\\&#x27;, &#x27;^&#x27;].includes(token);
-
-    const isOperand &#x3D; (token: string): boolean &#x3D;&gt;
-      /^[a-zA-Z0-9]+$/.test(token);
-
-    const generateId &#x3D; (): string &#x3D;&gt; {
-      if (typeof crypto !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; &#x27;randomUUID&#x27; in crypto) {
-        return crypto.randomUUID();
-      }
-      return Math.random().toString(36).substring(2, 10);
-    };
-
     let stepCounter &#x3D; 1;
 
-    try {
-      for (const token of tokens) {
-        let action: string;
+    const generateId &#x3D; () &#x3D;&gt;
+      typeof crypto !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; &#x27;randomUUID&#x27; in crypto
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2, 10);
 
-        if (isOperand(token)) {
-          const type: NodeType &#x3D; /^[0-9]+$/.test(token)
-            ? &#x27;number&#x27;
-            : &#x27;variable&#x27;;
-          const node: ExpressionNode &#x3D; {
-            id: generateId(),
-            type,
-            value: token,
-          };
-          stack.push(node);
-          action &#x3D; &#x60;Token &quot;${token}&quot;: operando, se apila como nodo hoja.&#x60;;
-        } else if (isOperator(token)) {
-          if (stack.length &lt; 2) {
-            throw new Error(
-              &#x60;No hay suficientes operandos en la pila para el operador &quot;${token}&quot;.&#x60;
-            );
-          }
-          const right &#x3D; stack.pop() as ExpressionNode;
-          const left &#x3D; stack.pop() as ExpressionNode;
+    const makeStep &#x3D; (token: string, action: string, currentRoot?: ExpressionNode) &#x3D;&gt; {
+      steps.push({
+        step: stepCounter++,
+        token,
+        action,
+        currentRoot,
+      });
+    };
 
+    const peek &#x3D; () &#x3D;&gt; (pos &lt; tokens.length ? tokens[pos] : null);
+    const consume &#x3D; (expected?: string) &#x3D;&gt; {
+      const t &#x3D; peek();
+      if (t &#x3D;&#x3D;&#x3D; null) return null;
+      if (expected &amp;&amp; t !&#x3D;&#x3D; expected) {
+        throw new Error(&#x60;Se esperaba &quot;${expected}&quot; pero se encontró &quot;${t}&quot;.&#x60;);
+      }
+      pos++;
+      return t;
+    };
+
+    const parseExpression &#x3D; (): ExpressionNode &#x3D;&gt; {
+      let left &#x3D; parseTerm();
+      while (true) {
+        const t &#x3D; peek();
+        if (t &#x3D;&#x3D;&#x3D; &#x27;+&#x27; || t &#x3D;&#x3D;&#x3D; &#x27;-&#x27;) {
+          const op &#x3D; consume() as string;
+          const right &#x3D; parseTerm();
           const node: ExpressionNode &#x3D; {
             id: generateId(),
             type: &#x27;operator&#x27;,
-            value: token,
+            value: op,
             left,
             right,
           };
+          makeStep(op, &#x60;Creado nodo operador &quot;${op}&quot;.&#x60;, node);
+          left &#x3D; node;
+        } else break;
+      }
+      return left;
+    };
 
-          stack.push(node);
-          action &#x3D;
-            &#x27;Token &quot;&#x27; +
-            token +
-            &#x27;&quot;: operador, se desapilan 2 nodos y se crea un nodo operador.&#x27;;
-        } else {
-          throw new Error(&#x60;Token no reconocido en postfix: &quot;${token}&quot;.&#x60;);
+    const parseTerm &#x3D; (): ExpressionNode &#x3D;&gt; {
+      let left &#x3D; parseFactor();
+      while (true) {
+        const t &#x3D; peek();
+        if (t &#x3D;&#x3D;&#x3D; &#x27;*&#x27; || t &#x3D;&#x3D;&#x3D; &#x27;/&#x27; || t &#x3D;&#x3D;&#x3D; &#x27;\\&#x27;) {
+          const op &#x3D; consume() as string;
+          const right &#x3D; parseFactor();
+          const node: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left,
+            right,
+          };
+          makeStep(op, &#x60;Creado nodo operador &quot;${op}&quot;.&#x60;, node);
+          left &#x3D; node;
+        } else break;
+      }
+      return left;
+    };
+
+    const parseFactor &#x3D; (): ExpressionNode &#x3D;&gt; {
+      const t &#x3D; peek();
+      if (t &#x3D;&#x3D;&#x3D; null) throw new Error(&#x27;Expresión incompleta (se esperaba un factor).&#x27;);
+
+      // Unario negativo
+      if (t &#x3D;&#x3D;&#x3D; &#x27;-&#x27;) {
+        consume(&#x27;-&#x27;);
+        const right &#x3D; parseFactor();
+        const node: ExpressionNode &#x3D; {
+          id: generateId(),
+          type: &#x27;unary&#x27;,
+          value: &#x27;neg&#x27;,
+          right,
+        };
+        makeStep(&#x27;NEG&#x27;, &#x27;Creado nodo unario NEG.&#x27;, node);
+        // Soporta exponentes tras unario: -x^2 &#x3D;&gt; -(x^2)
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;${op}&quot; aplicando exponente a unario.&#x60;, expNode);
+          return expNode;
+        }
+        return node;
+      }
+
+      // Paréntesis
+      if (t &#x3D;&#x3D;&#x3D; &#x27;(&#x27;) {
+        consume(&#x27;(&#x27;);
+        const node &#x3D; parseExpression();
+        if (peek() !&#x3D;&#x3D; &#x27;)&#x27;) throw new Error(&#x27;Paréntesis sin cerrar.&#x27;);
+        consume(&#x27;)&#x27;);
+        makeStep(&#x27;()&#x27;, &#x27;Evaluada subexpresión entre paréntesis.&#x27;, node);
+
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;${op}&quot; como exponente de subexpresión.&#x60;, expNode);
+          return expNode;
+        }
+        return node;
+      }
+
+      // Número
+      if (/^[0-9]+$/.test(t)) {
+        const tok &#x3D; consume() as string;
+        const node: ExpressionNode &#x3D; {
+          id: generateId(),
+          type: &#x27;number&#x27;,
+          value: tok,
+        };
+        makeStep(tok, &#x60;Creado nodo número &quot;${tok}&quot;.&#x60;, node);
+
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;^&quot; con base número.&#x60;, expNode);
+          return expNode;
         }
 
-        const stackSnapshot &#x3D; [...stack];
-
-        steps.push({
-          step: stepCounter++,
-          token,
-          action,
-          stackSnapshot,
-          currentRoot: stack[stack.length - 1],
-        });
+        return node;
       }
 
-      if (stack.length !&#x3D;&#x3D; 1) {
-        throw new Error(
-          &#x60;La pila final no tiene exactamente un elemento. Tamaño actual: ${stack.length}.&#x60;
-        );
+      // Identificador (variable)
+      if (/^[a-zA-Z]+$/.test(t)) {
+        const tok &#x3D; consume() as string;
+        const node: ExpressionNode &#x3D; {
+          id: generateId(),
+          type: &#x27;variable&#x27;,
+          value: tok,
+        };
+        makeStep(tok, &#x60;Creado nodo variable &quot;${tok}&quot;.&#x60;, node);
+
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;^&quot; con base variable.&#x60;, expNode);
+          return expNode;
+        }
+
+        return node;
       }
 
-      const finalTree &#x3D; stack[0];
+      throw new Error(&#x60;Token no válido en factor: &quot;${t}&quot;.&#x60;);
+    };
+
+    try {
+      const root &#x3D; parseExpression();
+
+      if (peek() !&#x3D;&#x3D; null) {
+        throw new Error(&#x60;Tokens sobrantes después del parseo: &quot;${peek()}&quot;.&#x60;);
+      }
+
+      makeStep(&#x27;DONE&#x27;, &#x27;Árbol completo construido.&#x27;, root);
 
       return {
-        tree: finalTree,
+        tree: root,
         steps,
         isValid: true,
       };
-    } catch (error) {
+    } catch (err) {
       return {
         steps,
         isValid: false,
-        errorMessage:
-          error instanceof Error
-            ? error.message
-            : &#x27;Error desconocido al construir el árbol.&#x27;,
+        errorMessage: err instanceof Error ? err.message : String(err),
       };
     }
+  }
+
+  /* --------------- Tokenizador --------------- */
+
+  /**
+   * Genera tokens a partir de la cadena normalizada.
+   * Acepta: números enteros, identificadores (letras), operadores y paréntesis.
+   */
+  private tokenize(expr: string): string[] {
+    const tokens: string[] &#x3D; [];
+    let i &#x3D; 0;
+    while (i &lt; expr.length) {
+      const c &#x3D; expr[i];
+
+      if (&#x27;+-*/\\^()&#x27;.includes(c)) {
+        tokens.push(c);
+        i++;
+        continue;
+      }
+
+      if (/\d/.test(c)) {
+        let j &#x3D; i;
+        while (j &lt; expr.length &amp;&amp; /\d/.test(expr[j])) j++;
+        tokens.push(expr.slice(i, j));
+        i &#x3D; j;
+        continue;
+      }
+
+      if (/[a-zA-Z]/.test(c)) {
+        let j &#x3D; i;
+        while (j &lt; expr.length &amp;&amp; /[a-zA-Z]/.test(expr[j])) j++;
+        tokens.push(expr.slice(i, j));
+        i &#x3D; j;
+        continue;
+      }
+
+      // Carácter inesperado: lo añadimos para que el parser lo reporte como error.
+      tokens.push(c);
+      i++;
+    }
+    return tokens;
   }
 }
 </code></pre>
@@ -1724,7 +1972,7 @@ get currentTree(): any {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="parser-root">  <div class="parser-bg-grid"></div>  <div class="parser-container">    <!-- Encabezado -->    <header class="parser-header">      <div class="parser-step-badge">2</div>      <div>        <h2 class="parser-title">Parser (construcción del árbol)</h2>        <p class="parser-subtitle">          Simulación paso a paso de la construcción del árbol de expresión a partir de la notación postfix.        </p>      </div>    </header>    <!-- Resumen de expresión -->    <section class="parser-summary-card">      <div class="summary-row">        <span class="summary-label">Expresión original</span>        <span class="summary-value mono">{{ expression }}</span>      </div>      <div class="summary-row">        <span class="summary-label">Expresión normalizada</span>        <span class="summary-value mono">{{ normalizedExpression }}</span>      </div>      <div class="summary-row">        <span class="summary-label">Postfix</span>        <span class="summary-value mono postfix-value">{{ postfix }}</span>      </div>    </section>    <!-- Contenido principal -->    <ng-container *ngIf="parseResult.isValid; else errorState">      <div class="parser-layout">        <!-- Panel de pasos -->        <section class="panel steps-panel">          <div class="panel-header">            <h3 class="panel-title">Pasos de construcción</h3>            <p class="panel-subtitle">              Navega entre los pasos para ver cómo evoluciona el árbol de expresión.            </p>          </div>          <!-- Controles de navegación -->          <div class="step-controls" *ngIf="totalSteps > 0">            <div class="step-buttons">              <button                class="btn-nav"                type="button"                (click)="goFirst()"                [disabled]="currentStepIndex === 0"              >                «              </button>              <button                class="btn-nav"                type="button"                (click)="goPrev()"                [disabled]="currentStepIndex === 0"              >                ‹              </button>              <span class="step-indicator">                Paso {{ currentStep?.step }} de {{ totalSteps }}              </span>              <button                class="btn-nav"                type="button"                (click)="goNext()"                [disabled]="currentStepIndex === totalSteps - 1"              >                ›              </button>              <button                class="btn-nav"                type="button"                (click)="goLast()"                [disabled]="currentStepIndex === totalSteps - 1"              >                »              </button>            </div>            <div class="step-meta" *ngIf="currentStep">              <p class="step-token">                Token actual:                <span class="mono highlight-token">                  "{{ currentStep.token }}"                </span>              </p>              <p class="step-action">                {{ currentStep.action }}              </p>            </div>          </div>          <div *ngIf="!totalSteps" class="empty-message">            No hay pasos generados. Verifica que la notación postfix no esté vacía.          </div>          <!-- Tabla de pasos -->          <div class="steps-table-wrapper" *ngIf="totalSteps > 0">            <table class="steps-table">              <thead>                <tr>                  <th>Paso</th>                  <th>Token</th>                  <th>Acción</th>                </tr>              </thead>              <tbody>                <tr                  *ngFor="let step of parseResult.steps"                  [class.step-active]="step.step === currentStep?.step"                >                  <td class="mono">{{ step.step }}</td>                  <td class="mono">{{ step.token }}</td>                  <td>{{ step.action }}</td>                </tr>              </tbody>            </table>          </div>        </section>        <!-- Panel de árbol visual -->        <section class="panel tree-panel">          <div class="panel-header">            <h3 class="panel-title">Árbol parcial</h3>            <p class="panel-subtitle">              Visualización del árbol correspondiente al paso seleccionado.            </p>          </div>          <app-tree-visualizer [tree]="currentTree"></app-tree-visualizer>          <div            class="final-message"            *ngIf="parseResult.tree && currentStepIndex === totalSteps - 1"          >            <p class="final-title">Árbol completo construido exitosamente.</p>            <p class="final-text">              Puedes regresar a pasos anteriores para revisar cómo fue evolucionando el árbol de expresión.            </p>          </div>        </section>      </div>    </ng-container>    <!-- Estado de error -->    <ng-template #errorState>      <section class="panel error-panel">        <h3 class="panel-title">Error al construir el árbol</h3>        <p class="panel-subtitle">          Ocurrió un problema al procesar la notación postfix.        </p>        <p class="error-message">          {{ parseResult.errorMessage || \'Error desconocido.\' }}        </p>      </section>    </ng-template>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'ParserViewComponent', 'selector': 'app-parser-view'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'RecursiveParserPanelComponent'};
 </script>

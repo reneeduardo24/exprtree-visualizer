@@ -137,6 +137,22 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Servicio encargado de almacenar y emitir el estado actual
+de la expresión ingresada por el usuario.</p>
+<p>Este servicio actúa como un &quot;store&quot; simple:</p>
+<ul>
+<li>Permite establecer una nueva expresión,</li>
+<li>Consultar el valor actual,</li>
+<li>O limpiar el estado.</li>
+</ul>
+<p>Los componentes pueden suscribirse a <code>expression$</code> para reaccionar
+automáticamente a los cambios.</p>
+
+            </p>
 
 
 
@@ -218,14 +234,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="28"
-                                    class="link-to-prism">src/app/core/expression-state.service.ts:28</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/app/core/expression-state.service.ts:70</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Limpia el estado dejando la expresión en null.
+Útil cuando se reinicia el proceso o se borra la entrada.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -255,19 +274,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="24"
-                                    class="link-to-prism">src/app/core/expression-state.service.ts:24</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/app/core/expression-state.service.ts:62</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el valor actual de la expresión sin necesidad de suscribirse.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/ExpressionInputModel.html" target="_self" >ExpressionInputModel | null</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>El modelo ExpressionInputModel actual, o null si no hay dato.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -292,14 +317,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="20"
-                                    class="link-to-prism">src/app/core/expression-state.service.ts:20</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/app/core/expression-state.service.ts:53</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Establece un nuevo estado de expresión.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -310,6 +337,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -324,6 +352,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Representa la expresión actual con todos sus metadatos.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -369,10 +401,17 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/core/expression-state.service.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/core/expression-state.service.ts:45</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Observable que expone la expresión actual para que cualquier componente
+pueda suscribirse y recibir actualizaciones.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -396,15 +435,23 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>new BehaviorSubject&lt;ExpressionInputModel | null&gt;(null)</code>
+                        <i>Default value : </i><code>new BehaviorSubject&lt;ExpressionInputModel | null&gt;(
+    null
+  )</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/core/expression-state.service.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/core/expression-state.service.ts:37</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>BehaviorSubject que mantiene el último valor emitido de la expresión.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -414,10 +461,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { BehaviorSubject, Observable } from &#x27;rxjs&#x27;;
-
-export interface ExpressionInputModel {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface ExpressionInputModel {
   id: string;
   rawExpression: string;
   normalizedExpression: string;
@@ -425,22 +469,59 @@ export interface ExpressionInputModel {
   timestamp: number;
 }
 
+import { Injectable } from &#x27;@angular/core&#x27;;
+import { BehaviorSubject, Observable } from &#x27;rxjs&#x27;;
+
+/**
+ * Servicio encargado de almacenar y emitir el estado actual
+ * de la expresión ingresada por el usuario.
+ *
+ * Este servicio actúa como un &quot;store&quot; simple:
+ * - Permite establecer una nueva expresión,
+ * - Consultar el valor actual,
+ * - O limpiar el estado.
+ *
+ * Los componentes pueden suscribirse a &#x60;expression$&#x60; para reaccionar
+ * automáticamente a los cambios.
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;,
 })
 export class ExpressionStateService {
-  private expressionSubject &#x3D; new BehaviorSubject&lt;ExpressionInputModel | null&gt;(null);
+  /** BehaviorSubject que mantiene el último valor emitido de la expresión. */
+  private expressionSubject &#x3D; new BehaviorSubject&lt;ExpressionInputModel | null&gt;(
+    null
+  );
 
-  expression$: Observable&lt;ExpressionInputModel | null&gt; &#x3D; this.expressionSubject.asObservable();
+  /**
+   * Observable que expone la expresión actual para que cualquier componente
+   * pueda suscribirse y recibir actualizaciones.
+   */
+  expression$: Observable&lt;ExpressionInputModel | null&gt; &#x3D;
+    this.expressionSubject.asObservable();
 
+  /**
+   * Establece un nuevo estado de expresión.
+   *
+   * @param model Representa la expresión actual con todos sus metadatos.
+   */
   setExpression(model: ExpressionInputModel): void {
     this.expressionSubject.next(model);
   }
 
+  /**
+   * Obtiene el valor actual de la expresión sin necesidad de suscribirse.
+   *
+   * @returns El modelo ExpressionInputModel actual, o null si no hay dato.
+   */
   getCurrent(): ExpressionInputModel | null {
     return this.expressionSubject.value;
   }
 
+  /**
+   * Limpia el estado dejando la expresión en null.
+   * Útil cuando se reinicia el proceso o se borra la entrada.
+   */
   clear(): void {
     this.expressionSubject.next(null);
   }

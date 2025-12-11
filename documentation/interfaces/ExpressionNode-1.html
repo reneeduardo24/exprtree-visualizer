@@ -144,6 +144,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Modelo de un nodo del árbol de expresión.
+En pasos intermedios puede existir un nodo &quot;virtual&quot; para agrupar múltiples raíces.</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -393,8 +401,13 @@ import {
 } from &#x27;@angular/core&#x27;;
 import * as d3 from &#x27;d3&#x27;;
 
+/** Tipos permitidos para nodos del árbol. */
 type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27;;
 
+/**
+ * Modelo de un nodo del árbol de expresión.
+ * En pasos intermedios puede existir un nodo &quot;virtual&quot; para agrupar múltiples raíces.
+ */
 interface ExpressionNode {
   id: string;
   type: NodeType;
@@ -411,74 +424,119 @@ interface ExpressionNode {
   styleUrls: [&#x27;./tree-visualizer.component.scss&#x27;],
 })
 export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
-  // Puede ser un ExpressionNode o un nodo &quot;virtual&quot; con children[]
+  /**
+   * Árbol o estructura virtual recibida desde el parser.
+   * Puede ser un ExpressionNode o un nodo con propiedad children[].
+   */
   @Input() tree: any &#x3D; null;
 
+  /** Referencia al elemento SVG donde se generará el render de D3. */
   @ViewChild(&#x27;svg&#x27;, { static: false }) svgRef!: ElementRef&lt;SVGSVGElement&gt;;
 
+  /** Bandera que indica si el SVG ya está listo para iniciar D3. */
   private initialized &#x3D; false;
 
+  /**
+   * Se ejecuta una vez cuando el componente ya está presente en el DOM.
+   * Marca el inicializado y realiza un primer render.
+   */
   ngAfterViewInit(): void {
     this.initialized &#x3D; true;
     this.renderTree();
   }
 
+  /**
+   * Se ejecuta cada vez que cambia el input &#x60;tree&#x60;.
+   * Si el componente ya fue inicializado, vuelve a dibujar el árbol.
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes[&#x27;tree&#x27;] &amp;&amp; this.initialized) {
       this.renderTree();
     }
   }
 
+  /**
+   * Renderiza el árbol completo utilizando D3.js.
+   *
+   * Flujo interno:
+   *  1. Limpia el SVG.
+   *  2. Configura dimensiones.
+   *  3. Construye una jerarquía D3:
+   *     - children[] → múltiples subárboles (raíz virtual)
+   *     - left/right → árbol binario tradicional
+   *  4. Aplica layout tipo &#x60;tree()&#x60;.
+   *  5. Dibuja enlaces (aristas):
+   *     - Si el enlace proviene de la raíz virtual → se oculta.
+   *  6. Dibuja nodos (círculos y texto).
+   */
   private renderTree(): void {
     if (!this.svgRef) return;
 
     const svgEl &#x3D; this.svgRef.nativeElement;
     const svg &#x3D; d3.select(svgEl);
 
-    // Limpiar contenido previo
+    // Limpieza completa del render previo
     svg.selectAll(&#x27;*&#x27;).remove();
 
-    if (!this.tree) {
-      return;
-    }
+    // Si no hay árbol, no se renderiza nada
+    if (!this.tree) return;
 
+    // Dimensiones dinámicas basadas en el contenedor
     const width &#x3D; svgEl.clientWidth || 600;
     const height &#x3D; svgEl.clientHeight || 400;
 
     svg.attr(&#x27;viewBox&#x27;, &#x60;0 0 ${width} ${height}&#x60;);
 
+    // Grupo principal con márgenes
     const g &#x3D; svg.append(&#x27;g&#x27;).attr(&#x27;transform&#x27;, &#x27;translate(20,40)&#x27;);
 
-    // Jerarquía D3:
-    // - Si el nodo tiene children[], usamos esos.
-    // - Si no, usamos left/right como hijos (árbol binario normal).
+    /**
+     * Construye la jerarquía interna de D3.
+     * - Si el nodo tiene children[] → se interpreta como raíz virtual.
+     * - Si tiene left/right → modelo de árbol binario normal.
+     */
     const root &#x3D; d3.hierarchy&lt;any&gt;(this.tree, (d: any) &#x3D;&gt; {
       if (Array.isArray(d.children)) {
         return d.children;
       }
+
       const children: any[] &#x3D; [];
       if (d.left) children.push(d.left);
       if (d.right) children.push(d.right);
       return children;
     });
 
+    // Layout tipo árbol
     const treeLayout &#x3D; d3.tree&lt;any&gt;().size([width - 40, height - 80]);
-
     treeLayout(root);
 
-    // ENLACES (aristas)
+    // --------------------------------------------------------------------
+    //                          ENLACES (aristas)
+    // --------------------------------------------------------------------
     g.selectAll(&#x27;path.link&#x27;)
       .data(root.links())
       .enter()
       .append(&#x27;path&#x27;)
       .attr(&#x27;class&#x27;, &#x27;tree-link&#x27;)
-      .attr(&#x27;d&#x27;, (d) &#x3D;&gt; &#x60;M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}&#x60;)
+      .attr(
+        &#x27;d&#x27;,
+        (d) &#x3D;&gt; &#x60;M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}&#x60;
+      )
       .attr(&#x27;fill&#x27;, &#x27;none&#x27;)
-      // Si el enlace sale de la raíz virtual (depth 0), lo hacemos invisible
-      .attr(&#x27;stroke&#x27;, (d) &#x3D;&gt; (d.source.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.source.data.isVirtual ? &#x27;transparent&#x27; : &#x27;#e5e7eb&#x27;))
-      .attr(&#x27;stroke-width&#x27;, (d) &#x3D;&gt; (d.source.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.source.data.isVirtual ? 0 : 1.5));
+      /**
+       * Oculta las aristas que salen de la raíz virtual,
+       * para evitar mostrar líneas colgantes mientras hay múltiples subárboles.
+       */
+      .attr(&#x27;stroke&#x27;, (d) &#x3D;&gt;
+        d.source.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.source.data.isVirtual ? &#x27;transparent&#x27; : &#x27;#e5e7eb&#x27;
+      )
+      .attr(&#x27;stroke-width&#x27;, (d) &#x3D;&gt;
+        d.source.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.source.data.isVirtual ? 0 : 1.5
+      );
 
-    // NODOS
+    // --------------------------------------------------------------------
+    //                          NODOS
+    // --------------------------------------------------------------------
     const nodes &#x3D; g
       .selectAll(&#x27;g.node&#x27;)
       .data(root.descendants())
@@ -487,13 +545,13 @@ export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
       .attr(&#x27;class&#x27;, &#x27;tree-node&#x27;)
       .attr(&#x27;transform&#x27;, (d) &#x3D;&gt; &#x60;translate(${d.x},${d.y})&#x60;);
 
-    // Círculo del nodo
+    // CÍRCULOS
     nodes
       .append(&#x27;circle&#x27;)
       .attr(&#x27;class&#x27;, (d) &#x3D;&gt;
         d.data.type &#x3D;&#x3D;&#x3D; &#x27;operator&#x27; ? &#x27;node-circle node-operator&#x27; : &#x27;node-circle&#x27;
       )
-      // Si es la raíz virtual, radio 0 → no se ve
+      // Si es raíz virtual → radio 0 para ocultarlo
       .attr(&#x27;r&#x27;, (d) &#x3D;&gt; (d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual ? 0 : 18))
       .attr(&#x27;fill&#x27;, &#x27;#ffffff&#x27;)
       .attr(&#x27;stroke&#x27;, (d) &#x3D;&gt;
@@ -503,7 +561,7 @@ export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
         d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual ? 0 : 2
       );
 
-    // Texto dentro del nodo
+    // ETIQUETAS DE TEXTO
     nodes
       .append(&#x27;text&#x27;)
       .attr(&#x27;class&#x27;, &#x27;node-label&#x27;)
@@ -511,10 +569,8 @@ export class TreeVisualizerComponent implements AfterViewInit, OnChanges {
       .attr(&#x27;dominant-baseline&#x27;, &#x27;middle&#x27;)
       .attr(&#x27;fill&#x27;, &#x27;#1e293b&#x27;)
       .text((d) &#x3D;&gt; {
-        // La raíz virtual no muestra texto
-        if (d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual) {
-          return &#x27;&#x27;;
-        }
+        // La raíz virtual no debe mostrar texto
+        if (d.depth &#x3D;&#x3D;&#x3D; 0 &amp;&amp; d.data.isVirtual) return &#x27;&#x27;;
         return d.data.value ?? &#x27;&#x27;;
       });
   }

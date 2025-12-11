@@ -63,9 +63,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/ExpressionInputComponent.html" data-type="entity-link" >ExpressionInputComponent</a>
                             </li>
                             <li class="link">
-                                <a href="components/ParserViewComponent.html" data-type="entity-link" >ParserViewComponent</a>
-                            </li>
-                            <li class="link">
                                 <a href="components/PresentationSliderComponent.html" data-type="entity-link" >PresentationSliderComponent</a>
                             </li>
                             <li class="link">

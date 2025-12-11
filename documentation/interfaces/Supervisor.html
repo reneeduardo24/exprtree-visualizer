@@ -144,6 +144,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Datos del supervisor/docente mostrado en la presentación.</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -254,17 +261,33 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
-export type SlideType &#x3D; &#x27;title&#x27; | &#x27;team&#x27; | &#x27;supervisor&#x27; | &#x27;technologies&#x27; | &#x27;thankyou&#x27;;
+/** Tipos permitidos para clasificar visualmente cada diapositiva. */
+export type SlideType &#x3D;
+  | &#x27;title&#x27;
+  | &#x27;team&#x27;
+  | &#x27;supervisor&#x27;
+  | &#x27;technologies&#x27;
+  | &#x27;thankyou&#x27;;
 
+/** Modelo para representar un miembro del equipo en una diapositiva. */
 export interface TeamMember {
   name: string;
 }
 
+/** Datos del supervisor/docente mostrado en la presentación. */
 export interface Supervisor {
   name: string;
   position: string;
 }
 
+/**
+ * Modelo general de una diapositiva.
+ * Dependiendo del tipo, la diapositiva puede contener:
+ * - subtítulo,
+ * - listado de integrantes,
+ * - información del supervisor,
+ * - listado de tecnologías.
+ */
 export interface Slide {
   id: number;
   title: string;
@@ -279,12 +302,19 @@ export interface Slide {
   providedIn: &#x27;root&#x27;,
 })
 export class SlideService {
+  /**
+   * Devuelve la colección de diapositivas que son consumidas
+   * por el componente de presentación inicial.
+   *
+   * @returns Arreglo de objetos Slide con su información correspondiente.
+   */
   getSlides(): Slide[] {
     return [
       {
         id: 1,
         title: &#x27;ExprTree Visualizer&#x27;,
-        subtitle: &#x27;Visualización interactiva de árboles de expresión mediante Parser Recursivo&#x27;,
+        subtitle:
+          &#x27;Visualización interactiva de árboles de expresión mediante Parser Recursivo&#x27;,
         type: &#x27;title&#x27;,
       },
       {
@@ -312,7 +342,7 @@ export class SlideService {
         title: &#x27;Tecnologías utilizadas&#x27;,
         type: &#x27;technologies&#x27;,
         technologies: [&#x27;Angular&#x27;, &#x27;TypeScript&#x27;, &#x27;SCSS&#x27;, &#x27;D3.js&#x27;, &#x27;SVG&#x27;],
-      }
+      },
     ];
   }
 }

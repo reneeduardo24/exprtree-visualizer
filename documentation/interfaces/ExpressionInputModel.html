@@ -144,6 +144,20 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Modelo que representa el estado de una expresión ingresada por el usuario.
+Contiene:</p>
+<ul>
+<li>La expresión original,</li>
+<li>La expresión normalizada,</li>
+<li>La notación postfix generada,</li>
+<li>Un identificador único y un timestamp para control de versiones.</li>
+</ul>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -369,10 +383,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { BehaviorSubject, Observable } from &#x27;rxjs&#x27;;
-
-export interface ExpressionInputModel {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface ExpressionInputModel {
   id: string;
   rawExpression: string;
   normalizedExpression: string;
@@ -380,22 +391,59 @@ export interface ExpressionInputModel {
   timestamp: number;
 }
 
+import { Injectable } from &#x27;@angular/core&#x27;;
+import { BehaviorSubject, Observable } from &#x27;rxjs&#x27;;
+
+/**
+ * Servicio encargado de almacenar y emitir el estado actual
+ * de la expresión ingresada por el usuario.
+ *
+ * Este servicio actúa como un &quot;store&quot; simple:
+ * - Permite establecer una nueva expresión,
+ * - Consultar el valor actual,
+ * - O limpiar el estado.
+ *
+ * Los componentes pueden suscribirse a &#x60;expression$&#x60; para reaccionar
+ * automáticamente a los cambios.
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;,
 })
 export class ExpressionStateService {
-  private expressionSubject &#x3D; new BehaviorSubject&lt;ExpressionInputModel | null&gt;(null);
+  /** BehaviorSubject que mantiene el último valor emitido de la expresión. */
+  private expressionSubject &#x3D; new BehaviorSubject&lt;ExpressionInputModel | null&gt;(
+    null
+  );
 
-  expression$: Observable&lt;ExpressionInputModel | null&gt; &#x3D; this.expressionSubject.asObservable();
+  /**
+   * Observable que expone la expresión actual para que cualquier componente
+   * pueda suscribirse y recibir actualizaciones.
+   */
+  expression$: Observable&lt;ExpressionInputModel | null&gt; &#x3D;
+    this.expressionSubject.asObservable();
 
+  /**
+   * Establece un nuevo estado de expresión.
+   *
+   * @param model Representa la expresión actual con todos sus metadatos.
+   */
   setExpression(model: ExpressionInputModel): void {
     this.expressionSubject.next(model);
   }
 
+  /**
+   * Obtiene el valor actual de la expresión sin necesidad de suscribirse.
+   *
+   * @returns El modelo ExpressionInputModel actual, o null si no hay dato.
+   */
   getCurrent(): ExpressionInputModel | null {
     return this.expressionSubject.value;
   }
 
+  /**
+   * Limpia el estado dejando la expresión en null.
+   * Útil cuando se reinicia el proceso o se borra la entrada.
+   */
   clear(): void {
     this.expressionSubject.next(null);
   }

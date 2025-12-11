@@ -166,6 +166,13 @@
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
+                                        <a href="#isVirtual" 
+>
+                                            isVirtual
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#left" 
 >
                                             left
@@ -228,6 +235,44 @@
                                         </td>
                                     </tr>
 
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isVirtual"></a>
+                                        <span class="name "><b>isVirtual</b>
+                                            <a href="#isVirtual">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isVirtual:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -390,7 +435,7 @@ import {
 } from &#x27;../../core/expression-state.service&#x27;;
 import { TreeVisualizerComponent } from &#x27;../tree-visualizer/tree-visualizer.component&#x27;;
 
-type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27;;
+type NodeType &#x3D; &#x27;operator&#x27; | &#x27;number&#x27; | &#x27;variable&#x27; | &#x27;unary&#x27;;
 
 interface ExpressionNode {
   id: string;
@@ -398,13 +443,13 @@ interface ExpressionNode {
   value: string;
   left?: ExpressionNode;
   right?: ExpressionNode;
+  isVirtual?: boolean;
 }
 
 interface BuildStep {
   step: number;
   token: string;
   action: string;
-  stackSnapshot: ExpressionNode[];
   currentRoot?: ExpressionNode;
 }
 
@@ -423,40 +468,44 @@ interface ParseResult {
   styleUrls: [&#x27;./recursive-parser-panel.component.scss&#x27;],
 })
 export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
+  /** Modelo de entrada publicado por el componente de expresiones. */
   expressionModel: ExpressionInputModel | null &#x3D; null;
 
-  parseResult: ParseResult &#x3D; {
-    steps: [],
-    isValid: false,
-  };
+  /** Resultado del parser: árbol, pasos y estado. */
+  parseResult: ParseResult &#x3D; { steps: [], isValid: false };
 
+  /** Índice del paso mostrado en la UI. */
   currentStepIndex &#x3D; 0;
 
   private sub?: Subscription;
 
   constructor(private expressionState: ExpressionStateService) {}
 
+  /** Se subscribe al estado de la expresión y dispara el parseo. */
   ngOnInit(): void {
     this.sub &#x3D; this.expressionState.expression$.subscribe((model) &#x3D;&gt; {
       this.expressionModel &#x3D; model;
-      if (model &amp;&amp; model.postfix.trim()) {
-        this.parseResult &#x3D; this.buildTreeFromPostfix(model.postfix);
+
+      if (model &amp;&amp; model.normalizedExpression &amp;&amp; model.normalizedExpression.trim()) {
+        this.parseResult &#x3D; this.parseRecursiveInfix(model.normalizedExpression);
         this.currentStepIndex &#x3D; 0;
       } else {
         this.parseResult &#x3D; {
           steps: [],
           isValid: false,
-          errorMessage:
-            &#x27;No hay expresión disponible. Ingresa una expresión válida en el Paso 1.&#x27;,
+          errorMessage: &#x27;No hay expresión disponible. Ingresa una expresión válida.&#x27;,
         };
         this.currentStepIndex &#x3D; 0;
       }
     });
   }
 
+  /** Limpia la suscripción al destruir el componente. */
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
+
+  /* ------------------ Getters ------------------ */
 
   get expression(): string {
     return this.expressionModel?.rawExpression ?? &#x27;&#x27;;
@@ -479,39 +528,12 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     return this.parseResult.steps.length;
   }
 
-  // Árbol/forest del paso actual: usa la pila (stackSnapshot)
-get currentTree(): any {
-  const step &#x3D; this.currentStep;
-
-  // Si no hay paso actual, regresamos el árbol final (por seguridad)
-  if (!step) {
-    return this.parseResult.tree;
+  /** Árbol parcial a pasar al visualizador (currentRoot del paso o árbol final). */
+  get currentTree(): ExpressionNode | undefined {
+    return this.currentStep?.currentRoot ?? this.parseResult.tree;
   }
 
-  const snapshot &#x3D; step.stackSnapshot;
-
-  if (!snapshot || snapshot.length &#x3D;&#x3D;&#x3D; 0) {
-    return undefined;
-  }
-
-  // Si solo hay un elemento en la pila, ya es un árbol válido
-  if (snapshot.length &#x3D;&#x3D;&#x3D; 1) {
-    return snapshot[0];
-  }
-
-  // Si hay varios elementos en la pila, construimos una raíz virtual
-  // que solo sirve para agruparlos visualmente.
-  return {
-    id: &#x27;virtual-root&#x27;,
-    type: &#x27;operator&#x27;,
-    value: &#x27;&#x27;,          // sin texto
-    isVirtual: true,    // bandera interna para el visualizador
-    children: snapshot, // hijos directos &#x3D; elementos de la pila
-  };
-}
-
-
-  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; NAVEGACIÓN DE PASOS &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  /* -------------- Navegación de pasos -------------- */
 
   goFirst(): void {
     if (!this.totalSteps) return;
@@ -519,15 +541,11 @@ get currentTree(): any {
   }
 
   goPrev(): void {
-    if (this.currentStepIndex &gt; 0) {
-      this.currentStepIndex--;
-    }
+    if (this.currentStepIndex &gt; 0) this.currentStepIndex--;
   }
 
   goNext(): void {
-    if (this.currentStepIndex &lt; this.totalSteps - 1) {
-      this.currentStepIndex++;
-    }
+    if (this.currentStepIndex &lt; this.totalSteps - 1) this.currentStepIndex++;
   }
 
   goLast(): void {
@@ -535,103 +553,265 @@ get currentTree(): any {
     this.currentStepIndex &#x3D; this.totalSteps - 1;
   }
 
-  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; LÓGICA DEL PARSER (postfix → árbol + pasos) &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  /* --------------- Parser recursivo --------------- */
 
-  private buildTreeFromPostfix(postfix: string): ParseResult {
-    const tokens &#x3D; postfix.split(/\s+/).filter(Boolean);
-    const stack: ExpressionNode[] &#x3D; [];
+  /**
+   * Analiza la expresión infija (normalizada) y construye el árbol.
+   * Devuelve el árbol final y los pasos de construcción para la UI.
+   *
+   * Gramática (resumida):
+   * Expression :&#x3D; Term ((&#x27;+&#x27;|&#x27;-&#x27;) Term)*
+   * Term :&#x3D; Factor ((&#x27;*&#x27;|&#x27;/&#x27;|&#x27;\\&#x27;) Factor)*
+   * Factor :&#x3D; Number | Identifier | &#x27;(&#x27; Expression &#x27;)&#x27; | &#x27;-&#x27; Factor
+   */
+  private parseRecursiveInfix(expr: string): ParseResult {
+    const tokens &#x3D; this.tokenize(expr);
+    let pos &#x3D; 0;
     const steps: BuildStep[] &#x3D; [];
-
-    const isOperator &#x3D; (token: string): boolean &#x3D;&gt;
-      [&#x27;+&#x27;, &#x27;-&#x27;, &#x27;*&#x27;, &#x27;/&#x27;, &#x27;\\&#x27;, &#x27;^&#x27;].includes(token);
-
-    const isOperand &#x3D; (token: string): boolean &#x3D;&gt;
-      /^[a-zA-Z0-9]+$/.test(token);
-
-    const generateId &#x3D; (): string &#x3D;&gt; {
-      if (typeof crypto !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; &#x27;randomUUID&#x27; in crypto) {
-        return crypto.randomUUID();
-      }
-      return Math.random().toString(36).substring(2, 10);
-    };
-
     let stepCounter &#x3D; 1;
 
-    try {
-      for (const token of tokens) {
-        let action: string;
+    const generateId &#x3D; () &#x3D;&gt;
+      typeof crypto !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; &#x27;randomUUID&#x27; in crypto
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2, 10);
 
-        if (isOperand(token)) {
-          const type: NodeType &#x3D; /^[0-9]+$/.test(token)
-            ? &#x27;number&#x27;
-            : &#x27;variable&#x27;;
-          const node: ExpressionNode &#x3D; {
-            id: generateId(),
-            type,
-            value: token,
-          };
-          stack.push(node);
-          action &#x3D; &#x60;Token &quot;${token}&quot;: operando, se apila como nodo hoja.&#x60;;
-        } else if (isOperator(token)) {
-          if (stack.length &lt; 2) {
-            throw new Error(
-              &#x60;No hay suficientes operandos en la pila para el operador &quot;${token}&quot;.&#x60;
-            );
-          }
-          const right &#x3D; stack.pop() as ExpressionNode;
-          const left &#x3D; stack.pop() as ExpressionNode;
+    const makeStep &#x3D; (token: string, action: string, currentRoot?: ExpressionNode) &#x3D;&gt; {
+      steps.push({
+        step: stepCounter++,
+        token,
+        action,
+        currentRoot,
+      });
+    };
 
+    const peek &#x3D; () &#x3D;&gt; (pos &lt; tokens.length ? tokens[pos] : null);
+    const consume &#x3D; (expected?: string) &#x3D;&gt; {
+      const t &#x3D; peek();
+      if (t &#x3D;&#x3D;&#x3D; null) return null;
+      if (expected &amp;&amp; t !&#x3D;&#x3D; expected) {
+        throw new Error(&#x60;Se esperaba &quot;${expected}&quot; pero se encontró &quot;${t}&quot;.&#x60;);
+      }
+      pos++;
+      return t;
+    };
+
+    const parseExpression &#x3D; (): ExpressionNode &#x3D;&gt; {
+      let left &#x3D; parseTerm();
+      while (true) {
+        const t &#x3D; peek();
+        if (t &#x3D;&#x3D;&#x3D; &#x27;+&#x27; || t &#x3D;&#x3D;&#x3D; &#x27;-&#x27;) {
+          const op &#x3D; consume() as string;
+          const right &#x3D; parseTerm();
           const node: ExpressionNode &#x3D; {
             id: generateId(),
             type: &#x27;operator&#x27;,
-            value: token,
+            value: op,
             left,
             right,
           };
+          makeStep(op, &#x60;Creado nodo operador &quot;${op}&quot;.&#x60;, node);
+          left &#x3D; node;
+        } else break;
+      }
+      return left;
+    };
 
-          stack.push(node);
-          action &#x3D;
-            &#x27;Token &quot;&#x27; +
-            token +
-            &#x27;&quot;: operador, se desapilan 2 nodos y se crea un nodo operador.&#x27;;
-        } else {
-          throw new Error(&#x60;Token no reconocido en postfix: &quot;${token}&quot;.&#x60;);
+    const parseTerm &#x3D; (): ExpressionNode &#x3D;&gt; {
+      let left &#x3D; parseFactor();
+      while (true) {
+        const t &#x3D; peek();
+        if (t &#x3D;&#x3D;&#x3D; &#x27;*&#x27; || t &#x3D;&#x3D;&#x3D; &#x27;/&#x27; || t &#x3D;&#x3D;&#x3D; &#x27;\\&#x27;) {
+          const op &#x3D; consume() as string;
+          const right &#x3D; parseFactor();
+          const node: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left,
+            right,
+          };
+          makeStep(op, &#x60;Creado nodo operador &quot;${op}&quot;.&#x60;, node);
+          left &#x3D; node;
+        } else break;
+      }
+      return left;
+    };
+
+    const parseFactor &#x3D; (): ExpressionNode &#x3D;&gt; {
+      const t &#x3D; peek();
+      if (t &#x3D;&#x3D;&#x3D; null) throw new Error(&#x27;Expresión incompleta (se esperaba un factor).&#x27;);
+
+      // Unario negativo
+      if (t &#x3D;&#x3D;&#x3D; &#x27;-&#x27;) {
+        consume(&#x27;-&#x27;);
+        const right &#x3D; parseFactor();
+        const node: ExpressionNode &#x3D; {
+          id: generateId(),
+          type: &#x27;unary&#x27;,
+          value: &#x27;neg&#x27;,
+          right,
+        };
+        makeStep(&#x27;NEG&#x27;, &#x27;Creado nodo unario NEG.&#x27;, node);
+        // Soporta exponentes tras unario: -x^2 &#x3D;&gt; -(x^2)
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;${op}&quot; aplicando exponente a unario.&#x60;, expNode);
+          return expNode;
+        }
+        return node;
+      }
+
+      // Paréntesis
+      if (t &#x3D;&#x3D;&#x3D; &#x27;(&#x27;) {
+        consume(&#x27;(&#x27;);
+        const node &#x3D; parseExpression();
+        if (peek() !&#x3D;&#x3D; &#x27;)&#x27;) throw new Error(&#x27;Paréntesis sin cerrar.&#x27;);
+        consume(&#x27;)&#x27;);
+        makeStep(&#x27;()&#x27;, &#x27;Evaluada subexpresión entre paréntesis.&#x27;, node);
+
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;${op}&quot; como exponente de subexpresión.&#x60;, expNode);
+          return expNode;
+        }
+        return node;
+      }
+
+      // Número
+      if (/^[0-9]+$/.test(t)) {
+        const tok &#x3D; consume() as string;
+        const node: ExpressionNode &#x3D; {
+          id: generateId(),
+          type: &#x27;number&#x27;,
+          value: tok,
+        };
+        makeStep(tok, &#x60;Creado nodo número &quot;${tok}&quot;.&#x60;, node);
+
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;^&quot; con base número.&#x60;, expNode);
+          return expNode;
         }
 
-        const stackSnapshot &#x3D; [...stack];
-
-        steps.push({
-          step: stepCounter++,
-          token,
-          action,
-          stackSnapshot,
-          currentRoot: stack[stack.length - 1],
-        });
+        return node;
       }
 
-      if (stack.length !&#x3D;&#x3D; 1) {
-        throw new Error(
-          &#x60;La pila final no tiene exactamente un elemento. Tamaño actual: ${stack.length}.&#x60;
-        );
+      // Identificador (variable)
+      if (/^[a-zA-Z]+$/.test(t)) {
+        const tok &#x3D; consume() as string;
+        const node: ExpressionNode &#x3D; {
+          id: generateId(),
+          type: &#x27;variable&#x27;,
+          value: tok,
+        };
+        makeStep(tok, &#x60;Creado nodo variable &quot;${tok}&quot;.&#x60;, node);
+
+        if (peek() &#x3D;&#x3D;&#x3D; &#x27;^&#x27;) {
+          const op &#x3D; consume() as string;
+          const rightExp &#x3D; parseFactor();
+          const expNode: ExpressionNode &#x3D; {
+            id: generateId(),
+            type: &#x27;operator&#x27;,
+            value: op,
+            left: node,
+            right: rightExp,
+          };
+          makeStep(op, &#x60;Creado operador &quot;^&quot; con base variable.&#x60;, expNode);
+          return expNode;
+        }
+
+        return node;
       }
 
-      const finalTree &#x3D; stack[0];
+      throw new Error(&#x60;Token no válido en factor: &quot;${t}&quot;.&#x60;);
+    };
+
+    try {
+      const root &#x3D; parseExpression();
+
+      if (peek() !&#x3D;&#x3D; null) {
+        throw new Error(&#x60;Tokens sobrantes después del parseo: &quot;${peek()}&quot;.&#x60;);
+      }
+
+      makeStep(&#x27;DONE&#x27;, &#x27;Árbol completo construido.&#x27;, root);
 
       return {
-        tree: finalTree,
+        tree: root,
         steps,
         isValid: true,
       };
-    } catch (error) {
+    } catch (err) {
       return {
         steps,
         isValid: false,
-        errorMessage:
-          error instanceof Error
-            ? error.message
-            : &#x27;Error desconocido al construir el árbol.&#x27;,
+        errorMessage: err instanceof Error ? err.message : String(err),
       };
     }
+  }
+
+  /* --------------- Tokenizador --------------- */
+
+  /**
+   * Genera tokens a partir de la cadena normalizada.
+   * Acepta: números enteros, identificadores (letras), operadores y paréntesis.
+   */
+  private tokenize(expr: string): string[] {
+    const tokens: string[] &#x3D; [];
+    let i &#x3D; 0;
+    while (i &lt; expr.length) {
+      const c &#x3D; expr[i];
+
+      if (&#x27;+-*/\\^()&#x27;.includes(c)) {
+        tokens.push(c);
+        i++;
+        continue;
+      }
+
+      if (/\d/.test(c)) {
+        let j &#x3D; i;
+        while (j &lt; expr.length &amp;&amp; /\d/.test(expr[j])) j++;
+        tokens.push(expr.slice(i, j));
+        i &#x3D; j;
+        continue;
+      }
+
+      if (/[a-zA-Z]/.test(c)) {
+        let j &#x3D; i;
+        while (j &lt; expr.length &amp;&amp; /[a-zA-Z]/.test(expr[j])) j++;
+        tokens.push(expr.slice(i, j));
+        i &#x3D; j;
+        continue;
+      }
+
+      // Carácter inesperado: lo añadimos para que el parser lo reporte como error.
+      tokens.push(c);
+      i++;
+    }
+    return tokens;
   }
 }
 </code></pre>

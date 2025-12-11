@@ -224,19 +224,38 @@ import { RecursiveParserPanelComponent } from &#x27;../recursive-parser-panel/re
 @Component({
   selector: &#x27;app-workspace&#x27;,
   standalone: true,
-  imports: [CommonModule, ExpressionInputComponent, RecursiveParserPanelComponent],
+  imports: [
+    CommonModule,
+    ExpressionInputComponent,
+    RecursiveParserPanelComponent,
+  ],
   templateUrl: &#x27;./workspace.component.html&#x27;,
   styleUrls: [&#x27;./workspace.component.scss&#x27;],
 })
-export class WorkspaceComponent {}
+export class WorkspaceComponent {
+  /**
+   * Este componente no requiere lógica interna.
+   * Su propósito principal es estructurar visualmente los pasos del flujo
+   * completo: desde la expresión ingresada hasta la construcción del árbol.
+   */
+}
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;section class&#x3D;&quot;workspace-root&quot; id&#x3D;&quot;workspace&quot;&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;!--
+  Sección principal del Workspace.
+  Aquí se muestran los dos pasos clave del sistema:
+  - Paso 1: Ingreso y validación de la expresión.
+  - Paso 2: Construcción del árbol mediante parser recursivo.
+--&gt;
+
+&lt;section class&#x3D;&quot;workspace-root&quot; id&#x3D;&quot;workspace&quot;&gt;
+  &lt;!-- Fondo decorativo --&gt;
   &lt;div class&#x3D;&quot;workspace-bg&quot;&gt;&lt;/div&gt;
 
   &lt;div class&#x3D;&quot;workspace-container&quot;&gt;
+    &lt;!-- Encabezado del área de trabajo --&gt;
     &lt;header class&#x3D;&quot;workspace-header&quot;&gt;
       &lt;h1 class&#x3D;&quot;workspace-title&quot;&gt;Expression Tree Workspace&lt;/h1&gt;
       &lt;p class&#x3D;&quot;workspace-subtitle&quot;&gt;
@@ -245,11 +264,12 @@ export class WorkspaceComponent {}
       &lt;/p&gt;
     &lt;/header&gt;
 
+    &lt;!-- Contenido principal del flujo --&gt;
     &lt;div class&#x3D;&quot;workspace-steps&quot;&gt;
-      &lt;!-- Paso 1: Entrada y validación --&gt;
+      &lt;!-- Paso 1 --&gt;
       &lt;app-expression-input&gt;&lt;/app-expression-input&gt;
 
-      &lt;!-- Paso 2: Parser recursivo y simulación de construcción --&gt;
+      &lt;!-- Paso 2 --&gt;
       &lt;app-recursive-parser-panel&gt;&lt;/app-recursive-parser-panel&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -372,8 +392,8 @@ export class WorkspaceComponent {}
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><section class="workspace-root" id="workspace">  <div class="workspace-bg"></div>  <div class="workspace-container">    <header class="workspace-header">      <h1 class="workspace-title">Expression Tree Workspace</h1>      <p class="workspace-subtitle">        Desde la expresión ingresada hasta el árbol visual interactivo:        sigue cada paso del análisis, el parser recursivo y la construcción del árbol.      </p>    </header>    <div class="workspace-steps">      <!-- Paso 1: Entrada y validación -->      <app-expression-input></app-expression-input>      <!-- Paso 2: Parser recursivo y simulación de construcción -->      <app-recursive-parser-panel></app-recursive-parser-panel>    </div>  </div></section></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'ParserViewComponent', 'selector': 'app-parser-view'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
+        var COMPONENT_TEMPLATE = '<div><!--  Sección principal del Workspace.  Aquí se muestran los dos pasos clave del sistema:  - Paso 1: Ingreso y validación de la expresión.  - Paso 2: Construcción del árbol mediante parser recursivo.--><section class="workspace-root" id="workspace">  <!-- Fondo decorativo -->  <div class="workspace-bg"></div>  <div class="workspace-container">    <!-- Encabezado del área de trabajo -->    <header class="workspace-header">      <h1 class="workspace-title">Expression Tree Workspace</h1>      <p class="workspace-subtitle">        Desde la expresión ingresada hasta el árbol visual interactivo:        sigue cada paso del análisis, el parser recursivo y la construcción del árbol.      </p>    </header>    <!-- Contenido principal del flujo -->    <div class="workspace-steps">      <!-- Paso 1 -->      <app-expression-input></app-expression-input>      <!-- Paso 2 -->      <app-recursive-parser-panel></app-recursive-parser-panel>    </div>  </div></section></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ExpressionInputComponent', 'selector': 'app-expression-input'},{'name': 'PresentationSliderComponent', 'selector': 'app-presentation-slider'},{'name': 'RecursiveParserPanelComponent', 'selector': 'app-recursive-parser-panel'},{'name': 'TreeVisualizerComponent', 'selector': 'app-tree-visualizer'},{'name': 'WorkspaceComponent', 'selector': 'app-workspace'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'WorkspaceComponent'};
 </script>
