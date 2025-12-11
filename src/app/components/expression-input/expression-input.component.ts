@@ -16,7 +16,7 @@ import {
 } from '../../core/expression-state.service';
 
 /** Tipos permitidos como notación de salida (expandible en el futuro). */
-type OutputNotation = 'postfix';
+type OutputNotation = 'infix';
 
 /** Lista de operadores aceptados por el sistema. */
 const ALLOWED_OPERATORS = ['+', '-', '*', '/', '\\', '^'];
@@ -67,12 +67,12 @@ export class ExpressionInputComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.form = this.fb.group<{
-      expression: string;
-      outputNotation: OutputNotation;
-    }>({
-      expression: '',
-      outputNotation: 'postfix',
-    });
+  expression: string;
+  outputNotation: OutputNotation;
+}>({
+  expression: '',
+  outputNotation: 'infix',
+});
 
     this.valueChangesSub = this.form.valueChanges.subscribe(() => {
       this.validateExpression();
@@ -291,54 +291,43 @@ export class ExpressionInputComponent implements OnInit, OnDestroy {
   // =================== Envío del formulario ===============
   // ========================================================
 
-  /**
-   * Valida y envía la expresión al parser.
-   * Si es válida:
-   * - Normaliza la expresión,
-   * - Convierte a postfix,
-   * - Crea un modelo ExpressionInputModel,
-   * - Lo envía al servicio global de estado.
-   */
-  submit(): void {
-    if (!this.isValid) {
-      this.validateExpression();
-      return;
-    }
-
-    const value = this.form.value;
-    const rawExpression = value.expression;
-    const normalizedExpression = this.normalizeExpression(rawExpression);
-
-    // Intentar convertir a postfix
-    let postfix = '';
-    try {
-      postfix = this.toPostfix(normalizedExpression);
-    } catch (e) {
-      this.validationErrors = [
-        e instanceof Error ? e.message : 'Error al convertir a postfix.',
-      ];
-      this.isValid = false;
-      return;
-    }
-
-    // ID único
-    const id =
-      typeof crypto !== 'undefined' && 'randomUUID' in crypto
-        ? crypto.randomUUID()
-        : Math.random().toString(36).substring(2, 10);
-
-    // Construcción del modelo final
-    const model: ExpressionInputModel = {
-      id,
-      rawExpression,
-      normalizedExpression,
-      postfix,
-      timestamp: Date.now(),
-    };
-
-    // Publicar estado global
-    this.expressionState.setExpression(model);
-
-    console.log('ExpressionInputModel enviado al estado:', model);
+ /**
+ * Valida y envía la expresión al parser.
+ * Si es válida:
+ * - Normaliza la expresión,
+ * - Crea un modelo ExpressionInputModel (sin calcular postfix),
+ * - Lo envía al servicio global de estado.
+ */
+submit(): void {
+  if (!this.isValid) {
+    this.validateExpression();
+    return;
   }
+
+  const value = this.form.value;
+  const rawExpression = value.expression;
+  const normalizedExpression = this.normalizeExpression(rawExpression);
+
+  // ID único
+  const id =
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? crypto.randomUUID()
+      : Math.random().toString(36).substring(2, 10);
+
+  // Construcción del modelo final SIN postfix
+  const model: ExpressionInputModel = {
+    id,
+    rawExpression,
+    normalizedExpression,
+    // mantenemos el campo postfix vacío o con la info antigua si lo prefieres
+    postfix: '',
+    timestamp: Date.now(),
+  };
+
+  // Publicar estado global
+  this.expressionState.setExpression(model);
+
+  console.log('ExpressionInputModel enviado al estado (sin postfix):', model);
+}
+
 }
