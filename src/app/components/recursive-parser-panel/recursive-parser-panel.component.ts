@@ -3,28 +3,10 @@
  * de un árbol de expresión usando un **parser recursivo descendente**
  * que además mantiene internamente una pila virtual para poder generar
  * los mismos "stack snapshots" que producía el parser postfix.
- *
- * Esto permite:
- *  - Mostrar la evolución del árbol en el visualizador D3 sin modificarlo.
- *  - Mantener el comportamiento educativo paso-a-paso.
- *  - Conservar la semántica y ventaja del parser recursivo.
- *
- * Flujo general:
- *   1. El usuario envía una expresión válida desde el Paso 1.
- *   2. El componente recibe la expresión normalizada.
- *   3. Se ejecuta el parser recursivo:
- *        - Aplica la gramática clásica (Expression → Term → Factor).
- *        - Maneja operadores binarios, unarios y exponentes.
- *        - Emite pasos BuildStep con snapshots de la pila virtual.
- *   4. `currentTree` transforma los snapshots en un árbol o en una raíz virtual
- *      que el TreeVisualizer puede dibujar incrementalmente.
- *
- * Este componente NO construye el árbol gráfico; solo prepara los datos
- * para que TreeVisualizer los renderice paso a paso.
  */
 
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   ExpressionInputModel,
@@ -32,26 +14,17 @@ import {
 } from '../../core/expression-state.service';
 import { TreeVisualizerComponent } from '../tree-visualizer/tree-visualizer.component';
 
-/** Tipos válidos para un nodo del árbol de expresión. */
 type NodeType = 'operator' | 'number' | 'variable' | 'unary';
 
-/**
- * Representa un nodo del árbol sintáctico.
- * Puede ser hoja (número/variable), operador binario o unario.
- */
 interface ExpressionNode {
   id: string;
   type: NodeType;
   value: string;
   left?: ExpressionNode;
   right?: ExpressionNode;
-  isVirtual?: boolean; // usado para raíces virtuales en la UI
+  isVirtual?: boolean;
 }
 
-/**
- * Representa un paso del proceso de construcción,
- * incluyendo el snapshot de la pila virtual.
- */
 interface BuildStep {
   step: number;
   token: string;
@@ -60,12 +33,12 @@ interface BuildStep {
   currentRoot?: ExpressionNode;
 }
 
-/** Resultado completo del parser recursivo. */
 interface ParseResult {
   tree?: ExpressionNode;
   steps: BuildStep[];
   isValid: boolean;
   errorMessage?: string;
+  postfix?: string;
 }
 
 @Component({
@@ -76,28 +49,20 @@ interface ParseResult {
   styleUrls: ['./recursive-parser-panel.component.scss'],
 })
 export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
-  /** Expresión recibida desde el Paso 1. */
   expressionModel: ExpressionInputModel | null = null;
-
-  /** Resultado (árbol + pasos). */
   parseResult: ParseResult = { steps: [], isValid: false };
-
-  /** Índice del paso que se está mostrando. */
   currentStepIndex = 0;
 
   private sub?: Subscription;
 
-  constructor(private expressionState: ExpressionStateService) {}
+  constructor(
+    private expressionState: ExpressionStateService,
+    private cd: ChangeDetectorRef
+  ) {}
 
-  // ============================================================================
-  // Ciclo de vida
-  // ============================================================================
-
-  /**
-   * Se suscribe al estado global:
-   * cada vez que el usuario envía una expresión,
-   * se reconstruye el árbol y se reinician los pasos.
-   */
+  // ------------------------------------------------------------
+  // CICLO DE VIDA
+  // ------------------------------------------------------------
   ngOnInit(): void {
     this.sub = this.expressionState.expression$.subscribe((model) => {
       this.expressionModel = model;
@@ -105,7 +70,13 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
       const expr = model?.normalizedExpression?.trim() ?? '';
 
       if (expr.length > 0) {
-        this.parseResult = this.parseRecursiveInfix(expr);
+        const result = this.parseRecursiveInfix(expr);
+        this.parseResult = result;
+
+        // NO actualizamos el estado global desde el parser para evitar bucles
+        // (la fuente de verdad del estado se establece únicamente en el Paso 1).
+
+        this.cd.detectChanges();
         this.currentStepIndex = 0;
       } else {
         this.parseResult = {
@@ -119,15 +90,13 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     });
   }
 
-  /** Evita fugas de memoria. */
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
 
-  // ============================================================================
-  // Accesores para UI
-  // ============================================================================
-
+  // ------------------------------------------------------------
+  // GETTERS PARA UI
+  // ------------------------------------------------------------
   get expression(): string {
     return this.expressionModel?.rawExpression ?? '';
   }
@@ -136,8 +105,9 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     return this.expressionModel?.normalizedExpression ?? '';
   }
 
+  /** Priorizamos el postfix calculado por el parser (parseResult) */
   get postfix(): string {
-    return this.expressionModel?.postfix ?? '';
+    return this.parseResult.postfix ?? this.expressionModel?.postfix ?? '';
   }
 
   get currentStep(): BuildStep | undefined {
@@ -149,11 +119,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     return this.parseResult.steps.length;
   }
 
-  /**
-   * Obtiene el árbol parcial para el paso actual.
-   * Cuando la pila virtual tiene múltiples elementos,
-   * se crea una raíz virtual con children[] para que D3 pueda visualizarlo.
-   */
   get currentTree(): any {
     const step = this.currentStep;
     if (!step) return this.parseResult.tree;
@@ -172,9 +137,9 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     };
   }
 
-  // ============================================================================
-  // Navegación
-  // ============================================================================
+  // ------------------------------------------------------------
+  // NAVEGACIÓN
+  // ------------------------------------------------------------
   goFirst(): void {
     if (this.totalSteps) this.currentStepIndex = 0;
   }
@@ -188,14 +153,9 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     if (this.totalSteps) this.currentStepIndex = this.totalSteps - 1;
   }
 
-  // ============================================================================
-  // Tokenizador simple
-  // ============================================================================
-
-  /**
-   * Convierte la expresión en un arreglo de tokens.
-   * No separa tipos; solo devuelve strings.
-   */
+  // ------------------------------------------------------------
+  // TOKENIZADOR
+  // ------------------------------------------------------------
   private tokenize(expr: string): string[] {
     const tokens: string[] = [];
     let i = 0;
@@ -203,14 +163,12 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     while (i < expr.length) {
       const c = expr[i];
 
-      // operadores y paréntesis
       if ('+-*/\\^()'.includes(c)) {
         tokens.push(c);
         i++;
         continue;
       }
 
-      // números
       if (/\d/.test(c)) {
         let j = i;
         while (j < expr.length && /\d/.test(expr[j])) j++;
@@ -219,7 +177,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         continue;
       }
 
-      // variables
       if (/[a-zA-Z]/.test(c)) {
         let j = i;
         while (j < expr.length && /[a-zA-Z]/.test(expr[j])) j++;
@@ -228,7 +185,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         continue;
       }
 
-      // carácter inesperado
       tokens.push(c);
       i++;
     }
@@ -236,15 +192,9 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
     return tokens;
   }
 
-  // ============================================================================
-  // Parser recursivo descendente + pila virtual (stackSnapshot)
-  // ============================================================================
-
-  /**
-   * Construye un árbol usando un parser recursivo descendente,
-   * pero simulando internamente una **pila virtual** para emitir
-   * los mismos BuildStep que el parser postfix original.
-   */
+  // ------------------------------------------------------------
+  // PARSER RECURSIVO + PILA VIRTUAL
+  // ------------------------------------------------------------
   private parseRecursiveInfix(expr: string): ParseResult {
     const tokens = this.tokenize(expr);
     let pos = 0;
@@ -293,7 +243,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
       leftNode: ExpressionNode,
       rightNode: ExpressionNode
     ) => {
-      // Toma preferentemente nodos reales de la pila
       const right = virtualStack.pop() ?? rightNode;
       const left = virtualStack.pop() ?? leftNode;
 
@@ -313,7 +262,7 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
       return node;
     };
 
-    // =============================== GRAMÁTICA ===============================
+    // ------------------ GRAMÁTICA ------------------
     const parseExpression = (): ExpressionNode => {
       let left = parseTerm();
       while (peek() === '+' || peek() === '-') {
@@ -338,7 +287,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
       const t = peek();
       if (!t) throw new Error('Expresión incompleta (factor faltante).');
 
-      // Unario negativo
       if (t === '-') {
         consume('-');
         const right = parseFactor();
@@ -360,7 +308,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         return node;
       }
 
-      // Paréntesis
       if (t === '(') {
         consume('(');
         const node = parseExpression();
@@ -376,7 +323,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         return node;
       }
 
-      // Número
       if (/^[0-9]+$/.test(t)) {
         const tok = consume()!;
         const leaf = pushLeaf(tok, 'number');
@@ -389,7 +335,6 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
         return leaf;
       }
 
-      // Variable
       if (/^[a-zA-Z]+$/.test(t)) {
         const tok = consume()!;
         const leaf = pushLeaf(tok, 'variable');
@@ -405,12 +350,14 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
       throw new Error(`Token inválido: "${t}".`);
     };
 
-    // =============================== EJECUCIÓN ===============================
+    // ------------------ EJECUCIÓN ------------------
     try {
       const root = parseExpression();
 
       if (peek() !== null) {
-        throw new Error(`Tokens sobrantes después del parseo: "${peek()}".`);
+        throw new Error(
+          `Tokens sobrantes después del parseo: "${peek()}".`
+        );
       }
 
       if (virtualStack.length !== 1) {
@@ -423,13 +370,53 @@ export class RecursiveParserPanelComponent implements OnInit, OnDestroy {
 
       makeStep('DONE', 'Construcción finalizada (árbol completo).');
 
-      return { tree: virtualStack[0], steps, isValid: true };
+      const finalRoot = virtualStack[0];
+      const postfixStr = this.astToPostfix(finalRoot);
+
+      return { tree: finalRoot, steps, isValid: true, postfix: postfixStr };
     } catch (err) {
       return {
         steps,
         isValid: false,
-        errorMessage: err instanceof Error ? err.message : String(err),
+        errorMessage:
+          err instanceof Error ? err.message : String(err),
       };
     }
+  }
+
+  // ------------------------------------------------------------
+  // AST → POSTFIX
+  // ------------------------------------------------------------
+  private astToPostfix(root: ExpressionNode | undefined | null): string {
+    if (!root) return '';
+    const out: string[] = [];
+
+    const visit = (n?: ExpressionNode | null) => {
+      if (!n) return;
+
+      if (n.type === 'operator') {
+        visit(n.left ?? null);
+        visit(n.right ?? null);
+        out.push(n.value);
+        return;
+      }
+
+      if (n.type === 'unary') {
+        visit(n.right ?? null);
+        out.push(n.value);
+        return;
+      }
+
+      if (n.type === 'number' || n.type === 'variable') {
+        out.push(n.value);
+        return;
+      }
+
+      visit(n.left ?? null);
+      visit(n.right ?? null);
+    };
+
+    visit(root);
+    return out.join(' ');
   }
 }
